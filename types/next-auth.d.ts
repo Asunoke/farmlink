@@ -1,0 +1,23 @@
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      email: string
+      name?: string
+      role: string
+      subscription: string
+    }
+  }
+
+  interface User {
+    role: string
+    subscription: string
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: string
+    subscription: string
+  }
+}

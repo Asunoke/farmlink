@@ -1,0 +1,316 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(USER)
+  subscription  SubscriptionPlan @default(FREE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  farms    Farm[]
+  expenses Expense[]
+  teamMembers TeamMember[]
+  offers   MarketplaceOffer[]
+  demands  MarketplaceDemand[]
+  negotiations MarketplaceNegotiation[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Farm {
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  totalArea   Float
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plots  Plot[]
+
+  @@map("farms")
+}
+
+model Plot {
+  id          String   @id @default(cuid())
+  name        String
+  area        Float
+  cropType    String
+  plantedDate DateTime?
+  harvestDate DateTime?
+  status      PlotStatus @default(PREPARATION)
+  farmId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  farm Farm @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  expenses Expense[]
+
+  @@map("plots")
+}
+
+model Expense {
+  id          String      @id @default(cuid())
+  description String
+  amount      Float
+  category    ExpenseCategory
+  date        DateTime
+  type        TransactionType @default(EXPENSE)
+  plotId      String?
+  userId      String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plot Plot? @relation(fields: [plotId], references: [id], onDelete: SetNull)
+
+  @@map("expenses")
+}
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  salary      Float
+  phone       String?
+  email       String?
+  hireDate    DateTime
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@map("team_members")
+}
+
+model Task {
+  id           String     @id @default(cuid())
+  title        String
+  description  String?
+  status       TaskStatus @default(PENDING)
+  priority     TaskPriority @default(MEDIUM)
+  dueDate      DateTime?
+  teamMemberId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  teamMember TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum SubscriptionPlan {
+  FREE
+  BASIC
+  PREMIUM
+}
+
+enum PlotStatus {
+  PREPARATION
+  PLANTED
+  GROWING
+  HARVESTED
+  FALLOW
+}
+
+enum ExpenseCategory {
+  SEEDS
+  FERTILIZER
+  EQUIPMENT
+  LABOR
+  FUEL
+  MAINTENANCE
+  OTHER
+}
+
+enum TransactionType {
+  EXPENSE
+  REVENUE
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model MarketplaceOffer {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    MarketplaceCategory
+  price       Float
+  quantity    Float
+  unit        String
+  location    String
+  latitude    Float?
+  longitude   Float?
+  status      MarketplaceStatus @default(ACTIVE)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  negotiations MarketplaceNegotiation[]
+
+  @@map("marketplace_offers")
+}
+
+model MarketplaceDemand {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    MarketplaceCategory
+  maxPrice    Float
+  quantity    Float
+  unit        String
+  location    String
+  latitude    Float?
+  longitude   Float?
+  status      MarketplaceStatus @default(ACTIVE)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  negotiations MarketplaceNegotiation[]
+
+  @@map("marketplace_demands")
+}
+
+model MarketplaceNegotiation {
+  id          String   @id @default(cuid())
+  offerId     String?
+  demandId    String?
+  price       Float
+  quantity    Float
+  message     String?
+  status      NegotiationStatus @default(PENDING)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offer   MarketplaceOffer? @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  demand  MarketplaceDemand? @relation(fields: [demandId], references: [id], onDelete: Cascade)
+
+  @@map("marketplace_negotiations")
+}
+
+enum MarketplaceCategory {
+  CROPS
+  SEEDS
+  FERTILIZER
+  EQUIPMENT
+  LIVESTOCK
+  SERVICES
+  OTHER
+}
+
+enum MarketplaceStatus {
+  ACTIVE
+  SOLD
+  CANCELLED
+  EXPIRED
+}
+
+enum NegotiationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COUNTER_OFFER
+  COMPLETED
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  message     String
+  type        NotificationType
+  isRead      Boolean  @default(false)
+  data        Json?    // Données supplémentaires (ID de négociation, etc.)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  NEGOTIATION_MESSAGE
+  NEGOTIATION_UPDATE
+  OFFER_INTEREST
+  DEMAND_MATCH
+  SYSTEM
+}
