@@ -72,7 +72,7 @@ export async function GET(
       )
     }
 
-    // Build a synthesized messages array from current negotiation data (no history persisted yet)
+    // Format messages for frontend (temporaire avec le message de la négociation)
     const messages = negotiation.message
       ? [
           {
@@ -134,12 +134,12 @@ export async function PUT(
     }
 
     // Vérifier que l'utilisateur peut modifier cette négociation
-    const canModify = 
-      existingNegotiation.userId === (session.user as any).id ||
+    const isNegotiator = existingNegotiation.userId === (session.user as any).id
+    const isOwner = 
       existingNegotiation.offer?.userId === (session.user as any).id ||
       existingNegotiation.demand?.userId === (session.user as any).id
 
-    if (!canModify) {
+    if (!isNegotiator && !isOwner) {
       return NextResponse.json(
         { error: "Non autorisé à modifier cette négociation" },
         { status: 403 }
@@ -161,11 +161,17 @@ export async function PUT(
       )
     }
 
+    // Mettre à jour la négociation
     const updateData: any = {}
     if (status) updateData.status = status as NegotiationStatus
     if (price) updateData.price = parseFloat(price)
     if (quantity) updateData.quantity = parseFloat(quantity)
     if (message !== undefined) updateData.message = message
+    
+    // Si c'est une contre-offre (nouveau prix/quantité), changer le statut
+    if (price || quantity) {
+      updateData.status = "COUNTER_OFFER"
+    }
 
     const negotiation = await prisma.marketplaceNegotiation.update({
       where: { id },
@@ -201,6 +207,7 @@ export async function PUT(
       }
     })
 
+    // Format messages for frontend
     const messages = negotiation.message
       ? [
           {
@@ -240,25 +247,34 @@ export async function DELETE(
       )
     }
 
-    // Vérifier que la négociation existe
     const { id } = await params
 
-    const existingNegotiation = await prisma.marketplaceNegotiation.findUnique({
+    // Vérifier que la négociation existe
+    const negotiation = await prisma.marketplaceNegotiation.findUnique({
       where: { id }
     })
 
-    if (!existingNegotiation) {
+    if (!negotiation) {
       return NextResponse.json(
         { error: "Négociation non trouvée" },
         { status: 404 }
       )
     }
 
-    // Admin peut tout supprimer, sinon seulement le créateur
-    const isAdmin = (session.user as any).role === "ADMIN"
-    if (!isAdmin && existingNegotiation.userId !== (session.user as any).id) {
+    // Vérifier que l'utilisateur peut supprimer cette négociation
+    const userRole = (session.user as any).role
+    const isAdmin = userRole === "ADMIN" || userRole === "admin"
+    const isCreator = negotiation.userId === (session.user as any).id
+    
+    console.log("Delete negotiation - User role:", userRole)
+    console.log("Delete negotiation - Is admin:", isAdmin)
+    console.log("Delete negotiation - Is creator:", isCreator)
+    console.log("Delete negotiation - User ID:", (session.user as any).id)
+    console.log("Delete negotiation - Negotiation user ID:", negotiation.userId)
+    
+    if (!isAdmin && !isCreator) {
       return NextResponse.json(
-        { error: "Non autorisé à supprimer cette négociation" },
+        { error: "Seul le créateur ou un administrateur peut supprimer la négociation" },
         { status: 403 }
       )
     }
@@ -267,7 +283,7 @@ export async function DELETE(
       where: { id }
     })
 
-    return NextResponse.json({ message: "Négociation supprimée avec succès" })
+    return NextResponse.json({ message: "Négociation supprimée" })
   } catch (error) {
     console.error("Error deleting negotiation:", error)
     return NextResponse.json(

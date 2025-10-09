@@ -319,8 +319,10 @@ export default function NegotiationPage() {
     )
   }
 
-  const isOwner = negotiation.offer?.user.name === session?.user?.name || 
-                  negotiation.demand?.user.name === session?.user?.name
+  const isOwner = negotiation.offer?.user.id === (session?.user as any)?.id || 
+                  negotiation.demand?.user.id === (session?.user as any)?.id
+  const isNegotiator = negotiation.userId === (session?.user as any)?.id
+  const canRespond = isOwner && negotiation.status !== "ACCEPTED" && negotiation.status !== "REJECTED"
 
   return (
     <div className="min-h-screen bg-background">
@@ -512,7 +514,7 @@ export default function NegotiationPage() {
               </Card>
 
               {/* Actions */}
-              {isOwner && negotiation.status === "PENDING" && (
+              {canRespond && (
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">Actions</CardTitle>
@@ -524,6 +526,33 @@ export default function NegotiationPage() {
                     <Button onClick={handleRejectOffer} variant="destructive" className="w-full">
                       Rejeter l'offre
                     </Button>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Status Display */}
+              {negotiation.status === "ACCEPTED" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg text-green-600">Négociation Acceptée</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Cette négociation a été acceptée. Vous pouvez maintenant finaliser la transaction.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
+              {negotiation.status === "REJECTED" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg text-red-600">Négociation Rejetée</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Cette négociation a été rejetée.
+                    </p>
                   </CardContent>
                 </Card>
               )}

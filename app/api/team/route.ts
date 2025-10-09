@@ -9,7 +9,7 @@ const teamMemberSchema = z.object({
   email: z.string().email("Email invalide").optional(),
   phone: z.string().optional(),
   role: z.string().min(1, "Le rôle est requis"),
-  salary: z.number().positive("Le salaire doit être positif").optional(),
+  salary: z.number().positive("Le salaire doit être positif"),
   hireDate: z.string().datetime(),
 })
 
@@ -49,9 +49,13 @@ export async function POST(request: NextRequest) {
 
     const teamMember = await prisma.teamMember.create({
       data: {
-        ...validatedData,
-        userId: session.user.id,
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        role: validatedData.role,
+        salary: validatedData.salary,
         hireDate: new Date(validatedData.hireDate),
+        userId: session.user.id,
       },
     })
 

@@ -1,37 +1,29 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { z } from "zod"
 
-const taskUpdateSchema = z.object({
-  title: z.string().min(1, "Le titre est requis").optional(),
-  description: z.string().optional(),
-  status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]).optional(),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),
-  dueDate: z.string().datetime().optional(),
-  teamMemberId: z.string().min(1, "L'assignation est requise").optional(),
-})
-
-export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+// GET /api/tasks/[id] - Récupérer une tâche spécifique
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await auth()
+    
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
     const { id } = await params
+
     const task = await prisma.task.findFirst({
-      where: {
+      where: { 
         id,
-        teamMember: {
-          userId: session.user.id,
-        },
+        teamMember: { userId: session.user.id }
       },
       include: {
-        teamMember: {
-          select: { name: true, role: true },
-        },
-      },
+        teamMember: true
+      }
     })
 
     if (!task) {
@@ -40,43 +32,45 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return NextResponse.json(task)
   } catch (error) {
-    console.error("Task fetch error:", error)
+    console.error('Erreur lors de la récupération de la tâche:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+// PUT /api/tasks/[id] - Mettre à jour une tâche
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await auth()
+    
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
     const { id } = await params
-    const body = await request.json()
-    const validated = taskUpdateSchema.parse(body)
+    const { title, description, status, priority, dueDate, teamMemberId } = await request.json()
 
-    // Check if task exists and belongs to user
+    // Vérifier que la tâche existe et appartient à l'utilisateur
     const existingTask = await prisma.task.findFirst({
-      where: {
+      where: { 
         id,
-        teamMember: {
-          userId: session.user.id,
-        },
-      },
+        teamMember: { userId: session.user.id }
+      }
     })
 
     if (!existingTask) {
       return NextResponse.json({ error: "Tâche non trouvée" }, { status: 404 })
     }
 
-    // If teamMemberId is being updated, verify the new team member belongs to user
-    if (validated.teamMemberId) {
+    // Si teamMemberId est fourni, vérifier qu'il appartient à l'utilisateur
+    if (teamMemberId) {
       const teamMember = await prisma.teamMember.findFirst({
         where: {
-          id: validated.teamMemberId,
-          userId: session.user.id,
-        },
+          id: teamMemberId,
+          userId: session.user.id
+        }
       })
 
       if (!teamMember) {
@@ -84,58 +78,61 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       }
     }
 
-    const updateData: any = { ...validated }
-    if (validated.dueDate) {
-      updateData.dueDate = new Date(validated.dueDate)
-    }
-
-    const updated = await prisma.task.update({
+    const updatedTask = await prisma.task.update({
       where: { id },
-      data: updateData,
-      include: {
-        teamMember: {
-          select: { name: true, role: true },
-        },
+      data: {
+        title: title || undefined,
+        description: description || undefined,
+        status: status || undefined,
+        priority: priority || undefined,
+        dueDate: dueDate ? new Date(dueDate) : undefined,
+        teamMemberId: teamMemberId || undefined
       },
+      include: {
+        teamMember: true
+      }
     })
 
-    return NextResponse.json(updated)
+    return NextResponse.json(updatedTask)
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 })
-    }
-    console.error("Task update error:", error)
+    console.error('Erreur lors de la mise à jour de la tâche:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+// DELETE /api/tasks/[id] - Supprimer une tâche
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await auth()
+    
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
     const { id } = await params
 
-    // Check if task exists and belongs to user
+    // Vérifier que la tâche existe et appartient à l'utilisateur
     const existingTask = await prisma.task.findFirst({
-      where: {
+      where: { 
         id,
-        teamMember: {
-          userId: session.user.id,
-        },
-      },
+        teamMember: { userId: session.user.id }
+      }
     })
 
     if (!existingTask) {
       return NextResponse.json({ error: "Tâche non trouvée" }, { status: 404 })
     }
 
-    await prisma.task.delete({ where: { id } })
-    return NextResponse.json({ message: "Tâche supprimée avec succès" })
+    await prisma.task.delete({
+      where: { id }
+    })
+
+    return NextResponse.json({ message: "Tâche supprimée" })
   } catch (error) {
-    console.error("Task deletion error:", error)
+    console.error('Erreur lors de la suppression de la tâche:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
 }

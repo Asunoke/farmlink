@@ -16,15 +16,15 @@ export interface SubscriptionLimits {
 
 export const SUBSCRIPTION_LIMITS: Record<string, SubscriptionLimits> = {
   FREE: {
-    farms: 1,
-    parcels: 3,
-    teamMembers: 3,
-    expenses: 50,
-    tasks: 20,
-    weatherApiCalls: 100,
+    farms: 3,
+    parcels: 4,
+    teamMembers: 10,
+    expenses: 500,
+    tasks: 100,
+    weatherApiCalls: 200,
     features: {
-      advancedAnalytics: false,
-      exportData: false,
+      advancedAnalytics: true,
+      exportData: true,
       prioritySupport: false,
       customReports: false,
       apiAccess: false,
@@ -45,7 +45,22 @@ export const SUBSCRIPTION_LIMITS: Record<string, SubscriptionLimits> = {
       apiAccess: false,
     },
   },
-  PREMIUM: {
+  BUSINESS: {
+    farms: 5,
+    parcels: 10,
+    teamMembers: 20,
+    expenses: 700,
+    tasks: Number.POSITIVE_INFINITY,
+    weatherApiCalls: 500,
+    features: {
+      advancedAnalytics: true,
+      exportData: true,
+      prioritySupport: true,
+      customReports: true,
+      apiAccess: true,
+    },
+  },
+  ENTERPRISE: {
     farms: 5,
     parcels: 10,
     teamMembers: 20,

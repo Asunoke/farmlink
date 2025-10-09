@@ -86,16 +86,16 @@ type ExpenseApi = {
 }
 
 const breakdownColors: Record<string, string> = {
-  "Engrais": "#22c55e",
-  "Main d'œuvre": "#3b82f6",
-  "Semences": "#f59e0b",
-  "Carburant": "#ef4444",
-  "Équipement": "#8b5cf6",
-  "Maintenance": "#14b8a6",
-  "Pesticides": "#a855f7",
-  "Transport": "#f97316",
-  "Irrigation": "#0ea5e9",
-  "Autres": "#94a3b8",
+  "Engrais": "#006633",
+  "Main d'œuvre": "#D4AF37",
+  "Semences": "#C1440E",
+  "Carburant": "#F5F5DC",
+  "Équipement": "#0B1623",
+  "Maintenance": "#006633",
+  "Pesticides": "#D4AF37",
+  "Transport": "#C1440E",
+  "Irrigation": "#006633",
+  "Autres": "#F5F5DC",
 }
 
 const formatCurrency = (amount: number) => {
@@ -350,17 +350,17 @@ export default function BudgetPage() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-balance">Budget & Dépenses</h1>
-            <p className="text-muted-foreground">Suivez vos finances agricoles en temps réel</p>
+            <h1 className="text-3xl font-bold text-balance text-[#D4AF37]">Budget & Dépenses</h1>
+            <p className="text-[#F5F5DC]/70">Suivez vos finances agricoles en temps réel</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={handleExport}>
+            <Button variant="outline" onClick={handleExport} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
               <Download className="mr-2 h-4 w-4" />
               Exporter
             </Button>
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button>
+                <Button className="bg-[#006633] hover:bg-[#C1440E] text-white transition-all duration-300 hover:scale-105">
                   <Plus className="mr-2 h-4 w-4" />
                   Nouvelle Dépense
                 </Button>
@@ -441,51 +441,51 @@ export default function BudgetPage() {
 
         {/* Financial Overview */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Revenus Totaux</CardTitle>
-              <TrendingUp className="h-4 w-4 text-green-600" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Revenus Totaux</CardTitle>
+              <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{formatCurrency(totalRevenue)}</div>
-              <p className="text-xs text-muted-foreground">+12% par rapport au mois dernier</p>
+              <div className="text-2xl font-bold text-[#006633]">{formatCurrency(totalRevenue)}</div>
+              <p className="text-xs text-[#F5F5DC]/70">+12% par rapport au mois dernier</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Dépenses Totales</CardTitle>
-              <TrendingDown className="h-4 w-4 text-red-600" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Dépenses Totales</CardTitle>
+              <TrendingDown className="h-4 w-4 text-[#C1440E]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">{formatCurrency(totalExpenses)}</div>
-              <p className="text-xs text-muted-foreground">-5% par rapport au mois dernier</p>
+              <div className="text-2xl font-bold text-[#C1440E]">{formatCurrency(totalExpenses)}</div>
+              <p className="text-xs text-[#F5F5DC]/70">-5% par rapport au mois dernier</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Bénéfice Net</CardTitle>
-              <Calculator className="h-4 w-4 text-primary" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Bénéfice Net</CardTitle>
+              <Calculator className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+              <div className={`text-2xl font-bold ${netProfit >= 0 ? "text-[#006633]" : "text-[#C1440E]"}`}>
                 {formatCurrency(netProfit)}
               </div>
-              <p className="text-xs text-muted-foreground">{netProfit >= 0 ? "Bénéfice" : "Perte"} ce mois</p>
+              <p className="text-xs text-[#F5F5DC]/70">{netProfit >= 0 ? "Bénéfice" : "Perte"} ce mois</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Marge Bénéficiaire</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Marge Bénéficiaire</CardTitle>
+              <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-2xl font-bold text-[#F5F5DC]">
                 {totalRevenue > 0 ? Math.round((netProfit / totalRevenue) * 100) : 0}%
               </div>
-              <p className="text-xs text-muted-foreground">Ratio profit/revenus</p>
+              <p className="text-xs text-[#F5F5DC]/70">Ratio profit/revenus</p>
             </CardContent>
           </Card>
         </div>

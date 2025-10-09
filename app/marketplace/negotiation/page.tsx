@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { MainNav } from "@/components/main-nav"
 
 interface NegotiationListItem {
   id: string
@@ -36,40 +37,60 @@ export default function NegotiationsIndexPage() {
     load()
   }, [])
 
-  if (loading) return <div className="container mx-auto px-4 py-8">Chargement…</div>
-  if (error) return <div className="container mx-auto px-4 py-8">{error}</div>
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Mes négociations</h1>
-        <Link href="/marketplace">
-          <Button variant="outline">Retour au marché</Button>
-        </Link>
+  if (loading) return (
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#006633] mx-auto mb-4"></div>
+          <p className="text-[#F5F5DC]/70">Chargement…</p>
+        </div>
       </div>
+    </div>
+  )
+  if (error) return (
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center text-[#C1440E]">{error}</div>
+      </div>
+    </div>
+  )
 
-      <div className="grid gap-3">
-        {items.length === 0 && (
-          <Card>
-            <CardContent className="p-6 text-sm text-muted-foreground">Aucune négociation.</CardContent>
-          </Card>
-        )}
-        {items.map((n) => (
-          <Card key={n.id}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0">
-              <CardTitle className="text-base font-medium">
-                {n.offer ? `Offre: ${n.offer.title}` : n.demand ? `Demande: ${n.demand.title}` : n.id}
-              </CardTitle>
-              <Badge>{n.status}</Badge>
-            </CardHeader>
-            <CardContent className="flex items-center justify-between">
-              <div className="text-xs text-muted-foreground">MAJ: {new Date(n.updatedAt).toLocaleString()}</div>
-              <Link href={`/marketplace/negotiation/${n.id}`}>
-                <Button size="sm" variant="outline">Ouvrir</Button>
-              </Link>
-            </CardContent>
-          </Card>
-        ))}
+  return ( 
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-[#D4AF37]">Mes négociations</h1>
+          <Link href="/marketplace">
+            <Button variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">Retour au marché</Button>
+          </Link>
+        </div>
+
+        <div className="grid gap-3">
+          {items.length === 0 && (
+            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+              <CardContent className="p-6 text-sm text-[#F5F5DC]/70">Aucune négociation.</CardContent>
+            </Card>
+          )}
+          {items.map((n) => (
+            <Card key={n.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                <CardTitle className="text-base font-medium text-[#D4AF37]">
+                  {n.offer ? `Offre: ${n.offer.title}` : n.demand ? `Demande: ${n.demand.title}` : n.id}
+                </CardTitle>
+                <Badge className="bg-[#006633] text-white">{n.status}</Badge>
+              </CardHeader>
+              <CardContent className="flex items-center justify-between">
+                <div className="text-xs text-[#F5F5DC]/70">MAJ: {new Date(n.updatedAt).toLocaleString()}</div>
+                <Link href={`/marketplace/negotiation/${n.id}`}>
+                  <Button size="sm" variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">Ouvrir</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -49,43 +49,43 @@ export default function ReportsPage() {
   return (
     <DashboardLayout>
       <div className="py-4">
-        <h1 className="text-2xl font-bold mb-6">Rapports et recommandations</h1>
+        <h1 className="text-2xl font-bold mb-6 text-[#D4AF37]">Rapports et recommandations</h1>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <Card>
+        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
-            <CardTitle>Surfaces totales</CardTitle>
+            <CardTitle className="text-[#D4AF37]">Surfaces totales</CardTitle>
           </CardHeader>
-          <CardContent className="text-3xl font-bold">{summary.totalArea.toLocaleString()} ha</CardContent>
+          <CardContent className="text-3xl font-bold text-[#F5F5DC]">{summary.totalArea.toLocaleString()} ha</CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
-            <CardTitle>Membres de l'équipe</CardTitle>
+            <CardTitle className="text-[#D4AF37]">Membres de l'équipe</CardTitle>
           </CardHeader>
-          <CardContent className="text-3xl font-bold">{summary.staffCount}</CardContent>
+          <CardContent className="text-3xl font-bold text-[#F5F5DC]">{summary.staffCount}</CardContent>
         </Card>
-        <Card>
+        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
-            <CardTitle>Catégorie de dépense principale</CardTitle>
+            <CardTitle className="text-[#D4AF37]">Catégorie de dépense principale</CardTitle>
           </CardHeader>
-          <CardContent className="text-xl">{summary.topCat ? `${summary.topCat[0]} (${summary.topCat[1].toLocaleString()} fcfa)` : "N/A"}</CardContent>
+          <CardContent className="text-xl text-[#F5F5DC]">{summary.topCat ? `${summary.topCat[0]} (${summary.topCat[1].toLocaleString()} fcfa)` : "N/A"}</CardContent>
         </Card>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <Card>
+        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
           <CardHeader>
-            <CardTitle>Dépenses par catégorie</CardTitle>
+            <CardTitle className="text-[#D4AF37]">Dépenses par catégorie</CardTitle>
           </CardHeader>
           <CardContent>
             {Object.keys(summary.expenseByCat).length === 0 ? (
-              <div className="text-sm text-muted-foreground">Aucune dépense.</div>
+              <div className="text-sm text-[#F5F5DC]/70">Aucune dépense.</div>
             ) : (
               <div className="space-y-2">
                 {Object.entries(summary.expenseByCat).map(([cat, amt]) => (
                   <div key={cat} className="flex items-center justify-between text-sm">
-                    <span>{cat}</span>
-                    <span className="font-medium">{amt.toLocaleString()} fcfa</span>
+                    <span className="text-[#F5F5DC]">{cat}</span>
+                    <span className="font-medium text-[#D4AF37]">{amt.toLocaleString()} fcfa</span>
                   </div>
                 ))}
               </div>
@@ -93,22 +93,22 @@ export default function ReportsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
           <CardHeader>
-            <CardTitle>Recommandations</CardTitle>
+            <CardTitle className="text-[#D4AF37]">Recommandations</CardTitle>
           </CardHeader>
           <CardContent>
             {summary.recommendations.length === 0 ? (
-              <div className="text-sm text-muted-foreground">Aucune recommandation pour le moment.</div>
+              <div className="text-sm text-[#F5F5DC]/70">Aucune recommandation pour le moment.</div>
             ) : (
               <ul className="list-disc pl-5 space-y-2 text-sm">
                 {summary.recommendations.map((rec, i) => (
-                  <li key={i}>{rec}</li>
+                  <li key={i} className="text-[#F5F5DC]">{rec}</li>
                 ))}
               </ul>
             )}
-            <Separator className="my-4" />
-            <div className="text-xs text-muted-foreground">Basé sur vos fermes, dépenses et équipe.</div>
+            <Separator className="my-4 bg-[#D4AF37]/20" />
+            <div className="text-xs text-[#F5F5DC]/70">Basé sur vos fermes, dépenses et équipe.</div>
           </CardContent>
         </Card>
       </div>

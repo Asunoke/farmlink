@@ -131,12 +131,12 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-balance">Paramètres</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold text-balance text-[#D4AF37]">Paramètres</h1>
+            <p className="text-[#F5F5DC]/70">
               Gérez vos préférences et paramètres de compte
             </p>
           </div>
-          <Badge variant="secondary" className="bg-primary/10 text-primary">
+          <Badge className="bg-[#006633]/10 text-[#006633] border-[#006633]/20">
             <Settings className="mr-2 h-4 w-4" />
             Configuration
           </Badge>
@@ -146,43 +146,43 @@ export default function SettingsPage() {
           {/* Main Settings */}
           <div className="lg:col-span-2 space-y-6">
             {/* Theme Settings */}
-            <Card>
+            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Palette className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
+                  <Palette className="h-5 w-5 text-[#006633]" />
                   Apparence
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#F5F5DC]/70">
                   Personnalisez l'apparence de votre interface
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">Thème</Label>
+                  <Label className="text-base font-medium text-[#F5F5DC]">Thème</Label>
                   <div className="grid gap-3">
                     {(["light", "dark", "system"] as Theme[]).map((themeType) => (
                       <div
                         key={themeType}
                         className={`flex items-center justify-between p-4 rounded-lg border cursor-pointer transition-colors ${
                           currentTheme === themeType
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:bg-muted/50"
+                            ? "border-[#006633] bg-[#006633]/10"
+                            : "border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
                         }`}
                         onClick={() => handleThemeChange(themeType)}
                       >
                         <div className="flex items-center gap-3">
                           {getThemeIcon(themeType)}
                           <div>
-                            <div className="font-medium capitalize">
+                            <div className="font-medium capitalize text-[#F5F5DC]">
                               {themeType === "system" ? "Système" : themeType === "light" ? "Clair" : "Sombre"}
                             </div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm text-[#F5F5DC]/70">
                               {getThemeDescription(themeType)}
                             </div>
                           </div>
                         </div>
                         {currentTheme === themeType && (
-                          <CheckCircle className="h-5 w-5 text-primary" />
+                          <CheckCircle className="h-5 w-5 text-[#006633]" />
                         )}
                       </div>
                     ))}
@@ -192,13 +192,13 @@ export default function SettingsPage() {
             </Card>
 
             {/* Notifications Settings */}
-            <Card>
+            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bell className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
+                  <Bell className="h-5 w-5 text-[#006633]" />
                   Notifications
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#F5F5DC]/70">
                   Configurez vos préférences de notification
                 </CardDescription>
               </CardHeader>
@@ -206,8 +206,8 @@ export default function SettingsPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label className="text-base">Notifications par email</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <Label className="text-base text-[#F5F5DC]">Notifications par email</Label>
+                      <p className="text-sm text-[#F5F5DC]/70">
                         Recevez des mises à jour importantes par email
                       </p>
                     </div>
@@ -217,12 +217,12 @@ export default function SettingsPage() {
                     />
                   </div>
                   
-                  <Separator />
+                  <Separator className="bg-[#D4AF37]/20" />
                   
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label className="text-base">Notifications push</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <Label className="text-base text-[#F5F5DC]">Notifications push</Label>
+                      <p className="text-sm text-[#F5F5DC]/70">
                         Recevez des notifications dans votre navigateur
                       </p>
                     </div>
@@ -232,12 +232,12 @@ export default function SettingsPage() {
                     />
                   </div>
                   
-                  <Separator />
+                  <Separator className="bg-[#D4AF37]/20" />
                   
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label className="text-base">Marketing</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <Label className="text-base text-[#F5F5DC]">Marketing</Label>
+                      <p className="text-sm text-[#F5F5DC]/70">
                         Recevez des offres et nouvelles fonctionnalités
                       </p>
                     </div>
@@ -254,35 +254,35 @@ export default function SettingsPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Account Info */}
-            <Card>
+            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
+                  <User className="h-5 w-5 text-[#006633]" />
                   Compte
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center space-y-2">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <User className="h-8 w-8 text-primary" />
+                  <div className="w-16 h-16 bg-[#006633]/10 rounded-full flex items-center justify-center mx-auto">
+                    <User className="h-8 w-8 text-[#006633]" />
                   </div>
                   <div>
-                    <p className="font-medium">Utilisateur FarmLink</p>
-                    <p className="text-sm text-muted-foreground">Membre depuis 2024</p>
+                    <p className="font-medium text-[#F5F5DC]">Utilisateur FarmLink</p>
+                    <p className="text-sm text-[#F5F5DC]/70">Membre depuis 2024</p>
                   </div>
                 </div>
                 
-                <Separator />
+                <Separator className="bg-[#D4AF37]/20" />
                 
                 <div className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start" asChild>
+                  <Button variant="outline" className="w-full justify-start border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]" asChild>
                     <a href="/dashboard/profile">
                       <User className="mr-2 h-4 w-4" />
                       Modifier le profil
                     </a>
                   </Button>
                   
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button variant="outline" className="w-full justify-start border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                     <Shield className="mr-2 h-4 w-4" />
                     Sécurité
                   </Button>
@@ -291,17 +291,17 @@ export default function SettingsPage() {
             </Card>
 
             {/* Support */}
-            <Card>
+            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
+                  <MessageCircle className="h-5 w-5 text-[#006633]" />
                   Support
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start"
+                  className="w-full justify-start border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
                   onClick={() => handleContactSupport("email")}
                 >
                   <Mail className="mr-2 h-4 w-4" />
@@ -310,7 +310,7 @@ export default function SettingsPage() {
                 
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start"
+                  className="w-full justify-start border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
                   onClick={() => handleContactSupport("whatsapp")}
                 >
                   <MessageCircle className="mr-2 h-4 w-4" />
@@ -320,34 +320,34 @@ export default function SettingsPage() {
             </Card>
 
             {/* Danger Zone */}
-            <Card className="border-red-200 dark:border-red-800">
+            <Card className="bg-[#0B1623] border border-[#C1440E]/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-red-600">
+                <CardTitle className="flex items-center gap-2 text-[#C1440E]">
                   <AlertTriangle className="h-5 w-5" />
                   Zone de danger
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#F5F5DC]/70">
                   Actions irréversibles sur votre compte
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button variant="destructive" className="w-full">
+                    <Button className="w-full bg-[#C1440E] hover:bg-[#C1440E]/80 text-white">
                       <Trash2 className="mr-2 h-4 w-4" />
                       Supprimer le compte
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="bg-[#0B1623] border border-[#D4AF37]/20">
                     <DialogHeader>
-                      <DialogTitle>Supprimer votre compte</DialogTitle>
-                      <DialogDescription>
+                      <DialogTitle className="text-[#D4AF37]">Supprimer votre compte</DialogTitle>
+                      <DialogDescription className="text-[#F5F5DC]/70">
                         Cette action est irréversible. Toutes vos données seront supprimées définitivement.
                       </DialogDescription>
                     </DialogHeader>
-                    <Alert variant="destructive">
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertDescription>
+                    <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+                      <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
+                      <AlertDescription className="text-[#F5F5DC]">
                         Vous perdrez accès à toutes vos fermes, parcelles, équipes et données financières.
                       </AlertDescription>
                     </Alert>
@@ -355,13 +355,14 @@ export default function SettingsPage() {
                       <Button 
                         variant="outline" 
                         onClick={() => setIsDeleteDialogOpen(false)}
+                        className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
                       >
                         Annuler
                       </Button>
                       <Button 
-                        variant="destructive" 
                         onClick={handleDeleteAccount}
                         disabled={isLoading}
+                        className="bg-[#C1440E] hover:bg-[#C1440E]/80 text-white"
                       >
                         {isLoading ? "Suppression..." : "Supprimer définitivement"}
                       </Button>

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { AdminDashboardLayout } from "@/components/admin-dashboard-layout"
 import Link from "next/link"
 
 type Negotiation = {
@@ -94,19 +95,22 @@ export default function AdminNegotiationsPage() {
 
   if (session && !isAdmin) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Accès refusé</CardTitle>
-          </CardHeader>
-          <CardContent>Vous devez être administrateur pour accéder à cette page.</CardContent>
-        </Card>
-      </div>
+      <AdminDashboardLayout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Card>
+            <CardHeader>
+              <CardTitle>Accès refusé</CardTitle>
+            </CardHeader>
+            <CardContent>Vous devez être administrateur pour accéder à cette page.</CardContent>
+          </Card>
+        </div>
+      </AdminDashboardLayout>
     )
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <AdminDashboardLayout>
+      <div className="space-y-6">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Toutes les négociations</h1>
         <Link href="/admin">
@@ -228,8 +232,7 @@ export default function AdminNegotiationsPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </AdminDashboardLayout>
   )
 }
-
-

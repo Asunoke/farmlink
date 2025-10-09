@@ -35,30 +35,30 @@ const getWeatherIcon = (condition: string, size = 24) => {
 
   switch (condition) {
     case "sunny":
-      return <Sun {...iconProps} className="text-yellow-500" />
+      return <Sun {...iconProps} className="text-[#D4AF37]" />
     case "partly-cloudy":
-      return <Cloud {...iconProps} className="text-gray-400" />
+      return <Cloud {...iconProps} className="text-[#F5F5DC]/70" />
     case "cloudy":
-      return <Cloud {...iconProps} className="text-gray-500" />
+      return <Cloud {...iconProps} className="text-[#F5F5DC]" />
     case "rainy":
-      return <CloudRain {...iconProps} className="text-blue-500" />
+      return <CloudRain {...iconProps} className="text-[#006633]" />
     case "stormy":
-      return <CloudRain {...iconProps} className="text-purple-500" />
+      return <CloudRain {...iconProps} className="text-[#C1440E]" />
     default:
-      return <Sun {...iconProps} />
+      return <Sun {...iconProps} className="text-[#D4AF37]" />
   }
 }
 
 const getSeverityColor = (severity: string) => {
   switch (severity) {
     case "high":
-      return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border-red-200"
+      return "bg-[#C1440E]/10 text-[#C1440E] border-[#C1440E]"
     case "medium":
-      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 border-yellow-200"
+      return "bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]"
     case "low":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 border-blue-200"
+      return "bg-[#006633]/10 text-[#006633] border-[#006633]"
     default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 border-gray-200"
+      return "bg-[#0B1623] text-[#F5F5DC] border-[#D4AF37]/20"
   }
 }
 
@@ -186,29 +186,29 @@ export default function WeatherPage() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-balance">Météo Agricole</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold text-balance text-[#D4AF37]">Météo Agricole</h1>
+            <p className="text-[#F5F5DC]/70">
               Prévisions météorologiques en temps réel pour optimiser vos activités agricoles
             </p>
           </div>
           <div className="flex gap-2">
             <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="w-48 bg-[#0B1623] border-[#D4AF37]/20 text-[#F5F5DC]">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0B1623] border-[#D4AF37]/20">
                 {malianCities.map((city) => (
-                  <SelectItem key={city.name} value={city.name}>
+                  <SelectItem key={city.name} value={city.name} className="text-[#F5F5DC] hover:bg-[#006633]">
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       <span>{city.name}</span>
-                      <span className="text-xs text-muted-foreground">({city.region})</span>
+                      <span className="text-xs text-[#F5F5DC]/70">({city.region})</span>
                     </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <Button variant="outline" onClick={refreshWeather} disabled={refreshing}>
+            <Button variant="outline" onClick={refreshWeather} disabled={refreshing} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
               {refreshing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
               Actualiser
             </Button>
@@ -219,21 +219,21 @@ export default function WeatherPage() {
         {alerts.length > 0 && (
           <div className="space-y-3">
             {alerts.map((alert) => (
-              <Card key={alert.id} className={`border-l-4 ${getSeverityColor(alert.severity)}`}>
+              <Card key={alert.id} className={`border-l-4 bg-[#0B1623] border border-[#D4AF37]/20 ${getSeverityColor(alert.severity)}`}>
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <AlertTriangle className="h-5 w-5 mt-0.5" />
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-semibold text-sm">{alert.title}</h4>
-                        <Badge variant="secondary" className={getSeverityColor(alert.severity)}>
+                        <h4 className="font-semibold text-sm text-[#F5F5DC]">{alert.title}</h4>
+                        <Badge className={getSeverityColor(alert.severity)}>
                           {alert.severity === "high" ? "Élevé" : alert.severity === "medium" ? "Moyen" : "Faible"}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-2">{alert.description}</p>
+                      <p className="text-sm text-[#F5F5DC]/70 mb-2">{alert.description}</p>
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-medium">Action: {alert.action}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs font-medium text-[#D4AF37]">Action: {alert.action}</p>
+                        <p className="text-xs text-[#F5F5DC]/70">
                           Valide jusqu'au {new Date(alert.validUntil).toLocaleDateString("fr-FR")}
                         </p>
                       </div>
@@ -247,14 +247,14 @@ export default function WeatherPage() {
 
         {/* Current Weather */}
         {currentWeather && (
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-muted-foreground" />
+                  <MapPin className="h-5 w-5 text-[#006633]" />
                   <div>
-                    <CardTitle>{currentWeather.location}</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-[#D4AF37]">{currentWeather.location}</CardTitle>
+                    <CardDescription className="text-[#F5F5DC]/70">
                       Dernière mise à jour:{" "}
                       {lastUpdated.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
                     </CardDescription>
@@ -266,25 +266,25 @@ export default function WeatherPage() {
             <CardContent>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <div className="text-center">
-                  <div className="text-4xl font-bold mb-2">{currentWeather.temperature}°C</div>
-                  <p className="text-sm text-muted-foreground">Ressenti {currentWeather.feelsLike}°C</p>
-                  <p className="text-sm font-medium capitalize">{currentWeather.description}</p>
+                  <div className="text-4xl font-bold mb-2 text-[#F5F5DC]">{currentWeather.temperature}°C</div>
+                  <p className="text-sm text-[#F5F5DC]/70">Ressenti {currentWeather.feelsLike}°C</p>
+                  <p className="text-sm font-medium capitalize text-[#D4AF37]">{currentWeather.description}</p>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <Droplets className="h-4 w-4 text-blue-500" />
-                    <span className="text-sm">Humidité: {currentWeather.humidity}%</span>
+                    <Droplets className="h-4 w-4 text-[#006633]" />
+                    <span className="text-sm text-[#F5F5DC]">Humidité: {currentWeather.humidity}%</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Wind className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">
+                    <Wind className="h-4 w-4 text-[#D4AF37]" />
+                    <span className="text-sm text-[#F5F5DC]">
                       Vent: {currentWeather.windSpeed} km/h {currentWeather.windDirection}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Gauge className="h-4 w-4 text-purple-500" />
-                    <span className="text-sm">Pression: {currentWeather.pressure} hPa</span>
+                    <Gauge className="h-4 w-4 text-[#C1440E]" />
+                    <span className="text-sm text-[#F5F5DC]">Pression: {currentWeather.pressure} hPa</span>
                   </div>
                 </div>
 

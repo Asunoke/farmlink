@@ -3,174 +3,157 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Leaf, Users, TrendingUp, Cloud, Calculator, Shield, ShoppingCart } from "lucide-react"
 import Link from "next/link"
+import { MainNav } from "@/components/main-nav"
+import { AnimatedSection, AnimatedCard, AnimatedButton } from "@/components/animated-section"
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-foreground">FarmLink</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
-                Fonctionnalités
-              </Link>
-              <Link href="/marketplace" className="text-muted-foreground hover:text-foreground transition-colors">
-                Marché
-              </Link>
-              <Link href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-                Tarifs
-              </Link>
-              <Link href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                Contact
-              </Link>
-            </div>
-            <Button asChild>
-              <Link href="/dashboard">Commencer</Link>
-            </Button>
-          </nav>
-        </div>
-      </header>
+      <MainNav />
 
       {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-[#0D1B2A] via-[#1a2a3a] to-[#0D1B2A]">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-[#C1440E]/5" />
         <div className="container mx-auto px-4 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full mr-2" />
+          <AnimatedSection className="max-w-4xl mx-auto text-center">
+            <Badge className="mb-6 bg-[#D4AF37] text-[#0D1B2A] hover:bg-[#C1440E] transition-colors">
+              <span className="w-2 h-2 bg-[#006633] rounded-full mr-2" />
               {"Nouveau : Intégration météo en temps réel"}
             </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-6">
+            <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-6 text-[#D4AF37]">
               {"La plateforme complète pour"}
-              <span className="text-primary"> {"gérer votre ferme"}</span>
+              <span className="text-[#F5F5DC]"> {"gérer votre ferme"}</span>
             </h1>
-            <p className="text-xl text-muted-foreground text-pretty mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-[#F5F5DC] text-pretty mb-8 max-w-2xl mx-auto">
               {
                 "Optimisez vos rendements agricoles avec FarmLink. Gérez vos équipes, suivez vos budgets et prenez des décisions éclairées grâce aux prévisions météo."
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/dashboard">
-                  {"Essai gratuit"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg">
-                {"Voir la démo"}
-              </Button>
+              <AnimatedButton>
+                <Button size="lg" asChild className="bg-[#006633] hover:bg-[#C1440E] text-white border-0 transition-all duration-300">
+                  <Link href="/dashboard">
+                    {"Essai gratuit"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </AnimatedButton>
+              <AnimatedButton>
+                <Button variant="outline" size="lg" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
+                  {"Voir la démo"}
+                </Button>
+              </AnimatedButton>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 border-y border-border/40">
+      <section className="py-16 bg-[#F5F5DC] border-y border-[#D4AF37]/20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">500+</div>
-              <div className="text-muted-foreground">Fermes connectées</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">25%</div>
-              <div className="text-muted-foreground">{"Augmentation des rendements"}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">30%</div>
-              <div className="text-muted-foreground">{"Réduction des coûts"}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-muted-foreground">Support technique</div>
-            </div>
+            <AnimatedCard delay={0.1} className="text-center group hover:shadow-lg p-4 rounded-lg">
+              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">500+</div>
+              <div className="text-[#0D1B2A] font-medium">Fermes connectées</div>
+            </AnimatedCard>
+            <AnimatedCard delay={0.2} className="text-center group hover:shadow-lg p-4 rounded-lg">
+              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">25%</div>
+              <div className="text-[#0D1B2A] font-medium">{"Augmentation des rendements"}</div>
+            </AnimatedCard>
+            <AnimatedCard delay={0.3} className="text-center group hover:shadow-lg p-4 rounded-lg">
+              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">30%</div>
+              <div className="text-[#0D1B2A] font-medium">{"Réduction des coûts"}</div>
+            </AnimatedCard>
+            <AnimatedCard delay={0.4} className="text-center group hover:shadow-lg p-4 rounded-lg">
+              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">24/7</div>
+              <div className="text-[#0D1B2A] font-medium">Support technique</div>
+            </AnimatedCard>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24">
+      <section id="features" className="py-24 bg-[#F5F5DC]">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4">{"Nos fonctionnalités principales"}</h2>
-            <p className="text-xl text-muted-foreground text-pretty max-w-2xl mx-auto">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4 text-[#0D1B2A]">{"Nos fonctionnalités principales"}</h2>
+            <p className="text-xl text-[#0D1B2A]/80 text-pretty max-w-2xl mx-auto">
               {"Tout ce dont vous avez besoin pour gérer efficacement votre exploitation agricole au Mali."}
             </p>
-          </div>
+          </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Leaf className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{"Gestion des Cultures"}</h3>
-                <p className="text-muted-foreground">
-                  {"Suivez vos plantations, planifiez les récoltes et optimisez vos cycles de production."}
-                </p>
-              </CardContent>
-            </Card>
+            <AnimatedCard delay={0.1}>
+              <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-[#006633]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#C1440E]/10 transition-colors">
+                    <Leaf className="h-6 w-6 text-[#006633] group-hover:text-[#C1440E] transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Gestion des Cultures"}</h3>
+                  <p className="text-[#0D1B2A]/70">
+                    {"Suivez vos plantations, planifiez les récoltes et optimisez vos cycles de production."}
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedCard>
 
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                  <Calculator className="h-6 w-6 text-accent" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{"Suivi Budgétaire"}</h3>
-                <p className="text-muted-foreground">
-                  {"Gérez vos dépenses, suivez vos revenus et analysez la rentabilité de vos activités."}
-                </p>
-              </CardContent>
-            </Card>
+            <AnimatedCard delay={0.2}>
+              <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#C1440E]/10 transition-colors">
+                    <Calculator className="h-6 w-6 text-[#D4AF37] group-hover:text-[#C1440E] transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Suivi Budgétaire"}</h3>
+                  <p className="text-[#0D1B2A]/70">
+                    {"Gérez vos dépenses, suivez vos revenus et analysez la rentabilité de vos activités."}
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedCard>
 
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
+            <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105 group">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="h-6 w-6 text-chart-2" />
+                <div className="w-12 h-12 bg-[#006633]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#C1440E]/10 transition-colors">
+                  <Users className="h-6 w-6 text-[#006633] group-hover:text-[#C1440E] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{"Gestion d'Équipe"}</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Gestion d'Équipe"}</h3>
+                <p className="text-[#0D1B2A]/70">
                   {"Organisez vos équipes, planifiez les tâches et suivez la productivité de vos employés."}
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
+            <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105 group">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center mb-4">
-                  <Cloud className="h-6 w-6 text-chart-3" />
+                <div className="w-12 h-12 bg-[#C1440E]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006633]/10 transition-colors">
+                  <Cloud className="h-6 w-6 text-[#C1440E] group-hover:text-[#006633] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{"Météo en Temps Réel"}</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Météo en Temps Réel"}</h3>
+                <p className="text-[#0D1B2A]/70">
                   {"Accédez aux prévisions météorologiques précises pour planifier vos activités agricoles."}
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
+            <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105 group">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-chart-4/10 rounded-lg flex items-center justify-center mb-4">
-                  <TrendingUp className="h-6 w-6 text-chart-4" />
+                <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#C1440E]/10 transition-colors">
+                  <TrendingUp className="h-6 w-6 text-[#D4AF37] group-hover:text-[#C1440E] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{"Analyses Avancées"}</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Analyses Avancées"}</h3>
+                <p className="text-[#0D1B2A]/70">
                   {"Obtenez des insights détaillés sur vos performances et identifiez les opportunités d'amélioration."}
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border/50 hover:border-primary/50 transition-colors">
+            <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105 group">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-chart-5/10 rounded-lg flex items-center justify-center mb-4">
-                  <ShoppingCart className="h-6 w-6 text-chart-5" />
+                <div className="w-12 h-12 bg-[#C1440E]/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#006633]/10 transition-colors">
+                  <ShoppingCart className="h-6 w-6 text-[#C1440E] group-hover:text-[#006633] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{"Marché Agricole"}</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">{"Marché Agricole"}</h3>
+                <p className="text-[#0D1B2A]/70">
                   {"Connectez-vous avec d'autres agriculteurs pour acheter, vendre et négocier vos produits."}
                 </p>
               </CardContent>
@@ -180,106 +163,114 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-24 bg-muted/30">
+      <section id="pricing" className="py-24 bg-[#0D1B2A]">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4">{"Tarifs transparents"}</h2>
-            <p className="text-xl text-muted-foreground text-pretty max-w-2xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4 text-[#D4AF37]">{"Tarifs transparents"}</h2>
+            <p className="text-xl text-[#F5F5DC] text-pretty max-w-2xl mx-auto">
               {"Choisissez le plan qui correspond à la taille de votre exploitation."}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="border-border/50">
+            <Card className="bg-[#F5F5DC] border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold mb-2">Starter</h3>
-                  <div className="text-3xl font-bold mb-1">
-                    15,000 <span className="text-sm font-normal">FCFA/mois</span>
+                  <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">Starter</h3>
+                  <div className="text-3xl font-bold mb-1 text-[#006633]">
+                    15,000 <span className="text-sm font-normal text-[#0D1B2A]">FCFA/mois</span>
                   </div>
-                  <p className="text-muted-foreground">{"Pour les petites exploitations"}</p>
+                  <p className="text-[#0D1B2A]/70">{"Pour les petites exploitations"}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                    {"Jusqu'à 5 hectares"}
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#006633] rounded-full mr-3" />
+                    {"Jusqu'à 1 ferme"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#006633] rounded-full mr-3" />
                     {"Suivi budgétaire de base"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                    {"Prévisions météo"}
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#006633] rounded-full mr-3" />
+                    {"météo en temps réel"}
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full bg-transparent">
-                  {"Commencer"}
+                <Button variant="outline" className="w-full border-[#006633] text-[#006633] hover:bg-[#006633] hover:text-white transition-all duration-300" asChild>
+                  <Link href="/pricing">
+                    {"Commencer"}
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
 
-            <Card className="border-primary/50 relative">
-              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">{"Populaire"}</Badge>
+            <Card className="bg-gradient-to-br from-[#D4AF37] to-[#C1440E] border-[#D4AF37] relative hover:shadow-xl transition-all duration-300 hover:scale-105 animate-pulse">
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#006633] text-white">{"Populaire"}</Badge>
               <CardContent className="p-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold mb-2">Professional</h3>
-                  <div className="text-3xl font-bold mb-1">
-                    35,000 <span className="text-sm font-normal">FCFA/mois</span>
+                  <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">Professional</h3>
+                  <div className="text-3xl font-bold mb-1 text-[#0D1B2A]">
+                    35,000 <span className="text-sm font-normal text-[#0D1B2A]/70">FCFA/mois</span>
                   </div>
-                  <p className="text-muted-foreground">{"Pour les exploitations moyennes"}</p>
+                  <p className="text-[#0D1B2A]/70">{"Pour les exploitations moyennes"}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                    {"Jusqu'à 50 hectares"}
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#0D1B2A] rounded-full mr-3" />
+                    {"Jusqu'à 3 fermes"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#0D1B2A] rounded-full mr-3" />
                     {"Gestion d'équipe complète"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#0D1B2A] rounded-full mr-3" />
                     {"Analyses avancées"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#0D1B2A] rounded-full mr-3" />
                     {"Support prioritaire"}
                   </li>
                 </ul>
-                <Button className="w-full">{"Commencer"}</Button>
+                <Button className="w-full bg-[#006633] hover:bg-[#0D1B2A] text-white transition-all duration-300" asChild>
+                  <Link href="/pricing">
+                    {"Commencer"}
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
-            <Card className="border-border/50">
+            <Card className="bg-[#F5F5DC] border-[#D4AF37]/30 hover:border-[#C1440E] hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-semibold mb-2">Enterprise</h3>
-                  <div className="text-3xl font-bold mb-1">
-                    75,000 <span className="text-sm font-normal">FCFA/mois</span>
+                  <h3 className="text-xl font-semibold mb-2 text-[#0D1B2A]">Enterprise</h3>
+                  <div className="text-3xl font-bold mb-1 text-[#C1440E]">
+                    75,000 <span className="text-sm font-normal text-[#0D1B2A]">FCFA/mois</span>
                   </div>
-                  <p className="text-muted-foreground">{"Pour les grandes exploitations"}</p>
+                  <p className="text-[#0D1B2A]/70">{"Pour les grandes exploitations"}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                    {"Superficie illimitée"}
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#C1440E] rounded-full mr-3" />
+                    {"jusqu'a 5 fermes"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#C1440E] rounded-full mr-3" />
                     {"API personnalisée"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#C1440E] rounded-full mr-3" />
                     {"Formation sur site"}
                   </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-3" />
+                  <li className="flex items-center text-[#0D1B2A]">
+                    <div className="w-2 h-2 bg-[#C1440E] rounded-full mr-3" />
                     {"Support dédié 24/7"}
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full bg-transparent">
-                  {"Nous contacter"}
+                <Button variant="outline" className="w-full border-[#C1440E] text-[#C1440E] hover:bg-[#C1440E] hover:text-white transition-all duration-300" asChild>
+                  <Link href="/pricing">
+                    {"Nous contacter"}
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -288,25 +279,25 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24">
+      <section className="py-24 bg-gradient-to-br from-[#006633] to-[#0D1B2A]">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-6">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in">
+            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-6 text-[#D4AF37]">
               {"Prêt à révolutionner votre agriculture ?"}
             </h2>
-            <p className="text-xl text-muted-foreground text-pretty mb-8">
+            <p className="text-xl text-[#F5F5DC] text-pretty mb-8">
               {
                 "Rejoignez des centaines d'agriculteurs maliens qui ont déjà transformé leur façon de gérer leurs exploitations."
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
+              <Button size="lg" asChild className="bg-[#D4AF37] hover:bg-[#C1440E] text-[#0D1B2A] transition-all duration-300 hover:scale-105">
                 <Link href="/dashboard">
                   {"Commencer gratuitement"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
                 {"Planifier une démo"}
               </Button>
             </div>
@@ -315,79 +306,79 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 py-12 bg-muted/30">
+      <footer className="border-t border-[#D4AF37]/20 py-12 bg-[#0D1B2A]">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
-            <div>
+            <div className="animate-fade-in">
               <div className="flex items-center space-x-2 mb-4">
-                <Leaf className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">FarmLink</span>
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
+                <span className="text-xl font-bold text-[#D4AF37]">FarmLink</span>
               </div>
-              <p className="text-muted-foreground">{"La solution de gestion agricole adaptée au contexte malien."}</p>
+              <p className="text-[#F5F5DC]/80">{"La solution de gestion agricole adaptée au contexte malien."}</p>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Produit</h4>
-              <ul className="space-y-2 text-muted-foreground">
+            <div className="animate-fade-in">
+              <h4 className="font-semibold mb-4 text-[#D4AF37]">Produit</h4>
+              <ul className="space-y-2 text-[#F5F5DC]/80">
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Fonctionnalités
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Tarifs
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     API
                   </Link>
                 </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-muted-foreground">
+            <div className="animate-fade-in">
+              <h4 className="font-semibold mb-4 text-[#D4AF37]">Support</h4>
+              <ul className="space-y-2 text-[#F5F5DC]/80">
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="/docs" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Formation
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Contact
                   </Link>
                 </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Entreprise</h4>
-              <ul className="space-y-2 text-muted-foreground">
+            <div className="animate-fade-in">
+              <h4 className="font-semibold mb-4 text-[#D4AF37]">Entreprise</h4>
+              <ul className="space-y-2 text-[#F5F5DC]/80">
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     À propos
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-foreground transition-colors">
+                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Carrières
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-border/40 mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 FarmLink. Tous droits réservés.</p>
+          <div className="border-t border-[#D4AF37]/20 mt-8 pt-8 text-center text-[#F5F5DC]/60">
+            <p>&copy; 2025 FarmLink. Tous droits réservés.</p>
           </div>
         </div>
       </footer>

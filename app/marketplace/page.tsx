@@ -12,6 +12,7 @@ import { Search, Plus, ShoppingCart, Package, MessageSquare, MapPin, Calendar, L
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { NegotiationModal } from "@/components/negotiation-modal"
+import { MainNav } from "@/components/main-nav"
 
 const categories = [
   { value: "CROPS", label: "Récoltes" },
@@ -113,42 +114,14 @@ export default function MarketplacePage() {
   // Les fonctions handleNegotiate et handlePropose sont maintenant gérées par NegotiationModal
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">FL</span>
-              </div>
-              <span className="text-xl font-bold">FarmLink</span>
-            </Link>
-            <div className="flex items-center gap-4">
-              {session ? (
-                <Link href="/dashboard">
-                  <Button>Tableau de Bord</Button>
-                </Link>
-              ) : (
-                <div className="flex gap-2">
-                  <Link href="/auth/signin">
-                    <Button variant="outline">Se connecter</Button>
-                  </Link>
-                  <Link href="/auth/signup">
-                    <Button>S'inscrire</Button>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
 
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-balance mb-4">Marché Agricole</h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-balance mb-4 text-[#D4AF37]">Marché Agricole</h1>
+          <p className="text-xl text-[#F5F5DC] mb-8 max-w-2xl mx-auto">
             Connectez-vous avec d'autres agriculteurs pour acheter, vendre et négocier vos produits agricoles.
           </p>
         </div>
@@ -182,13 +155,13 @@ export default function MarketplacePage() {
         {/* Action Buttons */}
         <div className="flex gap-4 mb-8">
           <Link href="/marketplace/offers/create">
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 bg-[#006633] hover:bg-[#C1440E] text-white transition-all duration-300 hover:scale-105">
               <Plus className="h-4 w-4" />
               Créer une offre
             </Button>
           </Link>
           <Link href="/marketplace/demands/create">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
               <ShoppingCart className="h-4 w-4" />
               Créer une demande
             </Button>
@@ -197,14 +170,14 @@ export default function MarketplacePage() {
 
         {/* Error State */}
         {error && (
-          <Card className="border-destructive bg-destructive/10">
+          <Card className="border-[#C1440E] bg-[#C1440E]/10">
             <CardContent className="p-4">
-              <p className="text-destructive">{error}</p>
+              <p className="text-[#C1440E]">{error}</p>
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={fetchData}
-                className="mt-2"
+                className="mt-2 border-[#C1440E] text-[#C1440E] hover:bg-[#C1440E] hover:text-white"
               >
                 Réessayer
               </Button>
@@ -216,8 +189,8 @@ export default function MarketplacePage() {
         {isLoading && (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-              <p className="text-muted-foreground">Chargement des annonces...</p>
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#006633]" />
+              <p className="text-[#F5F5DC]/70">Chargement des annonces...</p>
             </div>
           </div>
         )}
@@ -225,12 +198,12 @@ export default function MarketplacePage() {
         {/* Tabs */}
         {!isLoading && !error && (
           <Tabs defaultValue="offers" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="offers" className="flex items-center gap-2">
+            <TabsList className="grid w-full grid-cols-2 bg-[#0B1623] border border-[#D4AF37]/20">
+              <TabsTrigger value="offers" className="flex items-center gap-2 data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 <Package className="h-4 w-4" />
                 Offres ({offers.length})
               </TabsTrigger>
-              <TabsTrigger value="demands" className="flex items-center gap-2">
+              <TabsTrigger value="demands" className="flex items-center gap-2 data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 <ShoppingCart className="h-4 w-4" />
                 Demandes ({demands.length})
               </TabsTrigger>
@@ -238,15 +211,15 @@ export default function MarketplacePage() {
 
             <TabsContent value="offers" className="mt-6">
               {offers.length === 0 ? (
-                <Card>
+                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
                   <CardContent className="text-center py-12">
-                    <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Aucune offre trouvée</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <Package className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune offre trouvée</h3>
+                    <p className="text-[#F5F5DC]/70 mb-4">
                       Il n'y a actuellement aucune offre correspondant à vos critères.
                     </p>
                     <Link href="/marketplace/offers/create">
-                      <Button>
+                      <Button className="bg-[#006633] hover:bg-[#C1440E] text-white">
                         <Plus className="h-4 w-4 mr-2" />
                         Créer la première offre
                       </Button>
@@ -256,14 +229,14 @@ export default function MarketplacePage() {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {offers.map((offer) => (
-                <Card key={offer.id} className="hover:shadow-lg transition-shadow">
+                <Card key={offer.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-lg">{offer.title}</CardTitle>
-                        <CardDescription className="mt-1">{offer.description}</CardDescription>
+                        <CardTitle className="text-lg text-[#D4AF37]">{offer.title}</CardTitle>
+                        <CardDescription className="mt-1 text-[#F5F5DC]/70">{offer.description}</CardDescription>
                       </div>
-                      <Badge variant="secondary">
+                      <Badge className="bg-[#006633] text-white">
                         {categories.find((c) => c.value === offer.category)?.label}
                       </Badge>
                     </div>
@@ -271,27 +244,27 @@ export default function MarketplacePage() {
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-2xl font-bold text-primary">
+                        <span className="text-2xl font-bold text-[#D4AF37]">
                           {offer.price.toLocaleString()} fcfa
                         </span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-[#F5F5DC]/70">
                           / {offer.quantity} {offer.unit}
                         </span>
                       </div>
                       
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-sm text-[#F5F5DC]/70">
                         <MapPin className="h-4 w-4" />
                         {offer.location}
                       </div>
                       
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-sm text-[#F5F5DC]/70">
                         <Calendar className="h-4 w-4" />
                         {new Date(offer.createdAt).toLocaleDateString()}
                       </div>
                       
                       <div className="text-sm">
-                        <span className="text-muted-foreground">Vendeur: </span>
-                        <span className="font-medium">{offer.user.name}</span>
+                        <span className="text-[#F5F5DC]/70">Vendeur: </span>
+                        <span className="font-medium text-[#D4AF37]">{offer.user.name}</span>
                       </div>
                       
                       <div className="flex gap-2 pt-2">
@@ -302,7 +275,7 @@ export default function MarketplacePage() {
                           currentQuantity={offer.quantity}
                           unit={offer.unit}
                         >
-                          <Button size="sm" className="flex-1">
+                          <Button size="sm" className="flex-1 bg-[#006633] hover:bg-[#C1440E] text-white">
                             <MessageSquare className="h-4 w-4 mr-2" />
                             Négocier
                           </Button>
@@ -321,15 +294,15 @@ export default function MarketplacePage() {
 
             <TabsContent value="demands" className="mt-6">
               {demands.length === 0 ? (
-                <Card>
+                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
                   <CardContent className="text-center py-12">
-                    <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Aucune demande trouvée</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <ShoppingCart className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune demande trouvée</h3>
+                    <p className="text-[#F5F5DC]/70 mb-4">
                       Il n'y a actuellement aucune demande correspondant à vos critères.
                     </p>
                     <Link href="/marketplace/demands/create">
-                      <Button>
+                      <Button className="bg-[#006633] hover:bg-[#C1440E] text-white">
                         <Plus className="h-4 w-4 mr-2" />
                         Créer la première demande
                       </Button>
@@ -339,14 +312,14 @@ export default function MarketplacePage() {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {demands.map((demand) => (
-                <Card key={demand.id} className="hover:shadow-lg transition-shadow">
+                <Card key={demand.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-lg">{demand.title}</CardTitle>
-                        <CardDescription className="mt-1">{demand.description}</CardDescription>
+                        <CardTitle className="text-lg text-[#D4AF37]">{demand.title}</CardTitle>
+                        <CardDescription className="mt-1 text-[#F5F5DC]/70">{demand.description}</CardDescription>
                       </div>
-                      <Badge variant="outline">
+                      <Badge className="border-[#D4AF37] text-[#D4AF37]">
                         {categories.find((c) => c.value === demand.category)?.label}
                       </Badge>
                     </div>
@@ -354,15 +327,15 @@ export default function MarketplacePage() {
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-2xl font-bold text-primary">
+                        <span className="text-2xl font-bold text-[#D4AF37]">
                           Max: {demand.maxPrice.toLocaleString()} fcfa
                         </span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-[#F5F5DC]/70">
                           / {demand.quantity} {demand.unit}
                         </span>
                       </div>
                       
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-sm text-[#F5F5DC]/70">
                         <MapPin className="h-4 w-4" />
                         {demand.location}
                       </div>

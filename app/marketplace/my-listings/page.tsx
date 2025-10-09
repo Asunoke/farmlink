@@ -10,6 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal, Edit, Trash2, Eye, MessageSquare, MapPin, Calendar, DollarSign, Package, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { MainNav } from "@/components/main-nav"
 
 interface Offer {
   id: string
@@ -224,54 +225,39 @@ export default function MyListingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">FL</span>
-              </div>
-              <span className="text-xl font-bold">FarmLink</span>
-            </Link>
-            <Link href="/marketplace">
-              <Button variant="outline">Retour au marché</Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
+      
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Mes annonces</h1>
-            <p className="text-muted-foreground">
-              Gérez vos offres et demandes sur le marché agricole
-            </p>
-          </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold mb-2 text-[#D4AF37]">Mes annonces</h1>
+              <p className="text-[#F5F5DC]/70">
+                Gérez vos offres et demandes sur le marché agricole
+              </p>
+            </div>
 
           <Tabs defaultValue="offers" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="offers">
+            <TabsList className="grid w-full grid-cols-2 bg-[#0B1623] border border-[#D4AF37]/20">
+              <TabsTrigger value="offers" className="data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 Mes offres ({offers.length})
               </TabsTrigger>
-              <TabsTrigger value="demands">
+              <TabsTrigger value="demands" className="data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 Mes demandes ({demands.length})
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="offers" className="mt-6">
               {offers.length === 0 ? (
-                <Card>
+                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
                   <CardContent className="text-center py-12">
-                    <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Aucune offre</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <Package className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune offre</h3>
+                    <p className="text-[#F5F5DC]/70 mb-4">
                       Vous n'avez pas encore créé d'offres.
                     </p>
                     <Link href="/marketplace/offers/create">
-                      <Button>
+                      <Button className="bg-[#006633] hover:bg-[#C1440E] text-white">
                         <Package className="h-4 w-4 mr-2" />
                         Créer une offre
                       </Button>
@@ -281,15 +267,15 @@ export default function MyListingsPage() {
               ) : (
                 <div className="space-y-4">
                   {offers.map((offer) => (
-                  <Card key={offer.id} className="hover:shadow-lg transition-shadow">
+                  <Card key={offer.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <CardTitle className="text-lg">{offer.title}</CardTitle>
+                            <CardTitle className="text-lg text-[#D4AF37]">{offer.title}</CardTitle>
                             {getStatusBadge(offer.status)}
                           </div>
-                          <CardDescription className="mb-2">{offer.description}</CardDescription>
+                          <CardDescription className="mb-2 text-[#F5F5DC]/70">{offer.description}</CardDescription>
                           <div className="flex items-center gap-4 text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
                               <Package className="h-4 w-4" />
@@ -339,22 +325,22 @@ export default function MyListingsPage() {
                     <CardContent>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <DollarSign className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-2xl font-bold text-primary">
+                          <DollarSign className="h-4 w-4 text-[#D4AF37]" />
+                          <span className="text-2xl font-bold text-[#D4AF37]">
                             {offer.price.toLocaleString()} fcfa
                           </span>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-[#F5F5DC]/70">
                             / {offer.quantity} {offer.unit}
                           </span>
                         </div>
                         <div className="flex gap-2">
                           {offer.negotiations[0] && (
                             <Link href={`/marketplace/negotiation/${offer.negotiations[0].id}`}>
-                              <Button size="sm" variant="outline">Voir les négociations</Button>
+                              <Button size="sm" variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">Voir les négociations</Button>
                             </Link>
                           )}
-                          <Button size="sm" onClick={() => router.push(`/marketplace/offers/create?edit=${offer.id}`)}>Modifier</Button>
-                          <Button size="sm" variant="destructive" onClick={() => handleDeleteOffer(offer.id)}>Supprimer</Button>
+                          <Button size="sm" onClick={() => router.push(`/marketplace/offers/create?edit=${offer.id}`)} className="bg-[#006633] hover:bg-[#C1440E] text-white">Modifier</Button>
+                          <Button size="sm" variant="destructive" onClick={() => handleDeleteOffer(offer.id)} className="bg-[#C1440E] hover:bg-[#C1440E]/80 text-white">Supprimer</Button>
                         </div>
                       </div>
                     </CardContent>
@@ -366,11 +352,11 @@ export default function MyListingsPage() {
 
             <TabsContent value="demands" className="mt-6">
               {demands.length === 0 ? (
-                <Card>
+                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
                   <CardContent className="text-center py-12">
-                    <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Aucune demande</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <MessageSquare className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune demande</h3>
+                    <p className="text-[#F5F5DC]/70 mb-4">
                       Vous n'avez pas encore créé de demandes.
                     </p>
                     <Link href="/marketplace/demands/create">
@@ -471,13 +457,13 @@ export default function MyListingsPage() {
           {/* Action Buttons */}
           <div className="flex justify-center gap-4 mt-8">
             <Link href="/marketplace/offers/create">
-              <Button className="flex items-center gap-2">
+              <Button className="flex items-center gap-2 bg-[#006633] hover:bg-[#C1440E] text-white">
                 <Package className="h-4 w-4" />
                 Créer une offre
               </Button>
             </Link>
             <Link href="/marketplace/demands/create">
-              <Button variant="outline" className="flex items-center gap-2">
+              <Button variant="outline" className="flex items-center gap-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                 <MessageSquare className="h-4 w-4" />
                 Créer une demande
               </Button>

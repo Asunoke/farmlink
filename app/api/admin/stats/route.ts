@@ -49,7 +49,8 @@ export async function GET(request: NextRequest) {
     }
 
     const totalRevenue = usersBySubscription.reduce((sum, group) => {
-      return sum + group._count.subscription * revenueByPlan[group.subscription as keyof typeof revenueByPlan]
+      const planRevenue = revenueByPlan[group.subscription as keyof typeof revenueByPlan] || 0
+      return sum + (group._count.subscription * planRevenue)
     }, 0)
 
     // Process monthly growth data

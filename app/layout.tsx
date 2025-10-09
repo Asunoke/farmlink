@@ -8,7 +8,6 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
-import LinkieChatbot from "@/components/linkie-chatbot"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -37,7 +36,6 @@ export default async function RootLayout({
             <Suspense fallback={null}>{children}</Suspense>
           </SessionProvider>
           <Toaster />
-          <LinkieChatbot />
         </ThemeProvider>
         <Analytics />
       </body>

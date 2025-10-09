@@ -1,431 +1,370 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Leaf, Users, TrendingUp, Cloud, Calculator, AlertTriangle, Droplets, Wind, Eye } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Leaf, Users, TrendingUp, Cloud, Calculator, AlertTriangle, Droplets, Wind, Eye, Plus, X, Save } from "lucide-react"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { SubscriptionUsage } from "@/components/subscription-usage"
-import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { TrialAlert } from "@/components/trial-alert"
+import { WeatherWidget } from "@/components/weather-widget"
+import { WeatherAlert } from "@/components/weather-alert"
+import { useSession } from "next-auth/react"
+import Link from "next/link"
 
-async function getDashboardData() {
-  const session = await auth()
-  if (!session?.user?.id) {
-    return null
-  }
-
-  const userId = session.user.id
-
-  // Récupérer les données en parallèle
-  const [farms, plots, teamMembers, expenses, tasks] = await Promise.all([
-    // Fermes
-    prisma.farm.findMany({
-      where: { userId },
-      include: {
-        plots: true,
-        _count: {
-          select: { plots: true }
-        }
-      }
-    }),
-    
-    // Parcelles
-    prisma.plot.findMany({
-      where: {
-        farm: { userId }
-      },
-      include: {
-        farm: {
-          select: { name: true }
-        }
-      }
-    }),
-    
-    // Équipe
-    prisma.teamMember.findMany({
-      where: { userId }
-    }),
-    
-    // Dépenses du mois en cours
-    prisma.expense.findMany({
-      where: {
-        userId,
-        date: {
-          gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-          lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-        }
-      }
-    }),
-    
-    // Tâches récentes
-    prisma.task.findMany({
-      where: {
-        teamMember: { userId }
-      },
-      include: {
-        teamMember: {
-          select: { name: true }
-        }
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 5
-    })
-  ])
-
-  // Calculer les métriques
-  const totalArea = farms.reduce((sum, farm) => sum + farm.totalArea, 0)
-  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
-  const activeTeamMembers = teamMembers.length
-  const activePlots = plots.filter(plot => plot.status !== 'FALLOW').length
-
-  return {
-    farms,
-    plots,
-    teamMembers,
-    expenses,
-    tasks,
-    metrics: {
-      totalArea,
-      totalExpenses,
-      activeTeamMembers,
-      activePlots
-    }
-  }
+interface DashboardData {
+  farms: any[]
+  plots: any[]
+  teamMembers: any[]
+  expenses: any[]
+  tasks: any[]
+  weatherLimits: any
 }
 
-export default async function DashboardPage() {
-  const data = await getDashboardData()
+export default function DashboardPage() {
+  const { data: session } = useSession()
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
   
-  if (!data) {
+  // États pour les modales
+  const [showExpenseModal, setShowExpenseModal] = useState(false)
+  const [showTaskModal, setShowTaskModal] = useState(false)
+  const [showCropModal, setShowCropModal] = useState(false)
+  const [showReportsModal, setShowReportsModal] = useState(false)
+  
+  // États pour les formulaires
+  const [expenseForm, setExpenseForm] = useState({
+    amount: "",
+    description: "",
+    category: "",
+    farmId: ""
+  })
+  const [taskForm, setTaskForm] = useState({
+    title: "",
+    description: "",
+    assignedTo: "",
+    priority: "MEDIUM",
+    dueDate: ""
+  })
+  const [cropForm, setCropForm] = useState({
+    plotId: "",
+    cropType: "",
+    plantingDate: "",
+    notes: ""
+  })
+  
+  const [submitting, setSubmitting] = useState(false)
+  const [success, setSuccess] = useState("")
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await fetch('/api/dashboard')
+      if (response.ok) {
+        const data = await response.json()
+        setDashboardData(data)
+      } else {
+        setError("Erreur lors du chargement des données")
+      }
+    } catch (error) {
+      setError("Erreur lors du chargement des données")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleExpenseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setError("")
+
+    try {
+      const response = await fetch('/api/expenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expenseForm),
+      })
+
+      if (response.ok) {
+        setSuccess("Dépense enregistrée avec succès")
+        setExpenseForm({ amount: "", description: "", category: "", farmId: "" })
+        setShowExpenseModal(false)
+        fetchDashboardData()
+      } else {
+        const data = await response.json()
+        setError(data.error || "Erreur lors de l'enregistrement")
+      }
+    } catch (error) {
+      setError("Erreur lors de l'enregistrement")
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleTaskSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setError("")
+
+    try {
+      const response = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskForm),
+      })
+
+      if (response.ok) {
+        setSuccess("Tâche assignée avec succès")
+        setTaskForm({ title: "", description: "", assignedTo: "", priority: "MEDIUM", dueDate: "" })
+        setShowTaskModal(false)
+        fetchDashboardData()
+      } else {
+        const data = await response.json()
+        setError(data.error || "Erreur lors de l'assignation")
+      }
+    } catch (error) {
+      setError("Erreur lors de l'assignation")
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleCropSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setError("")
+
+    try {
+      const response = await fetch('/api/crops', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cropForm),
+      })
+
+      if (response.ok) {
+        setSuccess("Culture mise à jour avec succès")
+        setCropForm({ plotId: "", cropType: "", plantingDate: "", notes: "" })
+        setShowCropModal(false)
+        fetchDashboardData()
+      } else {
+        const data = await response.json()
+        setError(data.error || "Erreur lors de la mise à jour")
+      }
+    } catch (error) {
+      setError("Erreur lors de la mise à jour")
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  if (loading) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <p className="text-muted-foreground">Erreur de chargement des données</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
         </div>
       </DashboardLayout>
     )
   }
 
-  const { farms, plots, teamMembers, expenses, tasks, metrics } = data
+  if (error) {
+    return (
+      <DashboardLayout>
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      </DashboardLayout>
+    )
+  }
+
+  if (!dashboardData) {
+    return (
+      <DashboardLayout>
+        <div>Aucune donnée disponible</div>
+      </DashboardLayout>
+    )
+  }
+
+  const { farms, plots, teamMembers, expenses, tasks, weatherLimits } = dashboardData
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-balance">Tableau de Bord</h1>
-            <p className="text-muted-foreground">
-              Vue d'ensemble de votre exploitation agricole
-              {farms.length > 0 && ` - ${farms[0].name}`}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="bg-primary/10 text-primary">
-              <div className="w-2 h-2 bg-primary rounded-full mr-2" />
-              {farms.length > 0 ? 'Ferme Active' : 'Aucune Ferme'}
-            </Badge>
-            {farms.length > 1 && (
-              <Badge variant="outline">
-                +{farms.length - 1} autre{farms.length > 2 ? 's' : ''}
-              </Badge>
-            )}
-          </div>
-        </div>
+        {/* Alerts */}
+        {error && (
+          <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+            <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
+            <AlertDescription className="text-[#F5F5DC]">{error}</AlertDescription>
+          </Alert>
+        )}
+        {success && (
+          <Alert className="border-[#006633] bg-[#006633]/10">
+            <AlertDescription className="text-[#F5F5DC]">
+              {success}
+            </AlertDescription>
+          </Alert>
+        )}
 
-        {/* Subscription Usage Widget */}
+        {/* Trial Alert */}
+        <TrialAlert />
+        
+        {/* Subscription Usage */}
         <SubscriptionUsage />
 
         {/* Weather Alert */}
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-600" />
-              <div className="flex-1">
-                <p className="font-medium text-amber-900 dark:text-amber-100">Alerte Météo - Pluies prévues demain</p>
-                <p className="text-sm text-amber-700 dark:text-amber-200">
-                  Reportez l'arrosage prévu. Probabilité de précipitations: 85%
-                </p>
+        <WeatherAlert />
+
+        {/* Weather Widget */}
+        <WeatherWidget />
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Fermes</CardTitle>
+              <Leaf className="h-4 w-4 text-[#006633]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{farms.length}</div>
+              <p className="text-xs text-[#F5F5DC]/70">
+                {plots.length} parcelles au total
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Équipe</CardTitle>
+              <Users className="h-4 w-4 text-[#006633]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{teamMembers.length}</div>
+              <p className="text-xs text-[#F5F5DC]/70">
+                Membres actifs
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Dépenses</CardTitle>
+              <Calculator className="h-4 w-4 text-[#006633]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-[#F5F5DC]">
+                {expenses.reduce((sum, expense) => sum + expense.amount, 0).toLocaleString()} FCFA
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-amber-300 text-amber-700 hover:bg-amber-100 bg-transparent"
-              >
-                Voir détails
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Key Metrics */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Surface Totale</CardTitle>
-              <Leaf className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{metrics.totalArea.toFixed(1)} ha</div>
-              <p className="text-xs text-muted-foreground">{farms.length} ferme{farms.length > 1 ? 's' : ''} active{farms.length > 1 ? 's' : ''}</p>
+              <p className="text-xs text-[#F5F5DC]/70">
+                Ce mois-ci
+              </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Équipe Active</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Tâches</CardTitle>
+              <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{metrics.activeTeamMembers}</div>
-              <p className="text-xs text-muted-foreground">Membre{metrics.activeTeamMembers > 1 ? 's' : ''} d'équipe</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Parcelles Actives</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{metrics.activePlots}</div>
-              <p className="text-xs text-muted-foreground">Parcelle{metrics.activePlots > 1 ? 's' : ''} en culture</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Dépenses ce Mois</CardTitle>
-              <Calculator className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{metrics.totalExpenses.toLocaleString()} FCFA</div>
-              <p className="text-xs text-muted-foreground">{expenses.length} transaction{expenses.length > 1 ? 's' : ''}</p>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{tasks.length}</div>
+              <p className="text-xs text-[#F5F5DC]/70">
+                En cours
+              </p>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          {/* Weather Widget */}
-          <Card>
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Recent Activities */}
+          <div className="lg:col-span-2">
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Cloud className="h-5 w-5" />
-                Météo Actuelle - Bamako
-              </CardTitle>
-              <CardDescription>Conditions météorologiques en temps réel</CardDescription>
+                <CardTitle className="text-[#D4AF37]">Activités récentes</CardTitle>
+                <CardDescription className="text-[#F5F5DC]/70">Dernières actions sur vos fermes</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="text-4xl font-bold">32°C</div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Ensoleillé</p>
-                    <p className="text-xs text-muted-foreground">Ressenti: 35°C</p>
-                  </div>
-                </div>
-                <div className="text-right space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Droplets className="h-4 w-4 text-blue-500" />
-                    <span>Humidité: 65%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Wind className="h-4 w-4 text-gray-500" />
-                    <span>Vent: 12 km/h</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Prévisions 24h</span>
-                  <span className="text-muted-foreground">Pluie probable</span>
-                </div>
-                <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                  <div className="space-y-1">
-                    <p className="font-medium">12h</p>
-                    <p>34°C</p>
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mx-auto" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="font-medium">18h</p>
-                    <p>28°C</p>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full mx-auto" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="font-medium">00h</p>
-                    <p>24°C</p>
-                    <div className="w-2 h-2 bg-blue-400 rounded-full mx-auto" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="font-medium">06h</p>
-                    <p>22°C</p>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mx-auto" />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Farm Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle>État des Cultures</CardTitle>
-              <CardDescription>Progression des cultures par parcelle</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {plots.length > 0 ? (
-                  plots.slice(0, 4).map((plot) => {
-                    const getProgressValue = (status: string) => {
-                      switch (status) {
-                        case 'PREPARATION': return 10
-                        case 'PLANTED': return 25
-                        case 'GROWING': return 60
-                        case 'HARVESTED': return 100
-                        case 'FALLOW': return 0
-                        default: return 0
-                      }
-                    }
-
-                    const getStatusText = (status: string) => {
-                      switch (status) {
-                        case 'PREPARATION': return 'Préparation'
-                        case 'PLANTED': return 'Semis'
-                        case 'GROWING': return 'Croissance'
-                        case 'HARVESTED': return 'Récolté'
-                        case 'FALLOW': return 'En jachère'
-                        default: return 'Inconnu'
-                      }
-                    }
-
-                    const getStatusDescription = (status: string) => {
-                      switch (status) {
-                        case 'PREPARATION': return 'Préparation du terrain'
-                        case 'PLANTED': return 'Germination en cours'
-                        case 'GROWING': return 'Développement des cultures'
-                        case 'HARVESTED': return 'Récolte terminée'
-                        case 'FALLOW': return 'Parcelle en repos'
-                        default: return ''
-                      }
-                    }
-
-                    return (
-                      <div key={plot.id} className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="font-medium">
-                            {plot.cropType} - {plot.name} ({plot.area} ha)
-                          </span>
-                          <span className="text-muted-foreground">{getStatusText(plot.status)}</span>
-                        </div>
-                        <Progress value={getProgressValue(plot.status)} className="h-2" />
-                        <p className="text-xs text-muted-foreground">{getStatusDescription(plot.status)}</p>
-                      </div>
-                    )
-                  })
-                ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Leaf className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>Aucune parcelle enregistrée</p>
-                    <p className="text-xs">Créez votre première parcelle pour commencer</p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Recent Activities & Quick Actions */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Activités Récentes</CardTitle>
-              <CardDescription>Dernières tâches assignées</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {tasks.length > 0 ? (
-                  tasks.map((task) => {
-                    const getStatusColor = (status: string) => {
-                      switch (status) {
-                        case 'PENDING': return 'bg-yellow-500'
-                        case 'IN_PROGRESS': return 'bg-blue-500'
-                        case 'COMPLETED': return 'bg-green-500'
-                        case 'CANCELLED': return 'bg-red-500'
-                        default: return 'bg-gray-500'
-                      }
-                    }
-
-                    const getStatusText = (status: string) => {
-                      switch (status) {
-                        case 'PENDING': return 'En attente'
-                        case 'IN_PROGRESS': return 'En cours'
-                        case 'COMPLETED': return 'Terminé'
-                        case 'CANCELLED': return 'Annulé'
-                        default: return 'Inconnu'
-                      }
-                    }
-
-                    const formatDate = (date: Date) => {
-                      const now = new Date()
-                      const diff = now.getTime() - date.getTime()
-                      const hours = Math.floor(diff / (1000 * 60 * 60))
-                      const days = Math.floor(hours / 24)
-
-                      if (days > 0) return `Il y a ${days} jour${days > 1 ? 's' : ''}`
-                      if (hours > 0) return `Il y a ${hours} heure${hours > 1 ? 's' : ''}`
-                      return 'À l\'instant'
-                    }
-
-                    return (
-                      <div key={task.id} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className={`w-2 h-2 ${getStatusColor(task.status)} rounded-full`} />
+              <CardContent>
+                <div className="space-y-4">
+                  {tasks.slice(0, 5).map((task, index) => (
+                    <div key={index} className="flex items-center space-x-4">
+                      <div className="w-2 h-2 bg-[#006633] rounded-full"></div>
                         <div className="flex-1">
-                          <p className="text-sm font-medium">{task.title}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {formatDate(new Date(task.createdAt))} • {task.teamMember.name} • {getStatusText(task.status)}
+                          <p className="text-sm font-medium text-[#F5F5DC]">{task.title}</p>
+                          <p className="text-xs text-[#F5F5DC]/70">
+                          Assigné à {task.assignedTo} • {new Date(task.createdAt).toLocaleDateString('fr-FR')}
                           </p>
-                        </div>
                       </div>
-                    )
-                  })
-                ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>Aucune tâche récente</p>
-                    <p className="text-xs">Assignez des tâches à votre équipe</p>
+                      <Badge variant="outline" className="border-[#D4AF37] text-[#D4AF37]">{task.status}</Badge>
                   </div>
-                )}
+                  ))}
               </div>
-
-              <Button variant="outline" className="w-full bg-transparent">
+                <Button variant="outline" className="w-full mt-4 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
                 <Eye className="mr-2 h-4 w-4" />
                 Voir toutes les activités
               </Button>
             </CardContent>
           </Card>
+          </div>
 
-          <Card>
+          {/* Quick Actions */}
+          <div className="space-y-6">
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
             <CardHeader>
-              <CardTitle>Actions Rapides</CardTitle>
-              <CardDescription>Raccourcis vers les tâches courantes</CardDescription>
+              <CardTitle className="text-[#D4AF37]">Actions Rapides</CardTitle>
+              <CardDescription className="text-[#F5F5DC]/70">Raccourcis vers les tâches courantes</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button className="w-full justify-start bg-transparent" variant="outline">
+                <Button 
+                  className="w-full justify-start bg-transparent hover:bg-[#006633]/10 border-[#D4AF37]/30 text-[#F5F5DC] hover:text-[#006633] transition-all duration-300" 
+                  variant="outline"
+                  onClick={() => setShowExpenseModal(true)}
+                >
                 <Calculator className="mr-2 h-4 w-4" />
                 Enregistrer une dépense
               </Button>
 
-              <Button className="w-full justify-start bg-transparent" variant="outline">
+                <Button 
+                  className="w-full justify-start bg-transparent hover:bg-[#D4AF37]/10 border-[#D4AF37]/30 text-[#F5F5DC] hover:text-[#D4AF37] transition-all duration-300" 
+                  variant="outline"
+                  onClick={() => setShowTaskModal(true)}
+                >
                 <Users className="mr-2 h-4 w-4" />
                 Assigner une tâche
               </Button>
 
-              <Button className="w-full justify-start bg-transparent" variant="outline">
+                <Button 
+                  className="w-full justify-start bg-transparent hover:bg-[#C1440E]/10 border-[#D4AF37]/30 text-[#F5F5DC] hover:text-[#C1440E] transition-all duration-300" 
+                  variant="outline"
+                  onClick={() => setShowCropModal(true)}
+                >
                 <Leaf className="mr-2 h-4 w-4" />
                 Mettre à jour les cultures
               </Button>
 
-              <Button className="w-full justify-start bg-transparent" variant="outline">
+                <Button 
+                  className="w-full justify-start bg-transparent hover:bg-[#006633]/10 border-[#D4AF37]/30 text-[#F5F5DC] hover:text-[#006633] transition-all duration-300" 
+                  variant="outline"
+                  onClick={() => setShowReportsModal(true)}
+                >
                 <TrendingUp className="mr-2 h-4 w-4" />
                 Voir les rapports
               </Button>
@@ -433,6 +372,299 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
+      </div>
+
+      {/* Expense Modal */}
+      <Dialog open={showExpenseModal} onOpenChange={setShowExpenseModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enregistrer une dépense</DialogTitle>
+            <DialogDescription>
+              Ajoutez une nouvelle dépense à votre ferme
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleExpenseSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="amount">Montant (FCFA)</Label>
+              <Input
+                id="amount"
+                type="number"
+                value={expenseForm.amount}
+                onChange={(e) => setExpenseForm(prev => ({ ...prev, amount: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Input
+                id="description"
+                value={expenseForm.description}
+                onChange={(e) => setExpenseForm(prev => ({ ...prev, description: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="category">Catégorie</Label>
+              <Select value={expenseForm.category} onValueChange={(value) => setExpenseForm(prev => ({ ...prev, category: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner une catégorie" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="SEEDS">Graines</SelectItem>
+                  <SelectItem value="FERTILIZER">Engrais</SelectItem>
+                  <SelectItem value="EQUIPMENT">Équipement</SelectItem>
+                  <SelectItem value="LABOR">Main d'œuvre</SelectItem>
+                  <SelectItem value="OTHER">Autre</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="farmId">Ferme</Label>
+              <Select value={expenseForm.farmId} onValueChange={(value) => setExpenseForm(prev => ({ ...prev, farmId: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner une ferme" />
+                </SelectTrigger>
+                <SelectContent>
+                  {farms.map((farm) => (
+                    <SelectItem key={farm.id} value={farm.id}>{farm.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button type="button" variant="outline" onClick={() => setShowExpenseModal(false)}>
+                Annuler
+              </Button>
+              <Button type="submit" disabled={submitting}>
+                <Save className="h-4 w-4 mr-2" />
+                {submitting ? "Enregistrement..." : "Enregistrer"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Task Modal */}
+      <Dialog open={showTaskModal} onOpenChange={setShowTaskModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Assigner une tâche</DialogTitle>
+            <DialogDescription>
+              Créez une nouvelle tâche pour votre équipe
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleTaskSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Titre de la tâche</Label>
+              <Input
+                id="title"
+                value={taskForm.title}
+                onChange={(e) => setTaskForm(prev => ({ ...prev, title: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={taskForm.description}
+                onChange={(e) => setTaskForm(prev => ({ ...prev, description: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="assignedTo">Assigné à</Label>
+              <Select value={taskForm.assignedTo} onValueChange={(value) => setTaskForm(prev => ({ ...prev, assignedTo: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner un membre" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teamMembers.map((member) => (
+                    <SelectItem key={member.id} value={member.name}>{member.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="priority">Priorité</Label>
+                <Select value={taskForm.priority} onValueChange={(value) => setTaskForm(prev => ({ ...prev, priority: value }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="LOW">Faible</SelectItem>
+                    <SelectItem value="MEDIUM">Moyenne</SelectItem>
+                    <SelectItem value="HIGH">Élevée</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dueDate">Date limite</Label>
+                <Input
+                  id="dueDate"
+                  type="date"
+                  value={taskForm.dueDate}
+                  onChange={(e) => setTaskForm(prev => ({ ...prev, dueDate: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button type="button" variant="outline" onClick={() => setShowTaskModal(false)}>
+                Annuler
+              </Button>
+              <Button type="submit" disabled={submitting}>
+                <Save className="h-4 w-4 mr-2" />
+                {submitting ? "Assignation..." : "Assigner"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Crop Modal */}
+      <Dialog open={showCropModal} onOpenChange={setShowCropModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Mettre à jour les cultures</DialogTitle>
+            <DialogDescription>
+              Enregistrez les informations sur vos cultures
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleCropSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="plotId">Parcelle</Label>
+              <Select value={cropForm.plotId} onValueChange={(value) => setCropForm(prev => ({ ...prev, plotId: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner une parcelle" />
+                </SelectTrigger>
+                <SelectContent>
+                  {plots.map((plot) => (
+                    <SelectItem key={plot.id} value={plot.id}>
+                      {plot.name} - {farms.find(f => f.id === plot.farmId)?.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cropType">Type de culture</Label>
+              <Input
+                id="cropType"
+                value={cropForm.cropType}
+                onChange={(e) => setCropForm(prev => ({ ...prev, cropType: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="plantingDate">Date de plantation</Label>
+              <Input
+                id="plantingDate"
+                type="date"
+                value={cropForm.plantingDate}
+                onChange={(e) => setCropForm(prev => ({ ...prev, plantingDate: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes</Label>
+              <Textarea
+                id="notes"
+                value={cropForm.notes}
+                onChange={(e) => setCropForm(prev => ({ ...prev, notes: e.target.value }))}
+                placeholder="Observations, conditions, etc."
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button type="button" variant="outline" onClick={() => setShowCropModal(false)}>
+                Annuler
+              </Button>
+              <Button type="submit" disabled={submitting}>
+                <Save className="h-4 w-4 mr-2" />
+                {submitting ? "Mise à jour..." : "Mettre à jour"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reports Modal */}
+      <Dialog open={showReportsModal} onOpenChange={setShowReportsModal}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>Rapports et analyses</DialogTitle>
+            <DialogDescription>
+              Consultez les rapports détaillés de vos fermes
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Rapport financier</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    Analysez vos dépenses et revenus par période
+                  </p>
+                  <Button className="w-full" asChild>
+                    <Link href="/reports/financial">
+                      Voir le rapport financier
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Rapport de production</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    Suivez les rendements et performances de vos cultures
+                  </p>
+                  <Button className="w-full" asChild>
+                    <Link href="/reports/production">
+                      Voir le rapport de production
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Rapport météo</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    Analysez l'impact météorologique sur vos cultures
+                  </p>
+                  <Button className="w-full" asChild>
+                    <Link href="/reports/weather">
+                      Voir le rapport météo
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Rapport d'équipe</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    Évaluez les performances et tâches de votre équipe
+                  </p>
+                  <Button className="w-full" asChild>
+                    <Link href="/reports/team">
+                      Voir le rapport d'équipe
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   )
 }

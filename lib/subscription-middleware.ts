@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { canCreateResource } from "@/lib/subscription-limits"
+import { canCreateResource, getSubscriptionLimits } from "@/lib/subscription-limits"
 
 export async function checkSubscriptionLimit(
   resourceType: "farms" | "parcels" | "teamMembers" | "expenses" | "tasks",
@@ -39,7 +39,13 @@ export async function checkSubscriptionLimit(
       currentCount = user._count.teamMembers
       break
     case "expenses":
-      currentCount = user._count.expenses
+      // Only count actual expenses, not revenue or other transaction types
+      currentCount = await prisma.expense.count({
+        where: {
+          userId: targetUserId,
+          type: "EXPENSE"
+        }
+      })
       break
     case "tasks":
       // Tasks are linked to team members, not directly to users
@@ -63,19 +69,8 @@ export async function checkSubscriptionLimit(
   const allowed = canCreateResource(user.subscription, resourceType, currentCount)
 
   if (!allowed) {
-    const limits = {
-      FREE: { farms: 1, parcels: 5, teamMembers: 3, expenses: 50, tasks: 20 },
-      BASIC: { farms: 3, parcels: 20, teamMembers: 10, expenses: 500, tasks: 100 },
-      PREMIUM: {
-        farms: Number.POSITIVE_INFINITY,
-        parcels: Number.POSITIVE_INFINITY,
-        teamMembers: Number.POSITIVE_INFINITY,
-        expenses: Number.POSITIVE_INFINITY,
-        tasks: Number.POSITIVE_INFINITY,
-      },
-    }
-
-    const limit = limits[user.subscription as keyof typeof limits]?.[resourceType] || 0
+    const limits = getSubscriptionLimits(user.subscription)
+    const limit = limits[resourceType]
 
     return {
       allowed: false,

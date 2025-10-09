@@ -320,13 +320,13 @@ export default function TeamPage() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-balance">Gestion d'Équipe</h1>
-            <p className="text-muted-foreground">Gérez votre équipe et assignez les tâches agricoles</p>
+            <h1 className="text-3xl font-bold text-balance text-[#D4AF37]">Gestion d'Équipe</h1>
+            <p className="text-[#F5F5DC]/70">Gérez votre équipe et assignez les tâches agricoles</p>
           </div>
           <div className="flex gap-2">
             <Dialog open={isAddTaskDialogOpen} onOpenChange={setIsAddTaskDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                   <Plus className="mr-2 h-4 w-4" />
                   Nouvelle Tâche
                 </Button>
@@ -392,7 +392,7 @@ export default function TeamPage() {
 
             <Dialog open={isAddMemberDialogOpen} onOpenChange={setIsAddMemberDialogOpen}>
               <DialogTrigger asChild>
-                <Button>
+                <Button className="bg-[#006633] hover:bg-[#C1440E] text-white transition-all duration-300 hover:scale-105">
                   <Plus className="mr-2 h-4 w-4" />
                   Nouveau Membre
                 </Button>
@@ -441,47 +441,47 @@ export default function TeamPage() {
 
         {/* Team Overview */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Équipe</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Total Équipe</CardTitle>
+              <Users className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{teamMembers.length}</div>
-              <p className="text-xs text-muted-foreground">{teamMembers.length} membres actifs</p>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{teamMembers.length}</div>
+              <p className="text-xs text-[#F5F5DC]/70">{teamMembers.length} membres actifs</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Masse Salariale</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Masse Salariale</CardTitle>
+              <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{formatCurrency(totalSalaries)}</div>
-              <p className="text-xs text-muted-foreground">Par mois</p>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{formatCurrency(totalSalaries)}</div>
+              <p className="text-xs text-[#F5F5DC]/70">Par mois</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Tâches Terminées</CardTitle>
-              <Star className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Tâches Terminées</CardTitle>
+              <Star className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{completedTasks}</div>
-              <p className="text-xs text-muted-foreground">Ce mois</p>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{completedTasks}</div>
+              <p className="text-xs text-[#F5F5DC]/70">Ce mois</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Tâches Actives</CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-[#D4AF37]">Tâches Actives</CardTitle>
+              <Clock className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{pendingTasks}</div>
-              <p className="text-xs text-muted-foreground">En cours</p>
+              <div className="text-2xl font-bold text-[#F5F5DC]">{pendingTasks}</div>
+              <p className="text-xs text-[#F5F5DC]/70">En cours</p>
             </CardContent>
           </Card>
         </div>

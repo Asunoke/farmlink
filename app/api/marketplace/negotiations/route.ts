@@ -28,8 +28,8 @@ export async function GET(request: NextRequest) {
           OR: [
             { userId: (session.user as any).id },
             { offer: { userId: (session.user as any).id } },
-            { demand: { userId: (session.user as any).id } },
-          ],
+            { demand: { userId: (session.user as any).id } }
+          ]
         }
 
     if (status && status !== "all") {
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
                 }
               }
             }
-          }
+          },
         },
         orderBy: {
           updatedAt: "desc"
@@ -216,6 +216,8 @@ export async function POST(request: NextRequest) {
         }
       }
     })
+
+    // Note: Les messages seront gérés par l'API des messages une fois la migration appliquée
 
     return NextResponse.json(negotiation, { status: 201 })
   } catch (error) {

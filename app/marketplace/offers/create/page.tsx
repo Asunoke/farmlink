@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Package } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { MainNav } from "@/components/main-nav"
 
 const categories = [
   { value: "CROPS", label: "Récoltes" },
@@ -81,21 +82,22 @@ export default function CreateOfferPage() {
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen bg-[#0D1B2A] flex items-center justify-center">
+        <MainNav />
+        <Card className="w-full max-w-md bg-[#0B1623] border border-[#D4AF37]/20">
           <CardHeader>
-            <CardTitle>Connexion requise</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-[#D4AF37]">Connexion requise</CardTitle>
+            <CardDescription className="text-[#F5F5DC]/70">
               Vous devez être connecté pour créer une offre.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex gap-2">
               <Link href="/auth/signin" className="flex-1">
-                <Button className="w-full">Se connecter</Button>
+                <Button className="w-full bg-[#006633] hover:bg-[#C1440E] text-white">Se connecter</Button>
               </Link>
               <Link href="/marketplace" className="flex-1">
-                <Button variant="outline" className="w-full">Retour</Button>
+                <Button variant="outline" className="w-full border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">Retour</Button>
               </Link>
             </div>
           </CardContent>
@@ -105,45 +107,27 @@ export default function CreateOfferPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">FL</span>
-              </div>
-              <span className="text-xl font-bold">FarmLink</span>
-            </Link>
-            <Link href="/marketplace">
-              <Button variant="outline" className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Retour au marché
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#0D1B2A]">
+      <MainNav />
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="p-3 rounded-full bg-primary/10">
-                <Package className="h-8 w-8 text-primary" />
+              <div className="p-3 rounded-full bg-[#006633]/10">
+                <Package className="h-8 w-8 text-[#006633]" />
               </div>
             </div>
-            <h1 className="text-3xl font-bold mb-2">Créer une offre</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold mb-2 text-[#D4AF37]">Créer une offre</h1>
+            <p className="text-[#F5F5DC]/70">
               Publiez votre produit ou service sur le marché agricole
             </p>
           </div>
 
-          <Card>
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
             <CardHeader>
-              <CardTitle>Détails de l'offre</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-[#D4AF37]">Détails de l'offre</CardTitle>
+              <CardDescription className="text-[#F5F5DC]/70">
                 Remplissez les informations sur votre produit ou service
               </CardDescription>
             </CardHeader>
@@ -246,13 +230,13 @@ export default function CreateOfferPage() {
                 <div className="flex gap-4 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1"
+                    className="flex-1 bg-[#006633] hover:bg-[#C1440E] text-white"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Création..." : "Créer l'offre"}
                   </Button>
                   <Link href="/marketplace" className="flex-1">
-                    <Button type="button" variant="outline" className="w-full">
+                    <Button type="button" variant="outline" className="w-full border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                       Annuler
                     </Button>
                   </Link>

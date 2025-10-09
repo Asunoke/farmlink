@@ -41,17 +41,17 @@ interface FarmsClientProps {
 const getStatusColor = (status: string) => {
   switch (status) {
     case "GROWING":
-      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+      return "bg-[#006633] text-white"
     case "PLANTED":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+      return "bg-[#D4AF37] text-[#0D1B2A]"
     case "PREPARATION":
-      return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+      return "bg-[#F5F5DC] text-[#0D1B2A]"
     case "HARVESTED":
-      return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+      return "bg-[#C1440E] text-white"
     case "FALLOW":
-      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+      return "bg-[#0B1623] text-[#F5F5DC] border border-[#D4AF37]/20"
     default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+      return "bg-[#0B1623] text-[#F5F5DC] border border-[#D4AF37]/20"
   }
 }
 

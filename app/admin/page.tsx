@@ -11,7 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DashboardLayout } from "@/components/dashboard-layout"
+import { AdminDashboardLayout } from "@/components/admin-dashboard-layout"
 import { Users, Leaf, DollarSign, UserCheck, TrendingUp, Search, Trash2, Crown, AlertTriangle } from "lucide-react"
 import {
   LineChart,
@@ -26,6 +26,7 @@ import {
   Cell,
 } from "recharts"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface AdminStats {
   overview: {
@@ -175,6 +176,10 @@ export default function AdminPage() {
 
   const getSubscriptionColor = (subscription: string) => {
     switch (subscription) {
+      case "ENTREPRISE":
+        return "bg-green-500 text-yellow-50"
+      case "BUSINESS":
+        return "bg-red-500 text-yellow-50"
       case "PREMIUM":
         return "bg-yellow-500 text-yellow-50"
       case "BASIC":
@@ -190,7 +195,7 @@ export default function AdminPage() {
 
   if (status === "loading" || loading) {
     return (
-      <DashboardLayout>
+      <AdminDashboardLayout>
         <div className="space-y-6">
           <Skeleton className="h-8 w-64" />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -200,7 +205,7 @@ export default function AdminPage() {
           </div>
           <Skeleton className="h-96" />
         </div>
-      </DashboardLayout>
+      </AdminDashboardLayout>
     )
   }
 
@@ -210,17 +215,17 @@ export default function AdminPage() {
 
   if (error) {
     return (
-      <DashboardLayout>
+      <AdminDashboardLayout>
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-      </DashboardLayout>
+      </AdminDashboardLayout>
     )
   }
 
   return (
-    <DashboardLayout>
+    <AdminDashboardLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -242,7 +247,7 @@ export default function AdminPage() {
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.overview.totalUsers}</div>
+                <div className="text-2xl font-bold">{stats.overview.totalUsers || 0}</div>
                 <p className="text-xs text-muted-foreground">Comptes créés</p>
               </CardContent>
             </Card>
@@ -253,7 +258,7 @@ export default function AdminPage() {
                 <Leaf className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.overview.totalFarms}</div>
+                <div className="text-2xl font-bold">{stats.overview.totalFarms || 0}</div>
                 <p className="text-xs text-muted-foreground">Parcelles créées</p>
               </CardContent>
             </Card>
@@ -264,7 +269,7 @@ export default function AdminPage() {
                 <UserCheck className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.overview.totalTeamMembers}</div>
+                <div className="text-2xl font-bold">{stats.overview.totalTeamMembers || 0}</div>
                 <p className="text-xs text-muted-foreground">Membres d'équipe</p>
               </CardContent>
             </Card>
@@ -275,7 +280,7 @@ export default function AdminPage() {
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.overview.totalExpenses}</div>
+                <div className="text-2xl font-bold">{stats.overview.totalExpenses || 0}</div>
                 <p className="text-xs text-muted-foreground">Transactions</p>
               </CardContent>
             </Card>
@@ -286,7 +291,7 @@ export default function AdminPage() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.overview.totalRevenue.toLocaleString('fr-FR')} FCFA</div>
+                <div className="text-2xl font-bold">{(stats.overview.totalRevenue || 0).toLocaleString('fr-FR')} FCFA</div>
                 <p className="text-xs text-muted-foreground">Revenus mensuels</p>
               </CardContent>
             </Card>
@@ -296,6 +301,7 @@ export default function AdminPage() {
         <Tabs defaultValue="users" className="space-y-4">
           <TabsList>
             <TabsTrigger value="users">Gestion Utilisateurs</TabsTrigger>
+            <TabsTrigger value="payments">Paiements</TabsTrigger>
             <TabsTrigger value="analytics">Analytiques</TabsTrigger>
           </TabsList>
 
@@ -329,6 +335,8 @@ export default function AdminPage() {
                       <SelectItem value="FREE">Gratuit</SelectItem>
                       <SelectItem value="BASIC">Basic</SelectItem>
                       <SelectItem value="PREMIUM">Premium</SelectItem>
+                      <SelectItem value="BUSINESS">Business</SelectItem>
+                      <SelectItem value="ENTREPRISE">Entreprise</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -390,11 +398,13 @@ export default function AdminPage() {
                                   <SelectItem value="FREE">Gratuit</SelectItem>
                                   <SelectItem value="BASIC">Basic</SelectItem>
                                   <SelectItem value="PREMIUM">Premium</SelectItem>
+                                  <SelectItem value="BUSINESS">Business</SelectItem>
+                                  <SelectItem value="ENTREPRISE">Entreprise</SelectItem>
                                 </SelectContent>
                               </Select>
                             </TableCell>
-                            <TableCell>{user._count.farms}</TableCell>
-                            <TableCell>{user._count.teamMembers}</TableCell>
+                            <TableCell>{user._count?.farms || 0}</TableCell>
+                            <TableCell>{user._count?.teamMembers || 0}</TableCell>
                             <TableCell>{new Date(user.createdAt).toLocaleDateString("fr-FR")}</TableCell>
                             <TableCell>
                               <div className="flex gap-2">
@@ -445,6 +455,27 @@ export default function AdminPage() {
             </Card>
           </TabsContent>
 
+          <TabsContent value="payments" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Gestion des Paiements</CardTitle>
+                <CardDescription>Gérez les paiements Orange Money et les abonnements</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground mb-4">
+                    Gérez les paiements et vérifiez les abonnements
+                  </p>
+                  <Link href="/admin/payments">
+                    <Button>
+                      Accéder à la gestion des paiements
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="analytics" className="space-y-4">
             {stats && (
               <div className="grid gap-6 md:grid-cols-2">
@@ -456,7 +487,7 @@ export default function AdminPage() {
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={stats.monthlyGrowth}>
+                      <LineChart data={stats.monthlyGrowth || []}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="month" />
                         <YAxis />
@@ -477,7 +508,7 @@ export default function AdminPage() {
                     <ResponsiveContainer width="100%" height={300}>
                       <PieChart>
                         <Pie
-                          data={stats.usersBySubscription}
+                          data={stats.usersBySubscription || []}
                           cx="50%"
                           cy="50%"
                           labelLine={false}
@@ -486,7 +517,7 @@ export default function AdminPage() {
                           fill="#8884d8"
                           dataKey="count"
                         >
-                          {stats.usersBySubscription.map((entry, index) => (
+                          {(stats.usersBySubscription || []).map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
@@ -504,7 +535,7 @@ export default function AdminPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {stats.recentUsers.map((user) => (
+                      {(stats.recentUsers || []).map((user) => (
                         <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
                           <div>
                             <div className="font-medium">{user.name}</div>
@@ -526,6 +557,6 @@ export default function AdminPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </AdminDashboardLayout>
   )
 }

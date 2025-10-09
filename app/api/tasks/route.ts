@@ -1,51 +1,32 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { z } from "zod"
-import { checkSubscriptionLimit } from "@/lib/subscription-middleware"
 
-const taskSchema = z.object({
-  title: z.string().min(1, "Le titre est requis"),
-  description: z.string().optional(),
-  status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]).default("PENDING"),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).default("MEDIUM"),
-  dueDate: z.string().datetime().optional(),
-  teamMemberId: z.string().min(1, "L'assignation est requise"),
-})
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await auth()
+    
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
-    const { searchParams } = new URL(request.url)
-    const teamMemberId = searchParams.get("teamMemberId")
-    const status = searchParams.get("status")
-
-    const where: any = {
-      teamMember: {
-        userId: session.user.id,
-      },
-    }
-
-    if (teamMemberId) where.teamMemberId = teamMemberId
-    if (status) where.status = status
+    const userId = session.user.id
 
     const tasks = await prisma.task.findMany({
-      where,
-      include: {
-        teamMember: {
-          select: { name: true, role: true },
-        },
+      where: { 
+        teamMember: { userId }
       },
-      orderBy: { createdAt: "desc" },
+      include: {
+        teamMember: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
     })
 
     return NextResponse.json(tasks)
   } catch (error) {
-    console.error("Tasks fetch error:", error)
+    console.error('Erreur lors de la récupération des tâches:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
 }
@@ -53,24 +34,23 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await auth()
+    
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
-    const body = await request.json()
-    const validatedData = taskSchema.parse(body)
+    const { title, description, teamMemberId, priority, dueDate } = await request.json()
 
-    const limitCheck = await checkSubscriptionLimit("tasks", session.user.id)
-    if (!limitCheck.allowed) {
-      return NextResponse.json({ error: limitCheck.message }, { status: 403 })
+    if (!title || !description || !teamMemberId || !priority) {
+      return NextResponse.json({ error: "Tous les champs requis sont manquants" }, { status: 400 })
     }
 
-    // Verify team member ownership
+    // Vérifier que le membre d'équipe appartient à l'utilisateur
     const teamMember = await prisma.teamMember.findFirst({
       where: {
-        id: validatedData.teamMemberId,
-        userId: session.user.id,
-      },
+        id: teamMemberId,
+        userId: session.user.id
+      }
     })
 
     if (!teamMember) {
@@ -79,22 +59,21 @@ export async function POST(request: NextRequest) {
 
     const task = await prisma.task.create({
       data: {
-        ...validatedData,
-        dueDate: validatedData.dueDate ? new Date(validatedData.dueDate) : null,
+        title,
+        description,
+        teamMemberId,
+        priority,
+        dueDate: dueDate ? new Date(dueDate) : null,
+        status: 'PENDING'
       },
       include: {
-        teamMember: {
-          select: { name: true, role: true },
-        },
-      },
+        teamMember: true
+      }
     })
 
-    return NextResponse.json(task, { status: 201 })
+    return NextResponse.json(task)
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 })
-    }
-    console.error("Task creation error:", error)
+    console.error('Erreur lors de la création de la tâche:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
 }
