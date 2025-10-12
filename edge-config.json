@@ -1,0 +1,14 @@
+{
+  "edgeFunctions": {
+    "middleware": {
+      "maxSize": "1MB",
+      "runtime": "edge",
+      "regions": ["iad1", "sfo1", "lhr1"]
+    }
+  },
+  "optimizations": {
+    "treeShaking": true,
+    "minification": true,
+    "compression": true
+  }
+}
