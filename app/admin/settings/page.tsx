@@ -20,6 +20,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AdminDashboardLayout } from "@/components/admin-dashboard-layout"
+import { AuthGuard } from "@/components/auth-guard"
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState({
@@ -160,7 +161,8 @@ export default function AdminSettingsPage() {
   }
 
   return (
-    <AdminDashboardLayout>
+    <AuthGuard requireAdmin>
+      <AdminDashboardLayout>
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
@@ -402,6 +404,7 @@ export default function AdminSettingsPage() {
           </div>
         </div>
       </div>
-    </AdminDashboardLayout>
+      </AdminDashboardLayout>
+    </AuthGuard>
   )
 }

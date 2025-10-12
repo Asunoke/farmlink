@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { AdminDashboardLayout } from "@/components/admin-dashboard-layout"
+import { AuthGuard } from "@/components/auth-guard"
 
 interface User {
   id: string
@@ -163,7 +164,8 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <AdminDashboardLayout>
+    <AuthGuard requireAdmin>
+      <AdminDashboardLayout>
       <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-4">
@@ -381,6 +383,7 @@ export default function AdminUsersPage() {
         </CardContent>
       </Card>
       </div>
-    </AdminDashboardLayout>
+      </AdminDashboardLayout>
+    </AuthGuard>
   )
 }

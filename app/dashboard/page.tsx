@@ -18,6 +18,7 @@ import { TrialAlert } from "@/components/trial-alert"
 import { WeatherWidget } from "@/components/weather-widget"
 import { WeatherAlert } from "@/components/weather-alert"
 import { useSession } from "next-auth/react"
+import { AuthGuard } from "@/components/auth-guard"
 import Link from "next/link"
 
 interface DashboardData {
@@ -207,7 +208,8 @@ export default function DashboardPage() {
   const { farms, plots, teamMembers, expenses, tasks, weatherLimits } = dashboardData
 
   return (
-    <DashboardLayout>
+    <AuthGuard>
+      <DashboardLayout>
       <div className="space-y-6">
         {/* Alerts */}
         {error && (
@@ -665,6 +667,7 @@ export default function DashboardPage() {
           </div>
         </DialogContent>
       </Dialog>
-    </DashboardLayout>
+      </DashboardLayout>
+    </AuthGuard>
   )
 }
