@@ -7,11 +7,6 @@
       "maxDuration": 30
     }
   },
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "NEXTAUTH_URL": "@nextauth_url"
-  },
   "build": {
     "env": {
       "PRISMA_GENERATE_DATAPROXY": "true"
