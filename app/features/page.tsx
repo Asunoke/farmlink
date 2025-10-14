@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
 import { 
   BarChart3, 
   Users, 
@@ -20,7 +18,7 @@ import {
   Lightbulb,
   Heart
 } from "lucide-react"
-import MainNav from "@/components/main-nav"
+import { MainNav } from "@/components/main-nav"
 
 const features = [
   {
@@ -141,8 +139,6 @@ const testimonials = [
 ]
 
 export default function FeaturesPage() {
-  const [activeFeature, setActiveFeature] = useState("farming")
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
       <MainNav />
@@ -150,12 +146,7 @@ export default function FeaturesPage() {
       {/* Hero Section */}
       <section className="pt-20 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Fonctionnalités
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600">
@@ -166,15 +157,10 @@ export default function FeaturesPage() {
               Découvrez toutes les fonctionnalités qui font de FarmLink la plateforme 
               de référence pour l'agriculture moderne en Afrique
             </p>
-          </motion.div>
+          </div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20"
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-4">
@@ -184,36 +170,27 @@ export default function FeaturesPage() {
                 <div className="text-gray-600">{stat.label}</div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Features Grid */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Nos Fonctionnalités Principales
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Une suite complète d'outils pour moderniser votre agriculture
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <motion.div
+              <div
                 key={feature.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`${feature.bgColor} rounded-2xl p-8 hover:shadow-xl transition-all duration-300 cursor-pointer`}
-                onClick={() => setActiveFeature(feature.id)}
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${feature.color} rounded-xl mb-6`}>
                   <feature.icon className="w-8 h-8 text-white" />
@@ -232,7 +209,7 @@ export default function FeaturesPage() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -241,19 +218,14 @@ export default function FeaturesPage() {
       {/* Detailed Feature Section */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Pourquoi Choisir FarmLink ?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Des avantages concrets pour votre activité agricole
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
@@ -294,11 +266,8 @@ export default function FeaturesPage() {
                 color: "from-amber-500 to-yellow-500"
               }
             ].map((item, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-lg transition-all duration-300"
               >
                 <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${item.color} rounded-xl mb-6`}>
@@ -310,7 +279,7 @@ export default function FeaturesPage() {
                 <p className="text-gray-600">
                   {item.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -319,27 +288,19 @@ export default function FeaturesPage() {
       {/* Testimonials */}
       <section className="py-16 px-4 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Ce Que Disent Nos Utilisateurs
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Des témoignages authentiques d'agriculteurs qui ont transformé leur activité
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <div className="flex items-center mb-6">
@@ -359,7 +320,7 @@ export default function FeaturesPage() {
                 <p className="text-gray-700 italic">
                   "{testimonial.content}"
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -368,11 +329,7 @@ export default function FeaturesPage() {
       {/* CTA Section */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Prêt à Transformer Votre Agriculture ?
             </h2>
@@ -380,25 +337,21 @@ export default function FeaturesPage() {
               Rejoignez des milliers d'agriculteurs qui ont déjà choisi FarmLink
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
+              <a
                 href="/auth/register"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 Commencer Gratuitement
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </motion.a>
-              <motion.a
+              </a>
+              <a
                 href="/pricing"
                 className="inline-flex items-center px-8 py-4 border-2 border-amber-500 text-amber-600 font-semibold rounded-xl hover:bg-amber-50 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
                 Voir les Tarifs
-              </motion.a>
+              </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
