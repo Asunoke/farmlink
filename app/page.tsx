@@ -39,8 +39,10 @@ export default function LandingPage() {
                 </Button>
               </AnimatedButton>
               <AnimatedButton>
-                <Button variant="outline" size="lg" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
-                  {"Voir la démo"}
+                <Button variant="outline" size="lg" asChild className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
+                  <Link href="/features">
+                    {"Découvrir les fonctionnalités"}
+                  </Link>
                 </Button>
               </AnimatedButton>
             </div>
@@ -77,9 +79,15 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4 text-[#0D1B2A]">{"Nos fonctionnalités principales"}</h2>
-            <p className="text-xl text-[#0D1B2A]/80 text-pretty max-w-2xl mx-auto">
+            <p className="text-xl text-[#0D1B2A]/80 text-pretty max-w-2xl mx-auto mb-8">
               {"Tout ce dont vous avez besoin pour gérer efficacement votre exploitation agricole au Mali."}
             </p>
+            <Button asChild variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
+              <Link href="/features">
+                Voir toutes les fonctionnalités
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
