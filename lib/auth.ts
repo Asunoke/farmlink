@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+
 
 import NextAuth from "next-auth"
 
@@ -6,6 +6,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "./prisma"
+export const runtime = "nodejs";
 
 const config: any = {
   adapter: PrismaAdapter(prisma),
