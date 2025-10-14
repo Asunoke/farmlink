@@ -32,6 +32,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Vérifier le mot de passe actuel
+    if (!user.password) {
+      return NextResponse.json({ error: "Aucun mot de passe défini pour cet utilisateur" }, { status: 400 })
+    }
+    
     const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password)
 
     if (!isCurrentPasswordValid) {
