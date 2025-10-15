@@ -140,34 +140,34 @@ const testimonials = [
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#F5F5DC] via-[#FFF8DC] to-[#F0E68C]">
       <MainNav />
       
       {/* Hero Section */}
       <section className="pt-20 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#0D1B2A] mb-6">
               Fonctionnalités
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#C1440E]">
                 FarmLink
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-[#0D1B2A]/80 max-w-3xl mx-auto">
               Découvrez toutes les fonctionnalités qui font de FarmLink la plateforme 
               de référence pour l'agriculture moderne en Afrique
             </p>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16 md:mb-20">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-4">
-                  <stat.icon className="w-8 h-8 text-white" />
+              <div key={index} className="text-center p-4 bg-white/50 rounded-xl border border-[#D4AF37]/20">
+                <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#D4AF37] to-[#C1440E] rounded-full mb-3 md:mb-4">
+                  <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-2xl md:text-3xl font-bold text-[#0D1B2A] mb-2">{stat.value}</div>
+                <div className="text-sm md:text-base text-[#0D1B2A]/70">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -177,34 +177,34 @@ export default function FeaturesPage() {
       {/* Features Grid */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-4 md:mb-6">
               Nos Fonctionnalités Principales
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-[#0D1B2A]/80 max-w-3xl mx-auto">
               Une suite complète d'outils pour moderniser votre agriculture
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {features.map((feature, index) => (
               <div
                 key={feature.id}
-                className={`${feature.bgColor} rounded-2xl p-8 hover:shadow-xl transition-all duration-300 cursor-pointer`}
+                className={`${feature.bgColor} rounded-2xl p-6 md:p-8 hover:shadow-xl transition-all duration-300 cursor-pointer border border-[#D4AF37]/20`}
               >
-                <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${feature.color} rounded-xl mb-6`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+                <div className={`inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r ${feature.color} rounded-xl mb-4 md:mb-6`}>
+                  <feature.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-xl md:text-2xl font-bold text-[#0D1B2A] mb-3 md:mb-4">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-[#0D1B2A]/70 mb-4 md:mb-6 text-sm md:text-base">
                   {feature.description}
                 </p>
                 <ul className="space-y-2">
                   {feature.features.map((item, idx) => (
-                    <li key={idx} className="flex items-center text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    <li key={idx} className="flex items-center text-[#0D1B2A]/80 text-sm md:text-base">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-[#006633] mr-3 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -218,16 +218,16 @@ export default function FeaturesPage() {
       {/* Detailed Feature Section */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-4 md:mb-6">
               Pourquoi Choisir FarmLink ?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-[#0D1B2A]/80 max-w-3xl mx-auto">
               Des avantages concrets pour votre activité agricole
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 icon: Zap,
@@ -268,15 +268,15 @@ export default function FeaturesPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-lg transition-all duration-300"
+                className="text-center p-6 md:p-8 rounded-2xl bg-[#F5F5DC]/50 hover:bg-white hover:shadow-lg transition-all duration-300 border border-[#D4AF37]/20"
               >
-                <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${item.color} rounded-xl mb-6`}>
-                  <item.icon className="w-8 h-8 text-white" />
+                <div className={`inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r ${item.color} rounded-xl mb-4 md:mb-6`}>
+                  <item.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                <h3 className="text-lg md:text-xl font-bold text-[#0D1B2A] mb-3 md:mb-4">
                   {item.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-[#0D1B2A]/70 text-sm md:text-base">
                   {item.description}
                 </p>
               </div>
@@ -286,38 +286,38 @@ export default function FeaturesPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 px-4 bg-gradient-to-r from-amber-50 to-orange-50">
+      <section className="py-16 px-4 bg-gradient-to-r from-[#F5F5DC] to-[#FFF8DC]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-4 md:mb-6">
               Ce Que Disent Nos Utilisateurs
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-[#0D1B2A]/80 max-w-3xl mx-auto">
               Des témoignages authentiques d'agriculteurs qui ont transformé leur activité
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-8 shadow-lg"
+                className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-[#D4AF37]/20"
               >
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                <div className="flex items-center mb-4 md:mb-6">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-[#D4AF37] to-[#C1440E] rounded-full flex items-center justify-center text-white font-bold mr-3 md:mr-4">
                     {testimonial.avatar}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-gray-600">{testimonial.role}</p>
+                    <h4 className="font-bold text-[#0D1B2A] text-sm md:text-base">{testimonial.name}</h4>
+                    <p className="text-[#0D1B2A]/70 text-xs md:text-sm">{testimonial.role}</p>
                   </div>
                 </div>
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-3 md:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star key={i} className="w-4 h-4 md:w-5 md:h-5 text-[#D4AF37] fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 italic">
+                <p className="text-[#0D1B2A]/80 italic text-sm md:text-base">
                   "{testimonial.content}"
                 </p>
               </div>
@@ -330,23 +330,23 @@ export default function FeaturesPage() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-4 md:mb-6">
               Prêt à Transformer Votre Agriculture ?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-lg md:text-xl text-[#0D1B2A]/80 mb-6 md:mb-8">
               Rejoignez des milliers d'agriculteurs qui ont déjà choisi FarmLink
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/auth/register"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-[#D4AF37] to-[#C1440E] text-white font-semibold rounded-xl hover:from-[#C1440E] hover:to-[#D4AF37] transition-all duration-300 shadow-lg hover:shadow-xl text-sm md:text-base"
               >
                 Commencer Gratuitement
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
               </a>
               <a
                 href="/pricing"
-                className="inline-flex items-center px-8 py-4 border-2 border-amber-500 text-amber-600 font-semibold rounded-xl hover:bg-amber-50 transition-all duration-300"
+                className="inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 border-2 border-[#D4AF37] text-[#D4AF37] font-semibold rounded-xl hover:bg-[#D4AF37] hover:text-white transition-all duration-300 text-sm md:text-base"
               >
                 Voir les Tarifs
               </a>
