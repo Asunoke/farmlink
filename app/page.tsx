@@ -328,19 +328,17 @@ export default function LandingPage() {
               <h4 className="font-semibold mb-4 text-[#D4AF37]">Produit</h4>
               <ul className="space-y-2 text-[#F5F5DC]/80">
                 <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
+                  <Link href="/features" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Fonctionnalités
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
+                  <Link href="/pricing" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Tarifs
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
-                    API
-                  </Link>
+                 
                 </li>
               </ul>
             </div>
@@ -352,13 +350,9 @@ export default function LandingPage() {
                     Documentation
                   </Link>
                 </li>
+              
                 <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
-                    Formation
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
+                  <Link href="/contact" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     Contact
                   </Link>
                 </li>
@@ -368,25 +362,16 @@ export default function LandingPage() {
               <h4 className="font-semibold mb-4 text-[#D4AF37]">Entreprise</h4>
               <ul className="space-y-2 text-[#F5F5DC]/80">
                 <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
+                  <Link href="/about" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
                     À propos
                   </Link>
                 </li>
-                <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-[#D4AF37] transition-colors hover:scale-105 inline-block">
-                    Carrières
-                  </Link>
-                </li>
+             
               </ul>
             </div>
           </div>
           <div className="border-t border-[#D4AF37]/20 mt-8 pt-8 text-center text-[#F5F5DC]/60">
-            <p>&copy; 2025 FarmLink. Tous droits réservés.</p>
+            <p>&copy; 2025 Florynx labs. Tous droits réservés.</p>
           </div>
         </div>
       </footer>

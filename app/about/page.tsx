@@ -167,14 +167,12 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button size="lg" className="bg-white text-green-700 hover:bg-green-50 font-semibold">
-                Découvrir notre mission
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              <Link href="/contact">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-700 font-semibold">
                 <Play className="mr-2 w-5 h-5" />
-                Voir notre histoire
+                se joindre a nous 
               </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -197,7 +195,7 @@ export default function AboutPage() {
             >
               <p className="text-xl text-gray-600 leading-relaxed">
                 Née de la passion pour l'innovation et l'impact social, Farmlink est le fruit d'une vision audacieuse : 
-                transformer l'agriculture africaine grâce à la technologie.
+                transformer l'agriculture Malienne grâce à la technologie.
               </p>
             </motion.div>
 
@@ -205,19 +203,19 @@ export default function AboutPage() {
               <TimelineItem
                 year="2023"
                 title="La Vision"
-                description="L'idée de Farmlink naît de l'observation des défis auxquels font face les agriculteurs africains : manque d'accès aux données, aux marchés et aux technologies modernes."
+                description="L'idée de Farmlink naît de l'observation des défis auxquels font face les agriculteurs maliens : manque d'accès aux données, aux marchés et aux technologies modernes."
                 icon={Lightbulb}
                 delay={0.1}
               />
               <TimelineItem
-                year="2024"
+                year="2025"
                 title="Le Lancement"
-                description="Farmlink voit le jour avec une mission claire : connecter les agriculteurs africains à la technologie pour améliorer leur productivité et leurs revenus."
+                description="Farmlink voit le jour avec une mission claire : connecter les agriculteurs maliens à la technologie pour améliorer leur productivité et leurs revenus."
                 icon={Zap}
                 delay={0.2}
               />
               <TimelineItem
-                year="2024"
+                year="2027"
                 title="L'Expansion"
                 description="Notre plateforme s'étend à travers l'Afrique, touchant des milliers d'agriculteurs et créant un écosystème technologique agricole durable."
                 icon={Globe}
@@ -249,7 +247,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Notre Mission</h3>
                   <p className="text-gray-600 leading-relaxed text-lg">
-                    Connecter les agriculteurs africains à la donnée, l'énergie et le marché pour créer 
+                    Connecter les agriculteurs maliens à la donnée, l'énergie et le marché pour créer 
                     un écosystème agricole durable, prospère et technologiquement avancé.
                   </p>
                 </CardContent>
@@ -315,54 +313,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Notre Équipe */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-green-50/30">
-        <div className="container mx-auto px-6">
-          <SectionTitle className="text-green-700 mb-16">
-            Rencontrez nos bâtisseurs
-          </SectionTitle>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Une équipe passionnée d'innovateurs, d'agriculteurs et de technologues 
-              unis par une vision commune : transformer l'agriculture africaine.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Placeholder pour l'équipe - à remplacer par de vraies données */}
-            {[1, 2, 3].map((_, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              >
-                <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
-                  <CardContent className="p-8 text-center">
-                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
-                      <Users className="w-12 h-12 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900">Équipe en construction</h3>
-                    <p className="text-gray-600 mb-4">Nous recrutons activement des talents passionnés</p>
-                    <Button variant="outline" size="sm">
-                      Rejoindre l'équipe
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* Nos Partenaires & Impact */}
       <section className="py-20 bg-white">
@@ -373,19 +324,19 @@ export default function AboutPage() {
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
             <StatCard
-              number="500+"
+              number="10+"
               label="Agriculteurs connectés"
               icon={Users}
               delay={0.1}
             />
             <StatCard
-              number="10"
+              number="1"
               label="Pays couverts"
               icon={MapPin}
               delay={0.2}
             />
             <StatCard
-              number="95%"
+              number="99%"
               label="Satisfaction client"
               icon={Star}
               delay={0.3}
@@ -402,13 +353,13 @@ export default function AboutPage() {
             <h3 className="text-2xl font-bold text-gray-900 mb-8">Nos Partenaires</h3>
             <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
               <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Partenaire 1</span>
+                <span className="text-gray-500 text-sm">Atlas capital Holding SA</span>
               </div>
               <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Partenaire 2</span>
+                <span className="text-gray-500 text-sm">Florynx labs SARL</span>
               </div>
               <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Partenaire 3</span>
+                <span className="text-gray-500 text-sm">Evotech mali SARL</span>
               </div>
             </div>
           </motion.div>
@@ -438,13 +389,12 @@ export default function AboutPage() {
               Ensemble, créons un avenir durable et prospère.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact">
               <Button size="lg" className="bg-white text-green-700 hover:bg-green-50 font-semibold">
                 Nous contacter
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-700 font-semibold">
-                Rejoindre notre mission
-              </Button>
+              </Link>
             </div>
           </motion.div>
         </div>

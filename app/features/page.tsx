@@ -91,27 +91,14 @@ const features = [
       "Planification saisonnière"
     ]
   },
-  {
-    id: "mobile",
-    title: "Application Mobile",
-    description: "Accédez à vos données partout",
-    icon: Smartphone,
-    color: "from-pink-500 to-rose-600",
-    bgColor: "bg-pink-50",
-    features: [
-      "Application iOS et Android",
-      "Synchronisation en temps réel",
-      "Mode hors ligne",
-      "Notifications push"
-    ]
-  }
+
 ]
 
 const stats = [
-  { label: "Agriculteurs connectés", value: "10,000+", icon: Users },
-  { label: "Transactions réalisées", value: "50,000+", icon: ShoppingCart },
-  { label: "Produits vendus", value: "100,000+", icon: TrendingUp },
-  { label: "Pays couverts", value: "15+", icon: Globe }
+  { label: "Agriculteurs connectés", value: "10+", icon: Users },
+  { label: "Transactions réalisées", value: "50+", icon: ShoppingCart },
+  { label: "Produits vendus", value: "10+", icon: TrendingUp },
+  { label: "Pays couverts", value: "1+", icon: Globe }
 ]
 
 const testimonials = [
@@ -124,14 +111,14 @@ const testimonials = [
   },
   {
     name: "Fatou Diallo",
-    role: "Productrice, Sénégal",
+    role: "Productrice, Mali",
     content: "Le marketplace m'a ouvert de nouveaux marchés pour mes légumes bio.",
     rating: 5,
     avatar: "FD"
   },
   {
     name: "Ibrahim Keita",
-    role: "Fermier, Côte d'Ivoire",
+    role: "Fermier, Mali",
     content: "La gestion d'équipe est maintenant un jeu d'enfant avec FarmLink.",
     rating: 5,
     avatar: "IK"
@@ -232,7 +219,7 @@ export default function FeaturesPage() {
               {
                 icon: Zap,
                 title: "Performance",
-                description: "Augmentez vos rendements de 30% en moyenne",
+                description: "Augmentez vos rendements de 40% en moyenne",
                 color: "from-yellow-500 to-orange-500"
               },
               {

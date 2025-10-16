@@ -73,12 +73,7 @@ const features = [
     description: "Organisez et suivez vos exploitations agricoles",
     color: "green"
   },
-  {
-    icon: Smartphone,
-    title: "Application mobile",
-    description: "Accédez à vos données depuis n'importe où",
-    color: "blue"
-  },
+ 
   {
     icon: Globe,
     title: "Données météo",
@@ -567,21 +562,7 @@ export default function DocsPage() {
                       </Button>
                     </div>
 
-                    <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                        <h3 className="font-semibold text-blue-800 dark:text-blue-200">
-                          Centre d'aide
-                        </h3>
-                      </div>
-                      <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">
-                        Consultez nos guides détaillés et tutoriels vidéo.
-                      </p>
-                      <Button size="sm" variant="outline" className="rounded-lg">
-                        Accéder au centre d'aide
-                        <ExternalLink className="h-3 w-3 ml-1" />
-                      </Button>
-                    </div>
+                    
                   </div>
                 </div>
               </section>

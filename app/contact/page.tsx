@@ -159,7 +159,7 @@ export default function ContactPage() {
                       href="mailto:contact@farmlink.africa" 
                       className="text-[#006633] hover:text-[#C1440E] font-medium"
                     >
-                      contact@farmlink.africa
+                      contact@farmlinkmali.com
                     </a>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default function ContactPage() {
                     </p>
                     <p className="text-[#C1440E] font-medium">
                       Bamako, Mali<br />
-                      ACI 2000, Rue 123
+                     moribabougou
                     </p>
                   </div>
                 </div>
