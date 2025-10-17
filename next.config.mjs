@@ -42,6 +42,14 @@ const nextConfig = {
       config.externals.push('@prisma/client')
     }
     
+    // Résoudre le problème "self is not defined"
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    }
+    
     // Optimisation pour la production
     if (!dev) {
       config.optimization.splitChunks = {

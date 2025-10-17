@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -135,19 +134,8 @@ export function WelcomeTutorial({ onComplete, onSkip }: WelcomeTutorialProps) {
   if (!showTutorial) return null
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          className="w-full max-w-2xl"
-        >
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
           <Card className="relative overflow-hidden">
             {/* Header avec progression */}
             <CardHeader className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
@@ -178,14 +166,8 @@ export function WelcomeTutorial({ onComplete, onSkip }: WelcomeTutorialProps) {
             </CardHeader>
 
             <CardContent className="p-6">
-              {/* Étape actuelle */}
-              <motion.div
-                key={currentStep}
-                initial={{ x: 20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -20, opacity: 0 }}
-                className="text-center mb-6"
-              >
+            {/* Étape actuelle */}
+            <div className="text-center mb-6 animate-in slide-in-from-right-4 duration-300">
                 <div className="flex justify-center mb-4">
                   <div className="p-4 rounded-full bg-gradient-to-r from-green-100 to-blue-100">
                     {currentStepData.icon}
@@ -207,7 +189,7 @@ export function WelcomeTutorial({ onComplete, onSkip }: WelcomeTutorialProps) {
                   <Star className="h-4 w-4" />
                   <span>+{currentStepData.points} points</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Navigation */}
               <div className="flex justify-between items-center">
@@ -241,11 +223,7 @@ export function WelcomeTutorial({ onComplete, onSkip }: WelcomeTutorialProps) {
 
               {/* Étapes complétées */}
               {completedSteps.length > 0 && (
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  className="mt-6 pt-4 border-t"
-                >
+                <div className="mt-6 pt-4 border-t animate-in slide-in-from-bottom-4 duration-300">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle className="h-4 w-4 text-green-500" />
                     <span className="text-sm font-medium">Étapes complétées</span>
@@ -258,12 +236,11 @@ export function WelcomeTutorial({ onComplete, onSkip }: WelcomeTutorialProps) {
                       />
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
             </CardContent>
           </Card>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  )
+        </div>
+      </div>
+    )
 }

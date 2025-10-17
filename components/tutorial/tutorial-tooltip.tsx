@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -95,19 +94,15 @@ export function TutorialTooltip({
   if (!isVisible || !targetElement) return null
 
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={tooltipRef}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.8 }}
-        className="fixed z-[9999] pointer-events-none"
-        style={{
-          left: tooltipPosition.x,
-          top: tooltipPosition.y,
-          transform: 'translate(-50%, 0)'
-        }}
-      >
+    <div
+      ref={tooltipRef}
+      className="fixed z-[9999] pointer-events-none animate-in fade-in-0 zoom-in-95 duration-300"
+      style={{
+        left: tooltipPosition.x,
+        top: tooltipPosition.y,
+        transform: 'translate(-50%, 0)'
+      }}
+    >
         <Card className="w-80 shadow-2xl border-2 border-green-500 bg-white">
           <CardContent className="p-4">
             {/* Header avec points */}
@@ -161,7 +156,6 @@ export function TutorialTooltip({
             </div>
           </CardContent>
         </Card>
-      </motion.div>
-    </AnimatePresence>
-  )
+      </div>
+    )
 }

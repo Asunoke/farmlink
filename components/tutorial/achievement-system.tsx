@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -171,14 +170,8 @@ export function AchievementSystem({
   return (
     <>
       {/* Notification d'achievement */}
-      <AnimatePresence>
-        {showNotification && newAchievement && (
-          <motion.div
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 300, opacity: 0 }}
-            className="fixed top-4 right-4 z-50"
-          >
+      {showNotification && newAchievement && (
+        <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-right-4 duration-300">
             <Card className="w-80 shadow-2xl border-2 border-yellow-400 bg-gradient-to-r from-yellow-50 to-orange-50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
@@ -196,9 +189,8 @@ export function AchievementSystem({
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Panel des achievements */}
       <Card className="w-full">
@@ -251,11 +243,9 @@ export function AchievementSystem({
                 
                 <div className="grid grid-cols-1 gap-2">
                   {categoryAchievements.map(achievement => (
-                    <motion.div
+                    <div
                       key={achievement.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className={`p-3 rounded-lg border transition-all ${
+                      className={`p-3 rounded-lg border transition-all animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ${
                         achievement.unlocked 
                           ? 'bg-green-50 border-green-200' 
                           : 'bg-muted/50 border-muted'
@@ -288,7 +278,7 @@ export function AchievementSystem({
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
