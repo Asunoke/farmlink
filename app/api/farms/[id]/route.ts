@@ -94,6 +94,55 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 }
 
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const session = await auth()
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+    }
+
+    const { id } = await params
+    const body = await request.json()
+    const validatedData = farmUpdateSchema.parse(body)
+
+    const existingFarm = await prisma.farm.findFirst({
+      where: {
+        id,
+        userId: session.user.id,
+      },
+    })
+
+    if (!existingFarm) {
+      return NextResponse.json({ error: "Ferme non trouvée" }, { status: 404 })
+    }
+
+    const updateData: any = { ...validatedData }
+    if (validatedData.plantingDate) {
+      updateData.plantingDate = new Date(validatedData.plantingDate)
+    }
+    if (validatedData.harvestDate) {
+      updateData.harvestDate = new Date(validatedData.harvestDate)
+    }
+    if (validatedData.area) {
+      updateData.totalArea = validatedData.area
+      delete updateData.area
+    }
+
+    const farm = await prisma.farm.update({
+      where: { id },
+      data: updateData,
+    })
+
+    return NextResponse.json(farm)
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 })
+    }
+    console.error("Farm update error:", error)
+    return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
+  }
+}
+
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth()
