@@ -8,6 +8,10 @@ const farmSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
   area: z.number().positive("La surface doit être positive"),
   location: z.string().min(1, "La localisation est requise"),
+  crop: z.string().optional(),
+  plantingDate: z.string().datetime().optional(),
+  harvestDate: z.string().datetime().optional(),
+  notes: z.string().optional(),
 })
 
 export async function GET(request: NextRequest) {
@@ -52,6 +56,10 @@ export async function POST(request: NextRequest) {
         name: validatedData.name,
         totalArea: validatedData.area,
         location: validatedData.location,
+        crop: validatedData.crop,
+        plantingDate: validatedData.plantingDate ? new Date(validatedData.plantingDate) : null,
+        harvestDate: validatedData.harvestDate ? new Date(validatedData.harvestDate) : null,
+        notes: validatedData.notes,
         userId: session.user.id,
       },
       include: { plots: true },

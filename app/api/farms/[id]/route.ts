@@ -5,7 +5,7 @@ import { z } from "zod"
 
 const farmUpdateSchema = z.object({
   name: z.string().min(1, "Le nom est requis").optional(),
-  crop: z.string().min(1, "La culture est requise").optional(),
+  crop: z.string().optional(),
   area: z.number().positive("La surface doit être positive").optional(),
   location: z.string().min(1, "La localisation est requise").optional(),
   plantingDate: z.string().datetime().optional(),
