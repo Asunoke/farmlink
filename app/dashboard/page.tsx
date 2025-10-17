@@ -13,8 +13,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Leaf, Users, TrendingUp, Cloud, Calculator, AlertTriangle, Droplets, Wind, Eye, Plus, X, Save } from "lucide-react"
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { WelcomeTutorial } from "@/components/tutorial/welcome-tutorial"
-import { useTutorial } from "@/hooks/use-tutorial"
 import { SubscriptionUsage } from "@/components/subscription-usage"
 import { TrialAlert } from "@/components/trial-alert"
 import { WeatherWidget } from "@/components/weather-widget"
@@ -242,10 +240,7 @@ export default function DashboardPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card 
-            className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105"
-            data-tutorial="farms-section"
-          >
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Fermes</CardTitle>
               <Leaf className="h-4 w-4 text-[#006633]" />
@@ -258,10 +253,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card 
-            className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105"
-            data-tutorial="team-section"
-          >
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Équipe</CardTitle>
               <Users className="h-4 w-4 text-[#006633]" />
@@ -274,10 +266,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card 
-            className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105"
-            data-tutorial="budget-section"
-          >
+          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Dépenses</CardTitle>
               <Calculator className="h-4 w-4 text-[#006633]" />

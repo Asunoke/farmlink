@@ -8,7 +8,6 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { TutorialProvider } from "@/components/tutorial/tutorial-provider"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -95,9 +94,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SessionProvider session={session}>
-            <TutorialProvider>
-              <Suspense fallback={null}>{children}</Suspense>
-            </TutorialProvider>
+            <Suspense fallback={null}>{children}</Suspense>
           </SessionProvider>
           <Toaster />
         </ThemeProvider>

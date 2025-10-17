@@ -19,7 +19,7 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import { Leaf, Plus, MapPin, Calendar, Droplets, Thermometer, TrendingUp, AlertCircle, Edit, Eye } from "lucide-react"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { LazyFarmsClient } from "@/components/lazy-components"
+import { FarmsClient } from "./farms-client"
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -170,7 +170,7 @@ export default async function FarmsPage() {
           </Card>
         </div>
 
-        <LazyFarmsClient farms={farms as Farm[]} />
+        <FarmsClient farms={farms as Farm[]} />
       </div>
     </DashboardLayout>
   )
