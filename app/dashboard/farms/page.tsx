@@ -113,10 +113,7 @@ export default async function FarmsPage() {
             <h1 className="text-3xl font-bold text-balance text-[#D4AF37]">Gestion des Fermes</h1>
             <p className="text-[#F5F5DC]/70">Gérez vos parcelles et suivez vos cultures</p>
           </div>
-              <Button className="bg-[#006633] hover:bg-[#C1440E] text-white transition-all duration-300 hover:scale-105">
-                <Plus className="mr-2 h-4 w-4" />
-            Nouvelle Ferme
-                </Button>
+              
         </div>
 
         {/* Farm Overview Cards */}

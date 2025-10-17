@@ -32,7 +32,43 @@ import {
 import { Leaf, MapPin, Calendar, Droplets, Thermometer, TrendingUp, AlertCircle, Edit, Eye, Plus, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
-type Farm = any
+type PlotStatus = "PREPARATION" | "PLANTED" | "GROWING" | "HARVESTED" | "FALLOW"
+
+interface Plot {
+  id: string
+  name: string
+  area: number
+  cropType: string
+  plantedDate: string | null
+  harvestDate: string | null
+  status: PlotStatus
+  farmId: string
+  createdAt: string
+  updatedAt: string
+  farm?: {
+    name: string
+    location: string
+  }
+}
+
+interface Farm {
+  id: string
+  name: string
+  location: string
+  totalArea: number
+  userId: string
+  createdAt: string
+  updatedAt: string
+  plots: Plot[]
+  _count?: {
+    plots: number
+  }
+  // Propriétés optionnelles utilisées dans le code mais pas dans le schéma Prisma
+  crop?: string
+  plantingDate?: string
+  harvestDate?: string
+  notes?: string
+}
 
 interface FarmsClientProps {
   farms: Farm[]
@@ -715,13 +751,13 @@ export function FarmsClient({ farms: initialFarms }: FarmsClientProps) {
                       <div className="flex justify-between">
                         <span className="text-sm font-medium">Date plantation:</span>
                         <span className="text-sm text-muted-foreground">
-                          {new Date(selectedFarm.plantingDate).toLocaleDateString("fr-FR")}
+                          {selectedFarm.plantingDate ? new Date(selectedFarm.plantingDate).toLocaleDateString("fr-FR") : "Non définie"}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm font-medium">Récolte prévue:</span>
                         <span className="text-sm text-muted-foreground">
-                          {new Date(selectedFarm.harvestDate).toLocaleDateString("fr-FR")}
+                          {selectedFarm.harvestDate ? new Date(selectedFarm.harvestDate).toLocaleDateString("fr-FR") : "Non définie"}
                         </span>
                       </div>
                       <div className="flex justify-between">
