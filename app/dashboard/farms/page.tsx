@@ -19,7 +19,14 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import { Leaf, Plus, MapPin, Calendar, Droplets, Thermometer, TrendingUp, AlertCircle, Edit, Eye } from "lucide-react"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { FarmsClient } from "./farms-client"
+import { LazyFarmsClient } from "@/components/lazy-components"
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Gestion des Fermes',
+  description: 'Gérez vos fermes et parcelles agricoles avec FarmLink. Suivez vos cultures, planifiez vos récoltes et optimisez vos rendements.',
+  keywords: ['gestion ferme', 'parcelles agricoles', 'cultures', 'récoltes', 'rendement agricole'],
+}
 
 type Farm = any
 
@@ -163,7 +170,7 @@ export default async function FarmsPage() {
           </Card>
         </div>
 
-        <FarmsClient farms={farms as Farm[]} />
+        <LazyFarmsClient farms={farms as Farm[]} />
       </div>
     </DashboardLayout>
   )
