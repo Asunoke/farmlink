@@ -16,8 +16,9 @@ export const LazyFarmsClient = dynamic(
   }
 )
 
+// Composants lazy pour les modules qui existent
 export const LazyBudgetClient = dynamic(
-  () => import('@/app/dashboard/budget/budget-client').then(mod => ({ default: mod.BudgetClient })),
+  () => import('@/app/dashboard/budget/page').then(mod => ({ default: mod.default })),
   {
     loading: () => (
       <div className="flex items-center justify-center h-64">
@@ -29,7 +30,7 @@ export const LazyBudgetClient = dynamic(
 )
 
 export const LazyTeamClient = dynamic(
-  () => import('@/app/dashboard/team/team-client').then(mod => ({ default: mod.TeamClient })),
+  () => import('@/app/dashboard/team/page').then(mod => ({ default: mod.default })),
   {
     loading: () => (
       <div className="flex items-center justify-center h-64">
@@ -41,7 +42,7 @@ export const LazyTeamClient = dynamic(
 )
 
 export const LazyMarketplaceClient = dynamic(
-  () => import('@/app/marketplace/marketplace-client').then(mod => ({ default: mod.MarketplaceClient })),
+  () => import('@/app/marketplace/page').then(mod => ({ default: mod.default })),
   {
     loading: () => (
       <div className="flex items-center justify-center h-64">
