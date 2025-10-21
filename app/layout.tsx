@@ -12,20 +12,23 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "FarmLink - Gestion Agricole Intelligente",
+    default: "FarmLink - Augmentez vos rendements de 40% | Gestion Agricole Mali",
     template: "%s | FarmLink"
   },
-  description: "Plateforme SaaS de gestion agricole pour le Mali - Gérez votre ferme, parcelles, budget et équipe en toute simplicité. Optimisez vos rendements agricoles.",
+  description: "Plateforme SaaS de gestion agricole pour le Mali - Augmentez vos rendements de 40%, réduisez vos coûts de 30%. Gérez vos fermes, parcelles, budget et équipe. Essai gratuit 30 jours.",
   keywords: [
-    "gestion agricole",
+    "gestion agricole Mali",
+    "logiciel ferme Mali",
+    "agriculture Mali",
+    "rendement agricole",
+    "gestion parcelles Mali",
+    "budget agricole Mali",
+    "SaaS agricole Mali",
+    "agriculture digitale Mali",
     "ferme Mali",
-    "agriculture",
-    "parcelles",
-    "budget agricole",
-    "rendement",
-    "SaaS agricole",
-    "gestion ferme",
-    "agriculture digitale"
+    "agriculture intelligente",
+    "météo agricole Mali",
+    "marketplace agricole Mali"
   ],
   authors: [{ name: "FarmLink Team" }],
   creator: "FarmLink",
@@ -43,22 +46,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_ML',
     url: '/',
-    title: 'FarmLink - Gestion Agricole Intelligente',
-    description: 'Plateforme SaaS de gestion agricole pour le Mali - Gérez votre ferme, parcelles, budget et équipe en toute simplicité.',
+    title: 'FarmLink - Augmentez vos rendements de 40% | Gestion Agricole Mali',
+    description: 'Plateforme SaaS de gestion agricole pour le Mali - Augmentez vos rendements de 40%, réduisez vos coûts de 30%. Essai gratuit 30 jours.',
     siteName: 'FarmLink',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'FarmLink - Gestion Agricole Intelligente',
+        alt: 'FarmLink - Augmentez vos rendements agricoles de 40% au Mali',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FarmLink - Gestion Agricole Intelligente',
-    description: 'Plateforme SaaS de gestion agricole pour le Mali - Gérez votre ferme en toute simplicité.',
+    title: 'FarmLink - Augmentez vos rendements de 40% | Gestion Agricole Mali',
+    description: 'Plateforme SaaS de gestion agricole pour le Mali - Augmentez vos rendements de 40%, réduisez vos coûts de 30%.',
     images: ['/og-image.jpg'],
   },
   robots: {

@@ -5,10 +5,16 @@ import { ArrowRight, Leaf, Users, TrendingUp, Cloud, Calculator, Shield, Shoppin
 import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
 import { AnimatedSection, AnimatedCard, AnimatedButton } from "@/components/animated-section"
+import { FeatureShowcase } from "@/components/feature-showcase"
+import { SocialProof } from "@/components/social-proof"
+import { LazySection, PerformanceMonitor, CriticalCSSLoader, ResourceHints } from "@/components/performance-optimizer"
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PerformanceMonitor />
+      <CriticalCSSLoader />
+      <ResourceHints />
       <MainNav />
 
       {/* Hero Section */}
@@ -21,18 +27,18 @@ export default function LandingPage() {
               {"Nouveau : Intégration météo en temps réel"}
             </Badge>
             <h1 className="text-4xl lg:text-6xl font-bold text-balance mb-6 text-[#D4AF37]">
-              {"La plateforme complète pour"}
-              <span className="text-[#F5F5DC]"> {"gérer votre ferme"}</span>
+              {"Augmentez vos rendements de 40%"}
+              <span className="text-[#F5F5DC]"> {"avec FarmLink"}</span>
             </h1>
             <p className="text-xl text-[#F5F5DC] text-pretty mb-8 max-w-2xl mx-auto">
               {
-                "Optimisez vos rendements agricoles avec FarmLink. Gérez vos équipes, suivez vos budgets et prenez des décisions éclairées grâce aux prévisions météo."
+                "La plateforme intelligente qui transforme votre agriculture au Mali. Gérez vos fermes, optimisez vos coûts et maximisez vos profits avec des outils adaptés à votre contexte local."
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <AnimatedButton>
-                <Button size="lg" asChild className="bg-[#006633] hover:bg-[#C1440E] text-white border-0 transition-all duration-300">
-                  <Link href="/dashboard">
+                <Button size="lg" asChild className="bg-[#006633] hover:bg-[#C1440E] text-white border-0 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <Link href="/auth/signup">
                     {"Essai gratuit"}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -41,7 +47,7 @@ export default function LandingPage() {
               <AnimatedButton>
                 <Button variant="outline" size="lg" asChild className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
                   <Link href="/features">
-                    {"Découvrir les fonctionnalités"}
+                    {"Voir les fonctionnalitées"}
                   </Link>
                 </Button>
               </AnimatedButton>
@@ -53,13 +59,21 @@ export default function LandingPage() {
       {/* Stats Section */}
       <section className="py-16 bg-[#F5F5DC] border-y border-[#D4AF37]/20">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl lg:text-3xl font-bold text-[#0D1B2A] mb-4">
+              {"Rejoignez plus de 500 agriculteurs maliens"}
+            </h2>
+            <p className="text-lg text-[#0D1B2A]/80">
+              {"Qui ont déjà transformé leur agriculture avec FarmLink"}
+            </p>
+          </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <AnimatedCard delay={0.1} className="text-center group hover:shadow-lg p-4 rounded-lg">
               <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">500+</div>
               <div className="text-[#0D1B2A] font-medium">Fermes connectées</div>
             </AnimatedCard>
             <AnimatedCard delay={0.2} className="text-center group hover:shadow-lg p-4 rounded-lg">
-              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">25%</div>
+              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">40%</div>
               <div className="text-[#0D1B2A] font-medium">{"Augmentation des rendements"}</div>
             </AnimatedCard>
             <AnimatedCard delay={0.3} className="text-center group hover:shadow-lg p-4 rounded-lg">
@@ -169,6 +183,12 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Feature Showcase */}
+      <FeatureShowcase />
+
+      {/* Social Proof Section */}
+      <SocialProof />
 
       {/* Pricing Section */}
       <section id="pricing" className="py-24 bg-[#0D1B2A]">
@@ -286,6 +306,80 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-24 bg-[#F5F5DC]">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-balance mb-4 text-[#0D1B2A]">
+              {"Questions fréquentes"}
+            </h2>
+            <p className="text-xl text-[#0D1B2A]/80 text-pretty max-w-2xl mx-auto">
+              {"Tout ce que vous devez savoir sur FarmLink"}
+            </p>
+          </AnimatedSection>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8">
+              <AnimatedCard delay={0.1}>
+                <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-3 text-[#0D1B2A]">
+                      {"Comment FarmLink s'adapte-t-il au contexte malien ?"}
+                    </h3>
+                    <p className="text-[#0D1B2A]/70">
+                      FarmLink est spécialement conçu pour l'agriculture malienne avec des fonctionnalités 
+                      adaptées aux cultures locales (riz, mil, sorgho), aux saisons et aux défis climatiques du Mali.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedCard>
+
+              <AnimatedCard delay={0.2}>
+                <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-3 text-[#0D1B2A]">
+                      {"Puis-je utiliser FarmLink sans connexion internet ?"}
+                    </h3>
+                    <p className="text-[#0D1B2A]/70">
+                      Oui ! FarmLink fonctionne en mode hors-ligne pour la saisie des données. 
+                      La synchronisation se fait automatiquement dès que vous retrouvez une connexion.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedCard>
+
+              <AnimatedCard delay={0.3}>
+                <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-3 text-[#0D1B2A]">
+                      {"Y a-t-il une formation pour apprendre à utiliser FarmLink ?"}
+                    </h3>
+                    <p className="text-[#0D1B2A]/70">
+                      Absolument ! Nous proposons des formations gratuites en français et en langues locales, 
+                      ainsi qu'un support technique 24/7 pour vous accompagner.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedCard>
+
+              <AnimatedCard delay={0.4}>
+                <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-3 text-[#0D1B2A]">
+                      {"Comment puis-je commencer avec FarmLink ?"}
+                    </h3>
+                    <p className="text-[#0D1B2A]/70">
+                      C'est très simple ! Créez votre compte gratuit, ajoutez vos fermes et parcelles, 
+                      et commencez à suivre vos activités. L'essai gratuit dure 30 jours.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedCard>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-[#006633] to-[#0D1B2A]">
         <div className="container mx-auto px-4">
@@ -299,14 +393,14 @@ export default function LandingPage() {
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="bg-[#D4AF37] hover:bg-[#C1440E] text-[#0D1B2A] transition-all duration-300 hover:scale-105">
-                <Link href="/dashboard">
-                  {"Commencer gratuitement"}
+              <Button size="lg" asChild className="bg-[#D4AF37] hover:bg-[#C1440E] text-[#0D1B2A] transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                <Link href="/auth/signup">
+                  {"Essai gratuit"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300">
-                {"Planifier une démo"}
+                {"Voir la démo"}
               </Button>
             </div>
           </div>
