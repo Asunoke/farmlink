@@ -152,17 +152,18 @@ export function ResourceHints() {
       document.head.appendChild(link)
     })
 
-    // Preload critical resources
+    // Preload critical resources (only if they exist)
     const criticalResources = [
-      '/images/hero-bg.jpg',
-      '/images/feature-icons.svg'
+      '/hero-bg.jpg',
+      '/african-farmer-man.jpg',
+      '/african-farmer-woman.jpg'
     ]
 
     criticalResources.forEach(resource => {
       const link = document.createElement('link')
       link.rel = 'preload'
       link.href = resource
-      link.as = resource.endsWith('.svg') ? 'image' : 'image'
+      link.as = 'image'
       document.head.appendChild(link)
     })
   }, [])

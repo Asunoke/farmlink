@@ -7,6 +7,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, CheckCircle, Star, TrendingUp } from "lucide-react"
 
+// Type declarations for Google Analytics
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void
+  }
+}
+
 // A/B Test variants for hero section
 export const heroVariants = {
   A: {
