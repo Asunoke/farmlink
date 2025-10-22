@@ -151,7 +151,7 @@ export function FeatureShowcase() {
                   </div>
                 </div>
                 
-                <div className="p-6 bg-gradient-to-br from-[#F5F5DC] to-white min-h-[400px] relative overflow-hidden">
+                <div className="p-0 bg-white min-h-[400px] relative overflow-hidden rounded-b-lg">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeFeature}
@@ -159,69 +159,36 @@ export function FeatureShowcase() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.5 }}
-                      className="space-y-4"
+                      className="relative"
                     >
-                      {/* Mockup Elements */}
-                      <div className="grid grid-cols-2 gap-4">
-                        <motion.div
-                          className={`p-4 rounded-lg bg-gradient-to-r ${features[activeFeature].color} text-white`}
-                          animate={isAnimating ? { scale: [1, 1.05, 1] } : {}}
-                          transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0 }}
-                        >
-                          <div className="h-4 bg-white/30 rounded mb-2"></div>
-                          <div className="h-3 bg-white/20 rounded w-3/4"></div>
-                        </motion.div>
+                      {/* Real Dashboard Screenshot */}
+                      <motion.div
+                        className="relative"
+                        animate={isAnimating ? { scale: [1, 1.02, 1] } : {}}
+                        transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0 }}
+                      >
+                        <img
+                          src="/dasgh.PNG"
+                          alt="Dashboard FarmLink - Interface de gestion agricole"
+                          className="w-full h-auto rounded-b-lg shadow-lg"
+                          loading="lazy"
+                        />
                         
+                        {/* Overlay with feature highlight */}
                         <motion.div
-                          className="p-4 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40"
-                          animate={isAnimating ? { scale: [1, 1.05, 1] } : {}}
+                          className="absolute inset-0 bg-gradient-to-t from-[#006633]/20 to-transparent rounded-b-lg"
+                          animate={isAnimating ? { opacity: [0.3, 0.6, 0.3] } : {}}
+                          transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0 }}
+                        />
+                        
+                        {/* Feature highlight indicator */}
+                        <motion.div
+                          className="absolute top-4 right-4 bg-[#D4AF37] text-[#0D1B2A] px-3 py-1 rounded-full text-sm font-semibold shadow-lg"
+                          animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
                           transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0, delay: 0.2 }}
                         >
-                          <div className="space-y-2">
-                            <div className="h-3 bg-[#D4AF37]/60 rounded"></div>
-                            <div className="h-3 bg-[#D4AF37]/40 rounded w-2/3"></div>
-                            <div className="h-3 bg-[#D4AF37]/30 rounded w-1/2"></div>
-                          </div>
+                          {features[activeFeature].title}
                         </motion.div>
-                      </div>
-
-                      <motion.div
-                        className="p-4 rounded-lg bg-[#006633]/10 border border-[#006633]/20"
-                        animate={isAnimating ? { scale: [1, 1.05, 1] } : {}}
-                        transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0, delay: 0.4 }}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center">
-                            {React.createElement(features[activeFeature].icon, { className: "h-4 w-4 text-white" })}
-                          </div>
-                          <div className="flex-1">
-                            <div className="h-3 bg-[#006633]/60 rounded mb-2"></div>
-                            <div className="h-2 bg-[#006633]/40 rounded w-1/2"></div>
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      {/* Animated Chart */}
-                      <motion.div
-                        className="mt-6"
-                        animate={isAnimating ? { scale: [1, 1.02, 1] } : {}}
-                        transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0, delay: 0.6 }}
-                      >
-                        <div className="h-32 bg-gradient-to-t from-[#006633]/20 to-transparent rounded-lg p-4 relative">
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <div className="flex items-end space-x-2 h-20">
-                              {[40, 60, 45, 80, 70, 90, 85].map((height, index) => (
-                                <motion.div
-                                  key={index}
-                                  className="bg-gradient-to-t from-[#006633] to-[#D4AF37] rounded-t"
-                                  style={{ width: '12px', height: `${height}%` }}
-                                  animate={isAnimating ? { height: [`${height}%`, `${height + 10}%`, `${height}%`] } : {}}
-                                  transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0, delay: index * 0.1 }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
                       </motion.div>
                     </motion.div>
                   </AnimatePresence>
