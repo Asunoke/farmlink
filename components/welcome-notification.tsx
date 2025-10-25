@@ -39,18 +39,18 @@ export function WelcomeNotification({
   if (!isVisible) return null
 
   return (
-    <Card className="border-green-200 bg-green-50/50 shadow-lg">
+    <Card className="border border-[#006633]/30 bg-gradient-to-r from-[#006633]/10 to-[#006633]/5 shadow-lg">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100">
-              <CheckCircle className="h-5 w-5 text-green-600" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#006633]/20">
+              <CheckCircle className="h-5 w-5 text-[#006633]" />
             </div>
             <div>
-              <CardTitle className="text-lg text-green-800">
+              <CardTitle className="text-lg text-[#006633]">
                 Bienvenue sur FarmLink ! 🎉
               </CardTitle>
-              <CardDescription className="text-green-700">
+              <CardDescription className="text-[#006633]/80">
                 Salut {name} ! Votre compte a été créé avec succès.
               </CardDescription>
             </div>
@@ -59,17 +59,17 @@ export function WelcomeNotification({
             variant="ghost"
             size="sm"
             onClick={handleClose}
-            className="h-8 w-8 p-0 text-green-600 hover:text-green-800"
+            className="h-8 w-8 p-0 text-[#006633] hover:text-[#C1440E]"
           >
             <X className="h-4 w-4" />
           </Button>
         </div>
       </CardHeader>
       <CardContent className="pt-0">
-        <p className="text-sm text-green-700 mb-3">
+        <p className="text-sm text-[#006633]/80 mb-3">
           Vous pouvez maintenant commencer à utiliser toutes les fonctionnalités de FarmLink :
         </p>
-        <ul className="text-sm text-green-700 space-y-1">
+        <ul className="text-sm text-[#006633]/80 space-y-1">
           <li>• Gérer vos fermes et parcelles</li>
           <li>• Suivre vos dépenses et revenus</li>
           <li>• Organiser votre équipe</li>

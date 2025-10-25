@@ -113,13 +113,13 @@ export function Notifications({ className }: NotificationsProps) {
   }
 
   return (
-    <Card className={cn("w-full max-w-md", className)}>
+    <Card className={cn("w-full max-w-md bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium flex items-center gap-2">
+        <CardTitle className="text-sm font-medium flex items-center gap-2 text-[#D4AF37]">
           <Bell className="h-4 w-4" />
           Notifications
           {unreadCount > 0 && (
-            <Badge variant="destructive" className="ml-2">
+            <Badge variant="destructive" className="ml-2 bg-[#C1440E] text-white">
               {unreadCount}
             </Badge>
           )}
@@ -129,7 +129,7 @@ export function Notifications({ className }: NotificationsProps) {
             variant="ghost"
             size="sm"
             onClick={markAllAsRead}
-            className="text-xs"
+            className="text-xs text-[#F5F5DC] hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           >
             Tout marquer comme lu
           </Button>
@@ -139,10 +139,10 @@ export function Notifications({ className }: NotificationsProps) {
         <ScrollArea className="h-64">
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#D4AF37]"></div>
             </div>
           ) : notifications.length === 0 ? (
-            <div className="text-center text-muted-foreground py-8">
+            <div className="text-center text-[#F5F5DC]/80 py-8">
               Aucune notification
             </div>
           ) : (

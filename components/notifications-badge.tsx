@@ -62,7 +62,7 @@ export function NotificationsBadge() {
   if (!session?.user || isLoading || unreadCount === 0) return null
 
   return (
-    <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-red-500 text-white">
+    <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-[#C1440E] text-white">
       {unreadCount > 99 ? '99+' : unreadCount}
     </Badge>
   )

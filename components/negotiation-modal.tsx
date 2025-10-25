@@ -112,13 +112,13 @@ export function NegotiationModal({
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md bg-[#0B1623] border border-[#D4AF37]/30">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-[#D4AF37]">
             <MessageSquare className="h-5 w-5" />
             Démarrer une négociation
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-[#F5F5DC]/80">
             {offerId ? `Négocier pour: ${offerTitle}` : `Proposer pour: ${demandTitle}`}
           </DialogDescription>
         </DialogHeader>
@@ -126,7 +126,7 @@ export function NegotiationModal({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="price">Prix (fcfa)</Label>
+              <Label htmlFor="price" className="text-[#F5F5DC]">Prix (fcfa)</Label>
               <Input
                 id="price"
                 type="number"
@@ -135,10 +135,11 @@ export function NegotiationModal({
                 value={formData.price}
                 onChange={(e) => handleInputChange("price", e.target.value)}
                 placeholder="0"
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div>
-              <Label htmlFor="quantity">Quantité ({unit})</Label>
+              <Label htmlFor="quantity" className="text-[#F5F5DC]">Quantité ({unit})</Label>
               <Input
                 id="quantity"
                 type="number"
@@ -147,18 +148,20 @@ export function NegotiationModal({
                 value={formData.quantity}
                 onChange={(e) => handleInputChange("quantity", e.target.value)}
                 placeholder="0"
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
           </div>
 
           <div>
-            <Label htmlFor="message">Message (optionnel)</Label>
+            <Label htmlFor="message" className="text-[#F5F5DC]">Message (optionnel)</Label>
             <Textarea
               id="message"
               value={formData.message}
               onChange={(e) => handleInputChange("message", e.target.value)}
               placeholder="Ajoutez un message pour expliquer votre proposition..."
               rows={3}
+              className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
             />
           </div>
 
@@ -166,7 +169,7 @@ export function NegotiationModal({
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1"
+              className="flex-1 bg-[#006633] hover:bg-[#C1440E] text-white"
             >
               {isSubmitting ? (
                 "Envoi..."
@@ -181,6 +184,7 @@ export function NegotiationModal({
               type="button"
               variant="outline"
               onClick={() => setIsOpen(false)}
+              className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
             >
               Annuler
             </Button>
