@@ -313,8 +313,8 @@ export default function LandingPage() {
                       {"Puis-je utiliser FarmLink sans connexion internet ?"}
                     </h3>
                     <p className="text-[#0D1B2A]/70">
-                      Oui ! FarmLink fonctionne en mode hors-ligne pour la saisie des données. 
-                      La synchronisation se fait automatiquement dès que vous retrouvez une connexion.
+                      Non, FarmLink nécessite une connexion internet pour fonctionner. 
+                      Toutes les données sont stockées en ligne et synchronisées en temps réel.
                     </p>
                   </CardContent>
                 </Card>
