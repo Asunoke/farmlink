@@ -3,6 +3,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
+import { startTrial } from "@/lib/trial-limits"
 export const runtime = "nodejs";
 export async function POST(request: NextRequest) {
   try {
@@ -26,6 +27,8 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
+        subscription: 'FREE',
+        trialStartDate: new Date(), // Démarrer l'essai gratuit immédiatement
       },
     })
 

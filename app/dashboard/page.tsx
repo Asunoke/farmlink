@@ -15,6 +15,7 @@ import { Leaf, Users, TrendingUp, Cloud, Calculator, AlertTriangle, Droplets, Wi
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { SubscriptionUsage } from "@/components/subscription-usage"
 import { TrialAlert } from "@/components/trial-alert"
+import { TrialBanner } from "@/components/trial-banner"
 import { WeatherWidget } from "@/components/weather-widget"
 import { WeatherAlert } from "@/components/weather-alert"
 import { useSession } from "next-auth/react"
@@ -226,6 +227,9 @@ export default function DashboardPage() {
           </Alert>
         )}
 
+        {/* Trial Banner */}
+        <TrialBanner />
+        
         {/* Trial Alert */}
         <TrialAlert />
         
