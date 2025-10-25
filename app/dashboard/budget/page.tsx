@@ -365,33 +365,33 @@ export default function BudgetPage() {
                   Nouvelle Dépense
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
+              <DialogContent className="sm:max-w-[500px] bg-[#0B1623] border border-[#D4AF37]/30">
                 <DialogHeader>
-                  <DialogTitle>Ajouter une Dépense</DialogTitle>
-                  <DialogDescription>Enregistrez une nouvelle dépense.</DialogDescription>
+                  <DialogTitle className="text-[#D4AF37]">Ajouter une Dépense</DialogTitle>
+                  <DialogDescription className="text-[#F5F5DC]/80">Enregistrez une nouvelle dépense.</DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label>Type de transaction</Label>
+                    <Label className="text-[#F5F5DC]">Type de transaction</Label>
                     <Select value={formType} onValueChange={(v: "EXPENSE" | "REVENUE") => setFormType(v)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="EXPENSE">Dépense</SelectItem>
-                        <SelectItem value="REVENUE">Revenu</SelectItem>
+                      <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
+                        <SelectItem value="EXPENSE" className="text-[#F5F5DC] hover:bg-[#006633]/20">Dépense</SelectItem>
+                        <SelectItem value="REVENUE" className="text-[#F5F5DC] hover:bg-[#006633]/20">Revenu</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="category">Catégorie</Label>
+                    <Label htmlFor="category" className="text-[#F5F5DC]">Catégorie</Label>
                     <Select value={formCategory} onValueChange={setFormCategory}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                         <SelectValue placeholder="Sélectionner une catégorie" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
                         {(formType === "EXPENSE" ? expenseCategories : revenueCategories).map((category) => (
-                          <SelectItem key={category} value={category}>
+                          <SelectItem key={category} value={category} className="text-[#F5F5DC] hover:bg-[#006633]/20">
                             {category}
                           </SelectItem>
                         ))}
@@ -400,37 +400,37 @@ export default function BudgetPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="amount">Montant (FCFA)</Label>
-                      <Input id="amount" type="number" placeholder="0" value={formAmount} onChange={(e) => setFormAmount(e.target.value)} />
+                      <Label htmlFor="amount" className="text-[#F5F5DC]">Montant (FCFA)</Label>
+                      <Input id="amount" type="number" placeholder="0" value={formAmount} onChange={(e) => setFormAmount(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="date">Date</Label>
-                      <Input id="date" type="date" value={formDate} onChange={(e) => setFormDate(e.target.value)} />
+                      <Label htmlFor="date" className="text-[#F5F5DC]">Date</Label>
+                      <Input id="date" type="date" value={formDate} onChange={(e) => setFormDate(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="plot">Parcelle concernée</Label>
+                    <Label htmlFor="plot" className="text-[#F5F5DC]">Parcelle concernée</Label>
                     <Select value={formPlotId} onValueChange={setFormPlotId}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                         <SelectValue placeholder="Sélectionner" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
                         {plots.map((p) => (
-                          <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                          <SelectItem key={p.id} value={p.id} className="text-[#F5F5DC] hover:bg-[#006633]/20">{p.name}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="description">Description</Label>
-                    <Textarea id="description" placeholder="Détails de la transaction..." value={formDescription} onChange={(e) => setFormDescription(e.target.value)} />
+                    <Label htmlFor="description" className="text-[#F5F5DC]">Description</Label>
+                    <Textarea id="description" placeholder="Détails de la transaction..." value={formDescription} onChange={(e) => setFormDescription(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                   </div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button variant="outline" type="button" onClick={() => setIsAddDialogOpen(false)}>
+                  <Button variant="outline" type="button" onClick={() => setIsAddDialogOpen(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                     Annuler
                   </Button>
-                  <Button type="button" onClick={handleCreateTransaction} disabled={loading || !canSubmitCreate}>
+                  <Button type="button" onClick={handleCreateTransaction} disabled={loading || !canSubmitCreate} className="bg-[#006633] hover:bg-[#C1440E] text-white">
                     {loading ? "Enregistrement..." : "Enregistrer"}
                   </Button>
                 </div>

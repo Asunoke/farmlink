@@ -125,47 +125,47 @@ export default async function FarmsPage() {
 
         {/* Farm Overview Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Total Fermes</CardTitle>
               <Leaf className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{farms.length}</div>
-              <p className="text-xs text-[#F5F5DC]/70">{totalArea.toFixed(1)} hectares au total</p>
+              <p className="text-xs text-[#F5F5DC]/80">{totalArea.toFixed(1)} hectares au total</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Parcelles Actives</CardTitle>
               <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{activePlots}</div>
-              <p className="text-xs text-[#F5F5DC]/70">Sur {totalPlots} parcelles</p>
+              <p className="text-xs text-[#F5F5DC]/80">Sur {totalPlots} parcelles</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Prêt à Récolter</CardTitle>
               <Calendar className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{readyToHarvest}</div>
-              <p className="text-xs text-[#F5F5DC]/70">Parcelle{readyToHarvest > 1 ? 's' : ''} récoltée{readyToHarvest > 1 ? 's' : ''}</p>
+              <p className="text-xs text-[#F5F5DC]/80">Parcelle{readyToHarvest > 1 ? 's' : ''} récoltée{readyToHarvest > 1 ? 's' : ''}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Total Parcelles</CardTitle>
               <AlertCircle className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{totalPlots}</div>
-              <p className="text-xs text-[#F5F5DC]/70">Parcelle{totalPlots > 1 ? 's' : ''} enregistrée{totalPlots > 1 ? 's' : ''}</p>
+              <p className="text-xs text-[#F5F5DC]/80">Parcelle{totalPlots > 1 ? 's' : ''} enregistrée{totalPlots > 1 ? 's' : ''}</p>
             </CardContent>
           </Card>
         </div>

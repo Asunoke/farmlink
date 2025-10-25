@@ -397,41 +397,41 @@ export default function TeamPage() {
                   Nouveau Membre
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
+              <DialogContent className="sm:max-w-[500px] bg-[#0B1623] border border-[#D4AF37]/30">
                 <DialogHeader>
-                  <DialogTitle>Ajouter un Membre d'Équipe</DialogTitle>
-                  <DialogDescription>Enregistrez un nouveau membre dans votre équipe agricole.</DialogDescription>
+                  <DialogTitle className="text-[#D4AF37]">Ajouter un Membre d'Équipe</DialogTitle>
+                  <DialogDescription className="text-[#F5F5DC]/80">Enregistrez un nouveau membre dans votre équipe agricole.</DialogDescription>
                 </DialogHeader>
                 <form action={handleAddMember} className="grid gap-4 py-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="member-name">Nom complet</Label>
-                      <Input name="name" id="member-name" placeholder="Ex: Sekou Diallo" required />
+                      <Label htmlFor="member-name" className="text-[#F5F5DC]">Nom complet</Label>
+                      <Input name="name" id="member-name" placeholder="Ex: Sekou Diallo" required className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="member-role">Rôle</Label>
-                      <Input name="role" id="member-role" placeholder="Ex: Ouvrier agricole" required />
+                      <Label htmlFor="member-role" className="text-[#F5F5DC]">Rôle</Label>
+                      <Input name="role" id="member-role" placeholder="Ex: Ouvrier agricole" required className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="phone">Téléphone</Label>
-                      <Input name="phone" id="phone" placeholder="+223 XX XX XX XX" />
+                      <Label htmlFor="phone" className="text-[#F5F5DC]">Téléphone</Label>
+                      <Input name="phone" id="phone" placeholder="+223 XX XX XX XX" className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input name="email" id="email" type="email" placeholder="email@farmlink.ml" />
+                      <Label htmlFor="email" className="text-[#F5F5DC]">Email</Label>
+                      <Input name="email" id="email" type="email" placeholder="email@farmlink.ml" className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="salary">Salaire mensuel (FCFA)</Label>
-                    <Input name="salary" id="salary" type="number" placeholder="0" />
+                    <Label htmlFor="salary" className="text-[#F5F5DC]">Salaire mensuel (FCFA)</Label>
+                    <Input name="salary" id="salary" type="number" placeholder="0" className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
                   </div>
                   <div className="flex justify-end gap-2">
-                    <Button type="button" variant="outline" onClick={() => setIsAddMemberDialogOpen(false)}>
+                    <Button type="button" variant="outline" onClick={() => setIsAddMemberDialogOpen(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                       Annuler
                     </Button>
-                    <Button type="submit">Ajouter le Membre</Button>
+                    <Button type="submit" className="bg-[#006633] hover:bg-[#C1440E] text-white">Ajouter le Membre</Button>
                   </div>
                 </form>
               </DialogContent>
@@ -441,7 +441,7 @@ export default function TeamPage() {
 
         {/* Team Overview */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Total Équipe</CardTitle>
               <Users className="h-4 w-4 text-[#006633]" />
