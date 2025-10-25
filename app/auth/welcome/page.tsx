@@ -5,12 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { AuthLayout } from "@/components/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, ArrowRight, Leaf, Users, Calculator, TrendingUp } from "lucide-react"
+import { CheckCircle, ArrowRight, Leaf, Users, Calculator, TrendingUp, Play } from "lucide-react"
+import { useOnboarding } from "@/hooks/use-onboarding"
 
 export default function WelcomePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [countdown, setCountdown] = useState(5)
+  const { setShowOnboarding } = useOnboarding()
   
   const name = searchParams.get("name") || "Nouvel utilisateur"
   const email = searchParams.get("email") || ""
@@ -109,6 +111,16 @@ export default function WelcomePage() {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => {
+                  setShowOnboarding(true)
+                  router.push("/auth/signin")
+                }}
+                className="flex items-center gap-2 bg-[#006633] hover:bg-[#C1440E]"
+              >
+                <Play className="h-4 w-4" />
+                Commencer le tutoriel
+              </Button>
               <Button 
                 onClick={() => router.push("/auth/signin")}
                 className="flex items-center gap-2"

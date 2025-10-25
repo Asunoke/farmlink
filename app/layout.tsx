@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
+import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
@@ -97,7 +98,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SessionProvider session={session}>
-            <Suspense fallback={null}>{children}</Suspense>
+            <OnboardingProvider>
+              <Suspense fallback={null}>{children}</Suspense>
+            </OnboardingProvider>
           </SessionProvider>
           <Toaster />
         </ThemeProvider>
