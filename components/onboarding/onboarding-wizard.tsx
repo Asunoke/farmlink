@@ -167,8 +167,8 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <Card className={`w-full max-w-5xl max-h-[90vh] overflow-hidden border-0 shadow-2xl transition-all duration-500 ${
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4">
+      <Card className={`w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden border-0 shadow-2xl transition-all duration-500 ${
         isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
       }`}>
         <CardHeader className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] text-white">
@@ -204,9 +204,9 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
         </CardHeader>
 
         <CardContent className="p-0">
-          <div className="grid grid-cols-1 lg:grid-cols-4 h-[600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-4 h-[500px] sm:h-[600px]">
             {/* Sidebar avec les étapes */}
-            <div className="lg:col-span-1 bg-gradient-to-b from-[#F5F5DC] to-[#FFF8DC] p-6 border-r border-[#D4AF37]/20">
+            <div className="lg:col-span-1 bg-gradient-to-b from-[#F5F5DC] to-[#FFF8DC] p-4 sm:p-6 border-r border-[#D4AF37]/20">
               <h3 className="font-bold text-[#0D1B2A] mb-6 text-lg flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-[#006633]" />
                 Parcours d'apprentissage
@@ -252,7 +252,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
             </div>
 
             {/* Contenu principal */}
-            <div className="lg:col-span-3 p-8 bg-gradient-to-br from-white to-[#F5F5DC]/30">
+            <div className="lg:col-span-3 p-4 sm:p-8 bg-gradient-to-br from-white to-[#F5F5DC]/30">
               <div className={`transition-all duration-500 ${
                 isTransitioning ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
               }`}>
@@ -272,7 +272,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                   </div>
                 </div>
 
-                <div className="h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37] scrollbar-track-transparent">
+                <div className="h-[250px] sm:h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37] scrollbar-track-transparent">
                   <CurrentStepComponent 
                     onNext={handleNext}
                     onSkip={handleSkip}
@@ -280,22 +280,22 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                   />
                 </div>
 
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#D4AF37]/20">
+                <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-[#D4AF37]/20 gap-4">
                   <Button
                     variant="outline"
                     onClick={handlePrevious}
                     disabled={currentStep === 0}
-                    className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300 disabled:opacity-50"
+                    className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300 disabled:opacity-50 w-full sm:w-auto"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Précédent
                   </Button>
 
-                  <div className="flex items-center space-x-3">
+                  <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
                     <Button
                       variant="ghost"
                       onClick={handleSkip}
-                      className="text-[#0D1B2A]/70 hover:text-[#0D1B2A] hover:bg-[#D4AF37]/10 transition-all duration-300"
+                      className="text-[#0D1B2A]/70 hover:text-[#0D1B2A] hover:bg-[#D4AF37]/10 transition-all duration-300 w-full sm:w-auto"
                     >
                       <SkipForward className="h-4 w-4 mr-2" />
                       Passer le tutoriel
@@ -303,7 +303,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     <Button
                       onClick={handleNext}
                       disabled={isLoading}
-                      className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] hover:from-[#C1440E] hover:to-[#006633] text-white px-6 py-2 transition-all duration-300 shadow-lg hover:shadow-xl"
+                      className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] hover:from-[#C1440E] hover:to-[#006633] text-white px-6 py-2 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-2">

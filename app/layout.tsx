@@ -8,6 +8,7 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
+import { ChatbotTrigger } from "@/components/chatbot/chatbot-trigger"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     siteName: 'FarmLink',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/hero-bg.jpg',
         width: 1200,
         height: 630,
         alt: 'FarmLink - Augmentez vos rendements agricoles de 40% au Mali',
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'FarmLink - Augmentez vos rendements de 40% | Gestion Agricole Mali',
     description: 'Plateforme SaaS de gestion agricole pour le Mali - Augmentez vos rendements de 40%, réduisez vos coûts de 30%.',
-    images: ['/og-image.jpg'],
+    images: ['/hero-bg.jpg'],
   },
   robots: {
     index: true,
@@ -100,6 +101,7 @@ export default async function RootLayout({
           <SessionProvider session={session}>
             <OnboardingProvider>
               <Suspense fallback={null}>{children}</Suspense>
+              <ChatbotTrigger />
             </OnboardingProvider>
           </SessionProvider>
           <Toaster />
