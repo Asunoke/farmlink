@@ -2,6 +2,7 @@
 
 import { useOnboarding } from "@/hooks/use-onboarding"
 import { OnboardingWizard } from "./onboarding-wizard"
+import { OnboardingDetector } from "./onboarding-detector"
 
 interface OnboardingProviderProps {
   children: React.ReactNode
@@ -17,6 +18,7 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
   return (
     <>
+      <OnboardingDetector />
       {children}
       {showOnboarding && (
         <OnboardingWizard

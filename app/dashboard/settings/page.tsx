@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -31,14 +32,18 @@ import {
   Moon, 
   Sun,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
+  Calendar
 } from "lucide-react"
 import { toast } from "sonner"
 import { useTheme } from "next-themes"
+import { format } from "date-fns"
+import { fr } from "date-fns/locale"
 
 type Theme = "light" | "dark" | "system"
 
 export default function SettingsPage() {
+  const { data: session } = useSession()
   const { theme, setTheme } = useTheme()
   const [currentTheme, setCurrentTheme] = useState<Theme>("system")
   const [notifications, setNotifications] = useState({
@@ -48,6 +53,7 @@ export default function SettingsPage() {
   })
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [userData, setUserData] = useState<any>(null)
 
   useEffect(() => {
     // Initialize theme from localStorage or system preference
@@ -57,6 +63,24 @@ export default function SettingsPage() {
       setTheme(savedTheme)
     }
   }, [setTheme])
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (session?.user?.id) {
+        try {
+          const response = await fetch('/api/user/profile')
+          if (response.ok) {
+            const data = await response.json()
+            setUserData(data)
+          }
+        } catch (error) {
+          console.error('Erreur lors de la récupération des données utilisateur:', error)
+        }
+      }
+    }
+
+    fetchUserData()
+  }, [session?.user?.id])
 
   const handleThemeChange = (newTheme: Theme) => {
     setCurrentTheme(newTheme)
@@ -264,12 +288,56 @@ export default function SettingsPage() {
               <CardContent className="space-y-4">
                 <div className="text-center space-y-2">
                   <div className="w-16 h-16 bg-[#006633]/10 rounded-full flex items-center justify-center mx-auto">
-                    <User className="h-8 w-8 text-[#006633]" />
+                    {userData?.image ? (
+                      <img 
+                        src={userData.image} 
+                        alt="Avatar" 
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="h-8 w-8 text-[#006633]" />
+                    )}
                   </div>
                   <div>
-                    <p className="font-medium text-[#F5F5DC]">Utilisateur FarmLink</p>
-                    <p className="text-sm text-[#F5F5DC]/70">Membre depuis 2024</p>
+                    <p className="font-medium text-[#F5F5DC]">
+                      {userData?.name || session?.user?.name || "Utilisateur FarmLink"}
+                    </p>
+                    <p className="text-sm text-[#F5F5DC]/70">
+                      {userData?.email || session?.user?.email}
+                    </p>
+                    <p className="text-xs text-[#F5F5DC]/60 flex items-center justify-center gap-1 mt-1">
+                      <Calendar className="h-3 w-3" />
+                      Membre depuis {userData?.createdAt ? format(new Date(userData.createdAt), 'MMMM yyyy', { locale: fr }) : '2024'}
+                    </p>
                   </div>
+                </div>
+                
+                <Separator className="bg-[#D4AF37]/20" />
+                
+                {/* Plan d'abonnement */}
+                <div className="text-center space-y-2">
+                  <Badge 
+                    variant="outline" 
+                    className={`border-[#D4AF37] text-[#D4AF37] ${
+                      userData?.subscription === 'FREE' ? 'bg-gray-100 text-gray-600 border-gray-300' :
+                      userData?.subscription === 'BASIC' ? 'bg-[#006633]/10 text-[#006633] border-[#006633]' :
+                      userData?.subscription === 'PREMIUM' ? 'bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]' :
+                      'bg-[#C1440E]/10 text-[#C1440E] border-[#C1440E]'
+                    }`}
+                  >
+                    {userData?.subscription === 'FREE' ? 'Gratuit' :
+                     userData?.subscription === 'BASIC' ? 'Professional' :
+                     userData?.subscription === 'PREMIUM' ? 'Business' :
+                     userData?.subscription === 'ENTERPRISE' ? 'Enterprise' :
+                     'Gratuit'}
+                  </Badge>
+                  <p className="text-xs text-[#F5F5DC]/60">
+                    {userData?.subscription === 'FREE' ? 'Plan de base' :
+                     userData?.subscription === 'BASIC' ? 'Plan professionnel' :
+                     userData?.subscription === 'PREMIUM' ? 'Plan business' :
+                     userData?.subscription === 'ENTERPRISE' ? 'Plan entreprise' :
+                     'Plan de base'}
+                  </p>
                 </div>
                 
                 <Separator className="bg-[#D4AF37]/20" />
@@ -286,6 +354,15 @@ export default function SettingsPage() {
                     <Shield className="mr-2 h-4 w-4" />
                     Sécurité
                   </Button>
+                  
+                  {userData?.subscription === 'FREE' && (
+                    <Button variant="outline" className="w-full justify-start border-[#006633] text-[#006633] hover:bg-[#006633] hover:text-white" asChild>
+                      <a href="/pricing">
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Upgradez votre plan
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
