@@ -27,12 +27,7 @@ export function AnimatedSection({
     visible: { 
       y: 0, 
       x: 0, 
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        delay,
-        ease: "easeOut"
-      }
+      opacity: 1
     },
     hidden: directionVariants[direction]
   }
@@ -43,6 +38,11 @@ export function AnimatedSection({
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={animateVariants}
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: "easeOut"
+      }}
       className={className}
     >
       {children}
@@ -70,9 +70,9 @@ export function AnimatedCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
       whileHover={hover ? { 
-        y: -5, 
-        scale: 1.02,
-        transition: { duration: 0.2 }
+        y: -2, 
+        scale: 1.01,
+        transition: { duration: 0.3, ease: "easeOut" }
       } : {}}
       className={className}
     >
@@ -95,12 +95,12 @@ export function AnimatedButton({
   return (
     <motion.div
       whileHover={{ 
-        scale: 1.05,
-        transition: { duration: 0.2 }
+        scale: 1.02,
+        transition: { duration: 0.3, ease: "easeOut" }
       }}
       whileTap={{ 
-        scale: 0.95,
-        transition: { duration: 0.1 }
+        scale: 0.98,
+        transition: { duration: 0.2, ease: "easeOut" }
       }}
       className={className}
       onClick={onClick}

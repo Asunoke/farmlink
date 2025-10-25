@@ -164,8 +164,8 @@ export function FeatureShowcase() {
                       {/* Real Dashboard Screenshot */}
                       <motion.div
                         className="relative"
-                        animate={isAnimating ? { scale: [1, 1.02, 1] } : {}}
-                        transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0 }}
+                        animate={isAnimating ? { scale: [1, 1.01, 1] } : {}}
+                        transition={{ duration: 0.8, repeat: isAnimating ? 1 : 0, ease: "easeInOut" }}
                       >
                         <img
                           src="/dasgh.PNG"
@@ -177,15 +177,15 @@ export function FeatureShowcase() {
                         {/* Overlay with feature highlight */}
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-t from-[#006633]/20 to-transparent rounded-b-lg"
-                          animate={isAnimating ? { opacity: [0.3, 0.6, 0.3] } : {}}
-                          transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0 }}
+                          animate={isAnimating ? { opacity: [0.2, 0.4, 0.2] } : {}}
+                          transition={{ duration: 0.8, repeat: isAnimating ? 1 : 0, ease: "easeInOut" }}
                         />
                         
                         {/* Feature highlight indicator */}
                         <motion.div
                           className="absolute top-4 right-4 bg-[#D4AF37] text-[#0D1B2A] px-3 py-1 rounded-full text-sm font-semibold shadow-lg"
-                          animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
-                          transition={{ duration: 0.5, repeat: isAnimating ? 2 : 0, delay: 0.2 }}
+                          animate={isAnimating ? { scale: [1, 1.05, 1] } : {}}
+                          transition={{ duration: 0.8, repeat: isAnimating ? 1 : 0, delay: 0.3, ease: "easeInOut" }}
                         >
                           {features[activeFeature].title}
                         </motion.div>
@@ -199,8 +199,8 @@ export function FeatureShowcase() {
             {/* Floating Action Button */}
             <motion.div
               className="absolute -bottom-4 -right-4"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
               <Button
                 size="lg"

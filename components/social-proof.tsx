@@ -6,11 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { 
-  Play, 
   Star, 
-  Users, 
-  TrendingUp, 
-  Award,
   CheckCircle,
   Quote
 } from "lucide-react"
@@ -48,32 +44,6 @@ const testimonials = [
   }
 ]
 
-const achievements = [
-  {
-    icon: Users,
-    number: "500+",
-    label: "Agriculteurs connectés",
-    color: "from-green-500 to-emerald-600"
-  },
-  {
-    icon: TrendingUp,
-    number: "40%",
-    label: "Augmentation moyenne des rendements",
-    color: "from-blue-500 to-cyan-600"
-  },
-  {
-    icon: Award,
-    number: "30%",
-    label: "Réduction des coûts",
-    color: "from-orange-500 to-amber-600"
-  },
-  {
-    icon: Star,
-    number: "4.9/5",
-    label: "Note moyenne des utilisateurs",
-    color: "from-purple-500 to-violet-600"
-  }
-]
 
 export function SocialProof() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
@@ -81,7 +51,7 @@ export function SocialProof() {
   return (
     <section className="py-24 bg-gradient-to-br from-[#F5F5DC] to-[#FFF8DC]">
       <div className="container mx-auto px-4">
-        {/* Achievements */}
+        {/* Header */}
         <div className="text-center mb-16">
           <motion.h2
             className="text-3xl lg:text-4xl font-bold text-[#0D1B2A] mb-4"
@@ -90,7 +60,7 @@ export function SocialProof() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {"Rejoignez une communauté qui grandit"}
+            {"Ce que disent nos utilisateurs"}
           </motion.h2>
           <motion.p
             className="text-xl text-[#0D1B2A]/80 max-w-2xl mx-auto"
@@ -99,58 +69,12 @@ export function SocialProof() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {"Des résultats concrets pour des agriculteurs réels"}
+            {"Des témoignages authentiques d'agriculteurs qui ont transformé leur activité"}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {achievements.map((achievement, index) => (
-            <motion.div
-              key={index}
-              className="text-center p-6 bg-white/50 rounded-xl border border-[#D4AF37]/20 hover:shadow-lg transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <motion.div
-                className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${achievement.color} rounded-full mb-4`}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-              >
-                <achievement.icon className="w-8 h-8 text-white" />
-              </motion.div>
-              <motion.div
-                className="text-3xl font-bold text-[#0D1B2A] mb-2"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-              >
-                {achievement.number}
-              </motion.div>
-              <div className="text-sm text-[#0D1B2A]/70">{achievement.label}</div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Testimonials Carousel */}
+        {/* Testimonials */}
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-2xl lg:text-3xl font-bold text-[#0D1B2A] mb-4">
-              {"Ce que disent nos utilisateurs"}
-            </h3>
-            <p className="text-lg text-[#0D1B2A]/80">
-              {"Des témoignages authentiques d'agriculteurs qui ont transformé leur activité"}
-            </p>
-          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -161,7 +85,7 @@ export function SocialProof() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -2 }}
               >
                 <Card className="bg-white border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-xl transition-all duration-300 h-full">
                   <CardContent className="p-6 h-full flex flex-col">
