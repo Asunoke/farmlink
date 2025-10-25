@@ -198,25 +198,25 @@ export default function ProfilePage() {
         </TabsList>
 
         <TabsContent value="profile" className="space-y-6">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
                 <Edit className="h-5 w-5 text-[#006633]" />
                 Informations personnelles
               </CardTitle>
-              <CardDescription className="text-[#F5F5DC]/70">Modifiez vos informations de base</CardDescription>
+              <CardDescription className="text-[#F5F5DC]/80">Modifiez vos informations de base</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleProfileUpdate} className="space-y-4">
                 {error && (
-                  <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+                  <Alert className="border border-[#C1440E]/30 bg-[#C1440E]/10">
                     <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
                     <AlertDescription className="text-[#F5F5DC]">{error}</AlertDescription>
                   </Alert>
                 )}
                 
                 {message && (
-                  <Alert className="border-[#006633] bg-[#006633]/10">
+                  <Alert className="border border-[#006633]/30 bg-[#006633]/10">
                     <CheckCircle className="h-4 w-4 text-[#006633]" />
                     <AlertDescription className="text-[#F5F5DC]">{message}</AlertDescription>
                   </Alert>
@@ -276,14 +276,14 @@ export default function ProfilePage() {
             <CardContent>
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 {error && (
-                  <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+                  <Alert className="border border-[#C1440E]/30 bg-[#C1440E]/10">
                     <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
                     <AlertDescription className="text-[#F5F5DC]">{error}</AlertDescription>
                   </Alert>
                 )}
                 
                 {message && (
-                  <Alert className="border-[#006633] bg-[#006633]/10">
+                  <Alert className="border border-[#006633]/30 bg-[#006633]/10">
                     <CheckCircle className="h-4 w-4 text-[#006633]" />
                     <AlertDescription className="text-[#F5F5DC]">{message}</AlertDescription>
                   </Alert>

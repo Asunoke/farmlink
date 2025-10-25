@@ -70,12 +70,12 @@ export default function NegotiationsIndexPage() {
 
         <div className="grid gap-3">
           {items.length === 0 && (
-            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
-              <CardContent className="p-6 text-sm text-[#F5F5DC]/70">Aucune négociation.</CardContent>
+            <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
+              <CardContent className="p-6 text-sm text-[#F5F5DC]/80">Aucune négociation.</CardContent>
             </Card>
           )}
           {items.map((n) => (
-            <Card key={n.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <Card key={n.id} className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-base font-medium text-[#D4AF37]">
                   {n.offer ? `Offre: ${n.offer.title}` : n.demand ? `Demande: ${n.demand.title}` : n.id}
@@ -83,7 +83,7 @@ export default function NegotiationsIndexPage() {
                 <Badge className="bg-[#006633] text-white">{n.status}</Badge>
               </CardHeader>
               <CardContent className="flex items-center justify-between">
-                <div className="text-xs text-[#F5F5DC]/70">MAJ: {new Date(n.updatedAt).toLocaleString()}</div>
+                <div className="text-xs text-[#F5F5DC]/80">MAJ: {new Date(n.updatedAt).toLocaleString()}</div>
                 <Link href={`/marketplace/negotiation/${n.id}`}>
                   <Button size="sm" variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">Ouvrir</Button>
                 </Link>

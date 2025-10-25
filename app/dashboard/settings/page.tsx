@@ -216,13 +216,13 @@ export default function SettingsPage() {
             </Card>
 
             {/* Notifications Settings */}
-            <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+            <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
                   <Bell className="h-5 w-5 text-[#006633]" />
                   Notifications
                 </CardTitle>
-                <CardDescription className="text-[#F5F5DC]/70">
+                <CardDescription className="text-[#F5F5DC]/80">
                   Configurez vos préférences de notification
                 </CardDescription>
               </CardHeader>
@@ -231,7 +231,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label className="text-base text-[#F5F5DC]">Notifications par email</Label>
-                      <p className="text-sm text-[#F5F5DC]/70">
+                      <p className="text-sm text-[#F5F5DC]/80">
                         Recevez des mises à jour importantes par email
                       </p>
                     </div>
@@ -246,7 +246,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <Label className="text-base text-[#F5F5DC]">Notifications push</Label>
-                      <p className="text-sm text-[#F5F5DC]/70">
+                      <p className="text-sm text-[#F5F5DC]/80">
                         Recevez des notifications dans votre navigateur
                       </p>
                     </div>

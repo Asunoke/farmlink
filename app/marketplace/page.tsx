@@ -198,7 +198,7 @@ export default function MarketplacePage() {
         {/* Tabs */}
         {!isLoading && !error && (
           <Tabs defaultValue="offers" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-[#0B1623] border border-[#D4AF37]/20">
+            <TabsList className="grid w-full grid-cols-2 bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
               <TabsTrigger value="offers" className="flex items-center gap-2 data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 <Package className="h-4 w-4" />
                 Offres ({offers.length})
@@ -211,11 +211,11 @@ export default function MarketplacePage() {
 
             <TabsContent value="offers" className="mt-6">
               {offers.length === 0 ? (
-                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+                <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                   <CardContent className="text-center py-12">
                     <Package className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune offre trouvée</h3>
-                    <p className="text-[#F5F5DC]/70 mb-4">
+                    <p className="text-[#F5F5DC]/80 mb-4">
                       Il n'y a actuellement aucune offre correspondant à vos critères.
                     </p>
                     <Link href="/marketplace/offers/create">
@@ -229,12 +229,12 @@ export default function MarketplacePage() {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {offers.map((offer) => (
-                <Card key={offer.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Card key={offer.id} className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-lg text-[#D4AF37]">{offer.title}</CardTitle>
-                        <CardDescription className="mt-1 text-[#F5F5DC]/70">{offer.description}</CardDescription>
+                        <CardDescription className="mt-1 text-[#F5F5DC]/80">{offer.description}</CardDescription>
                       </div>
                       <Badge className="bg-[#006633] text-white">
                         {categories.find((c) => c.value === offer.category)?.label}

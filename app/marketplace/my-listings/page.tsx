@@ -238,7 +238,7 @@ export default function MyListingsPage() {
             </div>
 
           <Tabs defaultValue="offers" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-[#0B1623] border border-[#D4AF37]/20">
+            <TabsList className="grid w-full grid-cols-2 bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
               <TabsTrigger value="offers" className="data-[state=active]:bg-[#006633] data-[state=active]:text-white text-[#F5F5DC]">
                 Mes offres ({offers.length})
               </TabsTrigger>
@@ -249,7 +249,7 @@ export default function MyListingsPage() {
 
             <TabsContent value="offers" className="mt-6">
               {offers.length === 0 ? (
-                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+                <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                   <CardContent className="text-center py-12">
                     <Package className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune offre</h3>
@@ -267,7 +267,7 @@ export default function MyListingsPage() {
               ) : (
                 <div className="space-y-4">
                   {offers.map((offer) => (
-                  <Card key={offer.id} className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <Card key={offer.id} className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
@@ -352,7 +352,7 @@ export default function MyListingsPage() {
 
             <TabsContent value="demands" className="mt-6">
               {demands.length === 0 ? (
-                <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+                <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                   <CardContent className="text-center py-12">
                     <MessageSquare className="h-12 w-12 text-[#D4AF37] mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2 text-[#F5F5DC]">Aucune demande</h3>
