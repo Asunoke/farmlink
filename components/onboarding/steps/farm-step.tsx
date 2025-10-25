@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Crop, Calendar, FileText } from "lucide-react"
+import { MapPin, Crop, Calendar, FileText, Play, Eye } from "lucide-react"
+import { DemoPresentation } from "../demo-presentation"
 
 interface FarmStepProps {
   onNext: () => void
@@ -16,6 +17,7 @@ interface FarmStepProps {
 }
 
 export function FarmStep({ onNext, onSkip, isLoading }: FarmStepProps) {
+  const [showDemo, setShowDemo] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -32,6 +34,10 @@ export function FarmStep({ onNext, onSkip, isLoading }: FarmStepProps) {
     onNext()
   }
 
+  if (showDemo) {
+    return <DemoPresentation stepId="farm" onNext={onNext} />
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center mb-6">
@@ -44,6 +50,26 @@ export function FarmStep({ onNext, onSkip, isLoading }: FarmStepProps) {
         <p className="text-[#0D1B2A]/70 text-sm">
           Commencez par ajouter les informations de base de votre exploitation
         </p>
+      </div>
+
+      {/* Boutons d'action */}
+      <div className="flex justify-center gap-4 mb-6">
+        <Button
+          onClick={() => setShowDemo(true)}
+          variant="outline"
+          className="border-[#006633] text-[#006633] hover:bg-[#006633] hover:text-white"
+        >
+          <Play className="h-4 w-4 mr-2" />
+          Voir la démonstration
+        </Button>
+        <Button
+          onClick={() => setShowDemo(false)}
+          variant="outline"
+          className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
+        >
+          <Eye className="h-4 w-4 mr-2" />
+          Créer directement
+        </Button>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
