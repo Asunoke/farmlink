@@ -13,47 +13,37 @@ import { cn } from "@/lib/utils"
 import { UserNav } from "@/components/user-nav"
 import { NotificationsBadge } from "@/components/notifications-badge"
 
-const navigation = [
+// Navigation principale - éléments essentiels
+const mainNavigation = [
   {
     name: "Tableau de Bord",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: "Gestion des Fermes",
+    name: "Fermes",
     href: "/dashboard/farms",
     icon: Leaf,
   },
   {
-    name: "Budget & Dépenses",
+    name: "Finances",
     href: "/dashboard/budget",
     icon: Calculator,
   },
   {
-    name: "Gestion d'Équipe",
+    name: "Équipe",
     href: "/dashboard/team",
     icon: Users,
   },
   {
-    name: "Mon Profil",
-    href: "/dashboard/profile",
-    icon: User,
-  },
-  {
-    name: "Marché Agricole",
+    name: "Marché",
     href: "/marketplace",
     icon: ShoppingCart,
   },
-  {
-    name: "Mes Annonces",
-    href: "/marketplace/my-listings",
-    icon: ShoppingCart,
-  },
-  {
-    name: "Mes Négociations",
-    href: "/marketplace/negotiation",
-    icon: TrendingUp,
-  },
+]
+
+// Navigation secondaire - éléments moins fréquents
+const secondaryNavigation = [
   {
     name: "Météo",
     href: "/dashboard/weather",
@@ -63,6 +53,11 @@ const navigation = [
     name: "Rapports",
     href: "/dashboard/reports",
     icon: TrendingUp,
+  },
+  {
+    name: "Profil",
+    href: "/dashboard/profile",
+    icon: User,
   },
   {
     name: "Paramètres",
@@ -78,6 +73,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [showSecondary, setShowSecondary] = useState(false)
 
   return (
     <div className="min-h-screen bg-[#0D1B2A]">
@@ -93,25 +89,54 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </Link>
             </div>
             <nav className="flex-1 space-y-1 px-3 py-4">
-              {navigation.map((item) => {
-                const isActive = pathname === item.href
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={cn(
-                      "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg",
-                      isActive
-                        ? "bg-[#006633] text-white shadow-lg"
-                        : "text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]",
-                    )}
-                    onClick={() => setSidebarOpen(false)}
-                  >
-                    <item.icon className="mr-3 h-4 w-4" />
-                    {item.name}
-                  </Link>
-                )
-              })}
+              {/* Navigation principale */}
+              <div className="space-y-1">
+                {mainNavigation.map((item) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={cn(
+                        "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                        isActive
+                          ? "bg-[#006633] text-white shadow-lg"
+                          : "text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]",
+                      )}
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      <item.icon className="mr-3 h-4 w-4" />
+                      {item.name}
+                    </Link>
+                  )
+                })}
+              </div>
+
+              {/* Séparateur */}
+              <div className="border-t border-[#D4AF37]/20 my-4" />
+
+              {/* Navigation secondaire */}
+              <div className="space-y-1">
+                {secondaryNavigation.map((item) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={cn(
+                        "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                        isActive
+                          ? "bg-[#006633] text-white shadow-lg"
+                          : "text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]",
+                      )}
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      <item.icon className="mr-3 h-4 w-4" />
+                      {item.name}
+                    </Link>
+                  )
+                })}
+              </div>
             </nav>
           </div>
         </SheetContent>
@@ -130,7 +155,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => {
+                  {/* Navigation principale */}
+                  {mainNavigation.map((item) => {
                     const isActive = pathname === item.href
                     return (
                       <li key={item.name}>
@@ -151,6 +177,54 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   })}
                 </ul>
               </li>
+              
+              {/* Séparateur */}
+              <li>
+                <div className="border-t border-[#D4AF37]/20" />
+              </li>
+              
+              {/* Navigation secondaire avec bouton de toggle */}
+              <li>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-[#D4AF37]/70 uppercase tracking-wider">
+                    Plus
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowSecondary(!showSecondary)}
+                    className="text-[#D4AF37]/70 hover:text-[#D4AF37] p-1"
+                  >
+                    <span className="sr-only">Toggle secondary navigation</span>
+                    <span className={`transform transition-transform ${showSecondary ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </Button>
+                </div>
+                {showSecondary && (
+                  <ul role="list" className="-mx-2 mt-2 space-y-1">
+                    {secondaryNavigation.map((item) => {
+                      const isActive = pathname === item.href
+                      return (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                              isActive
+                                ? "bg-[#006633] text-white shadow-lg"
+                                : "text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]",
+                            )}
+                          >
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            {item.name}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </li>
             </ul>
           </nav>
         </div>
@@ -158,8 +232,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
       {/* Main content */}
       <div className="lg:pl-64">
-        {/* Top navigation */}
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-[#D4AF37]/20 bg-[#0D1B2A]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D1B2A]/60 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        {/* Top navigation - version allégée */}
+        <div className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 border-b border-[#D4AF37]/20 bg-[#0D1B2A]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D1B2A]/60 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
           <Button variant="ghost" size="sm" className="lg:hidden text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
             <span className="sr-only">Ouvrir la sidebar</span>
@@ -168,24 +242,23 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
             <div className="flex flex-1" />
             <div className="flex items-center gap-x-4 lg:gap-x-6">
+              {/* Notifications - seulement si nécessaire */}
               <Link href="/dashboard/notifications">
                 <Button variant="ghost" size="sm" className="relative text-[#F5F5DC] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
-                  <Bell className="h-5 w-5" />
+                  <Bell className="h-4 w-4" />
                   <NotificationsBadge />
-                  <span className="sr-only">Voir les notifications</span>
+                  <span className="sr-only">Notifications</span>
                 </Button>
               </Link>
-
-              <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-[#D4AF37]/20" />
 
               <UserNav />
             </div>
           </div>
         </div>
 
-        {/* Page content */}
-        <main className="py-6">
-          <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+        {/* Page content - version allégée */}
+        <main className="py-4">
+          <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">{children}</div>
         </main>
       </div>
     </div>
