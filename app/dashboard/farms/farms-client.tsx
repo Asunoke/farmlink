@@ -445,46 +445,48 @@ export function FarmsClient({ farms: initialFarms }: FarmsClientProps) {
     <div className="grid gap-6 lg:grid-cols-3">
       {/* Farm List */}
       <div className="lg:col-span-1">
-        <Card>
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
           <CardHeader>
             <div className="flex justify-between items-center">
               <div>
-                <CardTitle>Mes Fermes</CardTitle>
-                <CardDescription>Cliquez sur une ferme pour voir les détails</CardDescription>
+                <CardTitle className="text-[#D4AF37]">Mes Fermes</CardTitle>
+                <CardDescription className="text-[#F5F5DC]/80">Cliquez sur une ferme pour voir les détails</CardDescription>
               </div>
               <Dialog open={isAddFarmDialogOpen} onOpenChange={setIsAddFarmDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button size="sm">
+                  <Button size="sm" className="bg-[#006633] hover:bg-[#C1440E] text-white">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[500px]">
+                <DialogContent className="sm:max-w-[500px] bg-[#0B1623] border border-[#D4AF37]/30">
                   <DialogHeader>
-                    <DialogTitle>Créer une Nouvelle Ferme</DialogTitle>
-                    <DialogDescription>Créez une nouvelle ferme pour gérer vos cultures.</DialogDescription>
+                    <DialogTitle className="text-[#D4AF37]">Créez une Nouvelle Ferme</DialogTitle>
+                    <DialogDescription className="text-[#F5F5DC]/80">Créez une nouvelle ferme pour gérer vos cultures.</DialogDescription>
                   </DialogHeader>
                   <form action={handleAddFarm} className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="name">Nom de la ferme</Label>
+                      <Label htmlFor="name" className="text-[#F5F5DC]">Nom de la ferme</Label>
                       <Input 
                         name="name" 
                         id="name" 
                         placeholder="Ex: Ferme de Bamako" 
                         required 
+                        className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="crop">Culture principale</Label>
+                        <Label htmlFor="crop" className="text-[#F5F5DC]">Culture principale</Label>
                         <Input 
                           name="crop" 
                           id="crop" 
                           placeholder="Ex: Mil" 
                           required 
+                          className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="area">Surface totale (ha)</Label>
+                        <Label htmlFor="area" className="text-[#F5F5DC]">Surface totale (ha)</Label>
                         <Input 
                           name="area" 
                           id="area" 
@@ -492,51 +494,56 @@ export function FarmsClient({ farms: initialFarms }: FarmsClientProps) {
                           step="0.1"
                           placeholder="0.0" 
                           required 
+                          className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                         />
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="location">Localisation</Label>
+                      <Label htmlFor="location" className="text-[#F5F5DC]">Localisation</Label>
                       <Input 
                         name="location" 
                         id="location" 
                         placeholder="Ex: Bamako, Mali" 
                         required 
+                        className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="plantingDate">Date de plantation</Label>
+                        <Label htmlFor="plantingDate" className="text-[#F5F5DC]">Date de plantation</Label>
                         <Input 
                           name="plantingDate" 
                           id="plantingDate" 
                           type="date" 
                           required 
+                          className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="harvestDate">Date de récolte prévue</Label>
+                        <Label htmlFor="harvestDate" className="text-[#F5F5DC]">Date de récolte prévue</Label>
                         <Input 
                           name="harvestDate" 
                           id="harvestDate" 
                           type="date" 
                           required 
+                          className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                         />
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="notes">Notes</Label>
+                      <Label htmlFor="notes" className="text-[#F5F5DC]">Notes</Label>
                       <Textarea 
                         name="notes" 
                         id="notes" 
                         placeholder="Observations, remarques..." 
+                        className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                       />
                     </div>
                     <div className="flex justify-end gap-2">
-                      <Button type="button" variant="outline" onClick={() => setIsAddFarmDialogOpen(false)}>
+                      <Button type="button" variant="outline" onClick={() => setIsAddFarmDialogOpen(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                         Annuler
                       </Button>
-                      <Button type="submit" disabled={loading}>
+                      <Button type="submit" disabled={loading} className="bg-[#006633] hover:bg-[#C1440E] text-white">
                         {loading ? "Création..." : "Créer la ferme"}
                       </Button>
                     </div>

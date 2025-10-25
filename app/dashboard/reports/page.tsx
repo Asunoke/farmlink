@@ -52,19 +52,19 @@ export default function ReportsPage() {
         <h1 className="text-2xl font-bold mb-6 text-[#D4AF37]">Rapports et recommandations</h1>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-[#D4AF37]">Surfaces totales</CardTitle>
           </CardHeader>
           <CardContent className="text-3xl font-bold text-[#F5F5DC]">{summary.totalArea.toLocaleString()} ha</CardContent>
         </Card>
-        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-[#D4AF37]">Membres de l'équipe</CardTitle>
           </CardHeader>
           <CardContent className="text-3xl font-bold text-[#F5F5DC]">{summary.staffCount}</CardContent>
         </Card>
-        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
           <CardHeader>
             <CardTitle className="text-[#D4AF37]">Catégorie de dépense principale</CardTitle>
           </CardHeader>
@@ -73,13 +73,13 @@ export default function ReportsPage() {
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
           <CardHeader>
             <CardTitle className="text-[#D4AF37]">Dépenses par catégorie</CardTitle>
           </CardHeader>
           <CardContent>
             {Object.keys(summary.expenseByCat).length === 0 ? (
-              <div className="text-sm text-[#F5F5DC]/70">Aucune dépense.</div>
+              <div className="text-sm text-[#F5F5DC]/80">Aucune dépense.</div>
             ) : (
               <div className="space-y-2">
                 {Object.entries(summary.expenseByCat).map(([cat, amt]) => (
@@ -93,13 +93,13 @@ export default function ReportsPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+        <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
           <CardHeader>
             <CardTitle className="text-[#D4AF37]">Recommandations</CardTitle>
           </CardHeader>
           <CardContent>
             {summary.recommendations.length === 0 ? (
-              <div className="text-sm text-[#F5F5DC]/70">Aucune recommandation pour le moment.</div>
+              <div className="text-sm text-[#F5F5DC]/80">Aucune recommandation pour le moment.</div>
             ) : (
               <ul className="list-disc pl-5 space-y-2 text-sm">
                 {summary.recommendations.map((rec, i) => (

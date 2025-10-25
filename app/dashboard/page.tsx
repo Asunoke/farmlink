@@ -504,20 +504,21 @@ export default function DashboardPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="dueDate">Date limite</Label>
+                <Label htmlFor="dueDate" className="text-[#F5F5DC]">Date limite</Label>
                 <Input
                   id="dueDate"
                   type="date"
                   value={taskForm.dueDate}
                   onChange={(e) => setTaskForm(prev => ({ ...prev, dueDate: e.target.value }))}
+                  className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
                 />
               </div>
             </div>
             <div className="flex justify-end space-x-2">
-              <Button type="button" variant="outline" onClick={() => setShowTaskModal(false)}>
+              <Button type="button" variant="outline" onClick={() => setShowTaskModal(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                 Annuler
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={submitting} className="bg-[#006633] hover:bg-[#C1440E] text-white">
                 <Save className="h-4 w-4 mr-2" />
                 {submitting ? "Assignation..." : "Assigner"}
               </Button>
@@ -528,23 +529,23 @@ export default function DashboardPage() {
 
       {/* Crop Modal */}
       <Dialog open={showCropModal} onOpenChange={setShowCropModal}>
-        <DialogContent>
+        <DialogContent className="bg-[#0B1623] border border-[#D4AF37]/30">
           <DialogHeader>
-            <DialogTitle>Mettre à jour les cultures</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#D4AF37]">Mettre à jour les cultures</DialogTitle>
+            <DialogDescription className="text-[#F5F5DC]/80">
               Enregistrez les informations sur vos cultures
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleCropSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="plotId">Parcelle</Label>
+              <Label htmlFor="plotId" className="text-[#F5F5DC]">Parcelle</Label>
               <Select value={cropForm.plotId} onValueChange={(value) => setCropForm(prev => ({ ...prev, plotId: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                   <SelectValue placeholder="Sélectionner une parcelle" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
                   {plots.map((plot) => (
-                    <SelectItem key={plot.id} value={plot.id}>
+                    <SelectItem key={plot.id} value={plot.id} className="text-[#F5F5DC] hover:bg-[#006633]/20">
                       {plot.name} - {farms.find(f => f.id === plot.farmId)?.name}
                     </SelectItem>
                   ))}
@@ -552,37 +553,40 @@ export default function DashboardPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cropType">Type de culture</Label>
+              <Label htmlFor="cropType" className="text-[#F5F5DC]">Type de culture</Label>
               <Input
                 id="cropType"
                 value={cropForm.cropType}
                 onChange={(e) => setCropForm(prev => ({ ...prev, cropType: e.target.value }))}
                 required
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="plantingDate">Date de plantation</Label>
+              <Label htmlFor="plantingDate" className="text-[#F5F5DC]">Date de plantation</Label>
               <Input
                 id="plantingDate"
                 type="date"
                 value={cropForm.plantingDate}
                 onChange={(e) => setCropForm(prev => ({ ...prev, plantingDate: e.target.value }))}
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="notes">Notes</Label>
+              <Label htmlFor="notes" className="text-[#F5F5DC]">Notes</Label>
               <Textarea
                 id="notes"
                 value={cropForm.notes}
                 onChange={(e) => setCropForm(prev => ({ ...prev, notes: e.target.value }))}
                 placeholder="Observations, conditions, etc."
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button type="button" variant="outline" onClick={() => setShowCropModal(false)}>
+              <Button type="button" variant="outline" onClick={() => setShowCropModal(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                 Annuler
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={submitting} className="bg-[#006633] hover:bg-[#C1440E] text-white">
                 <Save className="h-4 w-4 mr-2" />
                 {submitting ? "Mise à jour..." : "Mettre à jour"}
               </Button>
@@ -593,24 +597,24 @@ export default function DashboardPage() {
 
       {/* Reports Modal */}
       <Dialog open={showReportsModal} onOpenChange={setShowReportsModal}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-4xl bg-[#0B1623] border border-[#D4AF37]/30">
           <DialogHeader>
-            <DialogTitle>Rapports et analyses</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#D4AF37]">Rapports et analyses</DialogTitle>
+            <DialogDescription className="text-[#F5F5DC]/80">
               Consultez les rapports détaillés de vos fermes
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
+              <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                 <CardHeader>
-                  <CardTitle className="text-lg">Rapport financier</CardTitle>
+                  <CardTitle className="text-lg text-[#D4AF37]">Rapport financier</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-sm text-[#F5F5DC]/80 mb-4">
                     Analysez vos dépenses et revenus par période
                   </p>
-                  <Button className="w-full" asChild>
+                  <Button className="w-full bg-[#006633] hover:bg-[#C1440E] text-white" asChild>
                     <Link href="/reports/financial">
                       Voir le rapport financier
                     </Link>
@@ -618,15 +622,15 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                 <CardHeader>
-                  <CardTitle className="text-lg">Rapport de production</CardTitle>
+                  <CardTitle className="text-lg text-[#D4AF37]">Rapport de production</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-sm text-[#F5F5DC]/80 mb-4">
                     Suivez les rendements et performances de vos cultures
                   </p>
-                  <Button className="w-full" asChild>
+                  <Button className="w-full bg-[#006633] hover:bg-[#C1440E] text-white" asChild>
                     <Link href="/reports/production">
                       Voir le rapport de production
                     </Link>
@@ -634,15 +638,15 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
                 <CardHeader>
-                  <CardTitle className="text-lg">Rapport météo</CardTitle>
+                  <CardTitle className="text-lg text-[#D4AF37]">Rapport météo</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-sm text-[#F5F5DC]/80 mb-4">
                     Analysez l'impact météorologique sur vos cultures
                   </p>
-                  <Button className="w-full" asChild>
+                  <Button className="w-full bg-[#006633] hover:bg-[#C1440E] text-white" asChild>
                     <Link href="/reports/weather">
                       Voir le rapport météo
                     </Link>
