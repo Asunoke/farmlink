@@ -243,7 +243,7 @@ export function WeatherWidget() {
             variant="outline"
             className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
             onClick={fetchWeatherData}
-            disabled={loading || (limits && limits.apiCallsRemaining <= 0)}
+            disabled={loading || (limits?.apiCallsRemaining ?? 0) <= 0}
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
           </Button>
