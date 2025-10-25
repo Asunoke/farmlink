@@ -16,7 +16,7 @@ export interface SubscriptionLimits {
 
 export const SUBSCRIPTION_LIMITS: Record<string, SubscriptionLimits> = {
   FREE: {
-    farms: 3,
+    farms: 1,
     parcels: 4,
     teamMembers: 10,
     expenses: 500,

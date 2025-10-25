@@ -129,7 +129,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   // Page d'accueil du tutoriel
   if (showWelcome) {
     return (
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" style={{ touchAction: 'manipulation' }}>
         <Card className="w-full max-w-2xl max-h-[90vh] overflow-hidden border-0 shadow-2xl">
           <CardHeader className="bg-gradient-to-br from-[#006633] via-[#0D1B2A] to-[#006633] text-white text-center py-12">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
@@ -145,7 +145,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               <Button
                 onClick={handleStartTutorial}
                 size="lg"
-                className="bg-[#D4AF37] hover:bg-[#C1440E] text-[#0D1B2A] font-semibold px-8 py-4 text-lg"
+                className="bg-[#D4AF37] hover:bg-[#C1440E] text-[#0D1B2A] font-semibold px-8 py-4 text-lg touch-manipulation min-h-[44px]"
               >
                 <Play className="h-5 w-5 mr-2" />
                 Commencer le tutoriel
@@ -154,7 +154,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 onClick={handleSkip}
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg"
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg touch-manipulation min-h-[44px]"
               >
                 <SkipForward className="h-5 w-5 mr-2" />
                 Passer le tutoriel
@@ -167,7 +167,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4" style={{ touchAction: 'manipulation' }}>
       <Card className={`w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden border-0 shadow-2xl transition-all duration-500 ${
         isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
       }`}>
@@ -186,7 +186,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               variant="ghost"
               size="sm"
               onClick={handleSkip}
-              className="text-white hover:bg-white/20 transition-colors"
+              className="text-white hover:bg-white/20 transition-colors touch-manipulation min-h-[44px] min-w-[44px]"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -220,13 +220,15 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                   return (
                     <div
                       key={step.id}
-                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 cursor-pointer ${
+                      onClick={() => setCurrentStep(index)}
+                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 cursor-pointer touch-manipulation ${
                         isCurrent 
                           ? 'bg-gradient-to-r from-[#006633] to-[#0D1B2A] text-white shadow-lg scale-105' 
                           : isCompleted 
                             ? 'bg-green-100 text-green-800 border border-green-200 hover:bg-green-200' 
                             : 'bg-white text-[#0D1B2A] hover:bg-[#006633]/5 hover:border-[#006633]/20 border border-transparent'
                       }`}
+                      style={{ minHeight: '44px' }}
                     >
                       <div className="flex-shrink-0">
                         {isCompleted ? (
@@ -285,7 +287,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     variant="outline"
                     onClick={handlePrevious}
                     disabled={currentStep === 0}
-                    className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300 disabled:opacity-50 w-full sm:w-auto"
+                    className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] transition-all duration-300 disabled:opacity-50 w-full sm:w-auto touch-manipulation min-h-[44px]"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Précédent
@@ -295,7 +297,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     <Button
                       variant="ghost"
                       onClick={handleSkip}
-                      className="text-[#0D1B2A]/70 hover:text-[#0D1B2A] hover:bg-[#D4AF37]/10 transition-all duration-300 w-full sm:w-auto"
+                      className="text-[#0D1B2A]/70 hover:text-[#0D1B2A] hover:bg-[#D4AF37]/10 transition-all duration-300 w-full sm:w-auto touch-manipulation min-h-[44px]"
                     >
                       <SkipForward className="h-4 w-4 mr-2" />
                       Passer le tutoriel
@@ -303,7 +305,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                     <Button
                       onClick={handleNext}
                       disabled={isLoading}
-                      className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] hover:from-[#C1440E] hover:to-[#006633] text-white px-6 py-2 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                      className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] hover:from-[#C1440E] hover:to-[#006633] text-white px-6 py-2 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto touch-manipulation min-h-[44px]"
                     >
                       {isLoading ? (
                         <div className="flex items-center gap-2">

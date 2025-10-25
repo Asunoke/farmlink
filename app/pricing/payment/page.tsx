@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Check, Clock, Smartphone, Copy, ArrowLeft } from "lucide-react"
+import { Check, Clock, Smartphone, Copy, ArrowLeft, X } from "lucide-react"
 import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
 
@@ -42,6 +42,7 @@ export default function PaymentPage() {
   const [paymentId, setPaymentId] = useState<string>("")
   const [userOrangeMoneyNumber, setUserOrangeMoneyNumber] = useState<string>("")
   const [isCreatingPayment, setIsCreatingPayment] = useState(false)
+  const [isValidPhone, setIsValidPhone] = useState(false)
   
   const plan = plans[planId as keyof typeof plans]
   const isYearly = period === 'yearly'
@@ -66,12 +67,12 @@ export default function PaymentPage() {
     }
   }, [session, planId, plan])
 
-  // Créer le paiement après que le numéro Orange Money soit défini
+  // Créer le paiement seulement après que l'utilisateur ait saisi un numéro valide
   useEffect(() => {
-    if (session && planId && plan && !isCreatingPayment && !paymentId) {
+    if (session && planId && plan && !isCreatingPayment && !paymentId && isValidPhone) {
       createPayment()
     }
-  }, [session, planId, plan, userOrangeMoneyNumber])
+  }, [session, planId, plan, isValidPhone])
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -120,10 +121,33 @@ export default function PaymentPage() {
     }
   }
 
+  const formatPhoneNumber = (value: string) => {
+    // Supprimer tous les caractères non numériques sauf le +
+    let cleaned = value.replace(/[^\d+]/g, '')
+    
+    // Si commence par 223, ajouter le +
+    if (cleaned.startsWith('223')) {
+      cleaned = '+' + cleaned
+    }
+    
+    // Si commence par un numéro sans +, ajouter le +223
+    if (cleaned.match(/^\d/) && !cleaned.startsWith('+223')) {
+      cleaned = '+223' + cleaned
+    }
+    
+    return cleaned
+  }
+
   const handlePhoneNumberChange = (value: string) => {
-    setUserOrangeMoneyNumber(value)
+    const formatted = formatPhoneNumber(value)
+    setUserOrangeMoneyNumber(formatted)
+    
+    // Validation du numéro
+    const isValid = formatted.match(/^\+223\d{8}$/) !== null
+    setIsValidPhone(isValid)
+    
     // Sauvegarder dans le localStorage
-    localStorage.setItem('userOrangeMoneyNumber', value)
+    localStorage.setItem('userOrangeMoneyNumber', formatted)
   }
 
   const formatTime = (seconds: number) => {
@@ -162,16 +186,38 @@ export default function PaymentPage() {
           <CardContent>
             <div className="space-y-2">
               <Label htmlFor="userOrangeMoneyNumber" className="text-[#F5F5DC]">Numéro Orange Money</Label>
-              <Input
-                id="userOrangeMoneyNumber"
-                type="tel"
-                placeholder="+223 XX XX XX XX XX"
-                value={userOrangeMoneyNumber}
-                onChange={(e) => handlePhoneNumberChange(e.target.value)}
-                className="font-mono bg-[#0D1B2A] border-[#D4AF37]/30 text-[#F5F5DC] placeholder:text-[#F5F5DC]/50 focus:border-[#D4AF37]"
-              />
+              <div className="relative">
+                <Input
+                  id="userOrangeMoneyNumber"
+                  type="tel"
+                  placeholder="+223 XX XX XX XX XX"
+                  value={userOrangeMoneyNumber}
+                  onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                  className={`font-mono bg-[#0D1B2A] border-[#D4AF37]/30 text-[#F5F5DC] placeholder:text-[#F5F5DC]/50 focus:border-[#D4AF37] touch-manipulation pr-10 ${
+                    userOrangeMoneyNumber && !isValidPhone ? 'border-red-500' : ''
+                  }`}
+                  style={{ fontSize: '16px' }} // Prevent zoom on iOS
+                  required
+                  minLength={10}
+                  maxLength={15}
+                />
+                {userOrangeMoneyNumber && (
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    {isValidPhone ? (
+                      <Check className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <X className="h-4 w-4 text-red-500" />
+                    )}
+                  </div>
+                )}
+              </div>
+              {userOrangeMoneyNumber && !isValidPhone && (
+                <p className="text-sm text-red-400">
+                  Veuillez entrer un numéro valide (ex: +223 70 12 34 56)
+                </p>
+              )}
               <p className="text-sm text-[#F5F5DC]/70">
-                Ce numéro sera sauvegardé localement et transmis avec votre paiement pour faciliter la vérification.
+                Ce numéro sera sauvegardé et transmis avec votre paiement pour faciliter la vérification.
               </p>
             </div>
           </CardContent>
