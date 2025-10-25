@@ -6,6 +6,9 @@ import { AnimatedCard } from "@/components/animated-section"
 interface StatsData {
   totalUsers: number
   totalFarms: number
+  totalTransactions: number
+  totalOffers: number
+  totalDemands: number
   yieldIncrease: string
   costReduction: string
   support: string

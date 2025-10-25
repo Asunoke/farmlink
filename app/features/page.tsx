@@ -19,6 +19,7 @@ import {
   Heart
 } from "lucide-react"
 import { MainNav } from "@/components/main-nav"
+import { FeaturesStats } from "@/components/features-stats"
 
 const features = [
   {
@@ -94,12 +95,7 @@ const features = [
 
 ]
 
-const stats = [
-  { label: "Agriculteurs connectés", value: "10+", icon: Users },
-  { label: "Transactions réalisées", value: "50+", icon: ShoppingCart },
-  { label: "Produits vendus", value: "10+", icon: TrendingUp },
-  { label: "Pays couverts", value: "1+", icon: Globe }
-]
+// Stats moved to FeaturesStats component
 
 const testimonials = [
   {
@@ -147,17 +143,7 @@ export default function FeaturesPage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16 md:mb-20">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center p-4 bg-white/50 rounded-xl border border-[#D4AF37]/20">
-                <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-[#D4AF37] to-[#C1440E] rounded-full mb-3 md:mb-4">
-                  <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-[#0D1B2A] mb-2">{stat.value}</div>
-                <div className="text-sm md:text-base text-[#0D1B2A]/70">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <FeaturesStats />
         </div>
       </section>
 
