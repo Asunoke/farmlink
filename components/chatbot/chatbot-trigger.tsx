@@ -3,12 +3,14 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Bot, MessageCircle, X } from "lucide-react"
+import { Bot, MessageCircle, X, Maximize2 } from "lucide-react"
 import { ChatbotInterface } from "./chatbot-interface"
+import { useRouter } from "next/navigation"
 
 export function ChatbotTrigger() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const router = useRouter()
 
   const handleToggle = () => {
     if (isOpen) {
@@ -26,6 +28,10 @@ export function ChatbotTrigger() {
 
   const handleToggleMinimize = () => {
     setIsMinimized(!isMinimized)
+  }
+
+  const handleMaximize = () => {
+    router.push('/chatbot')
   }
 
   return (
@@ -58,6 +64,7 @@ export function ChatbotTrigger() {
         onClose={handleClose}
         isMinimized={isMinimized}
         onToggleMinimize={handleToggleMinimize}
+        onMaximize={handleMaximize}
       />
     </>
   )

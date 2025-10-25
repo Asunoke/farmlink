@@ -20,7 +20,12 @@ import {
   Settings,
   HelpCircle,
   ArrowLeft,
-  RefreshCw
+  RefreshCw,
+  Plus,
+  MessageSquare,
+  Trash2,
+  Edit3,
+  Menu
 } from "lucide-react"
 import Link from "next/link"
 
@@ -30,6 +35,14 @@ interface Message {
   role: 'user' | 'assistant'
   timestamp: Date
   type?: 'text' | 'suggestion' | 'action'
+}
+
+interface Chat {
+  id: string
+  title: string
+  messages: Message[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 const quickActions = [
@@ -54,22 +67,60 @@ const suggestions = [
 
 export default function ChatbotPage() {
   const { data: session } = useSession()
+  const [chats, setChats] = useState<Chat[]>([])
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Message de bienvenue
-    const welcomeMessage: Message = {
-      id: '1',
-      content: `Bonjour ${session?.user?.name || 'utilisateur'} ! 👋 Je suis votre assistant FarmLink. Je peux vous aider avec toutes vos questions sur la gestion de vos fermes, finances, équipe, et bien plus encore. Que puis-je faire pour vous ?`,
-      role: 'assistant',
-      timestamp: new Date(),
-      type: 'text'
+    // Charger les chats depuis localStorage
+    const savedChats = localStorage.getItem('farmlink-chats')
+    if (savedChats) {
+      const parsedChats = JSON.parse(savedChats).map((chat: any) => ({
+        ...chat,
+        createdAt: new Date(chat.createdAt),
+        updatedAt: new Date(chat.updatedAt)
+      }))
+      setChats(parsedChats)
+      
+      if (parsedChats.length > 0) {
+        setCurrentChatId(parsedChats[0].id)
+        setMessages(parsedChats[0].messages)
+      } else {
+        createNewChat()
+      }
+    } else {
+      createNewChat()
     }
-    setMessages([welcomeMessage])
-  }, [session?.user?.name])
+  }, [])
+
+  const createNewChat = () => {
+    const newChat: Chat = {
+      id: Date.now().toString(),
+      title: "Nouvelle conversation",
+      messages: [{
+        id: '1',
+        content: `Bonjour ${session?.user?.name || 'utilisateur'} ! 👋 Je suis votre assistant FarmLink. Je peux vous aider avec toutes vos questions sur la gestion de vos fermes, finances, équipe, et bien plus encore. Que puis-je faire pour vous ?`,
+        role: 'assistant',
+        timestamp: new Date(),
+        type: 'text'
+      }],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    
+    setChats(prev => [newChat, ...prev])
+    setCurrentChatId(newChat.id)
+    setMessages(newChat.messages)
+    saveChats([newChat, ...chats])
+  }
+
+  const saveChats = (chatsToSave: Chat[]) => {
+    localStorage.setItem('farmlink-chats', JSON.stringify(chatsToSave))
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -85,9 +136,18 @@ export default function ChatbotPage() {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    const newMessages = [...messages, userMessage]
+    setMessages(newMessages)
     setInput("")
     setIsLoading(true)
+
+    // Mettre à jour le titre du chat si c'est le premier message
+    if (messages.length === 1) {
+      const newTitle = messageContent.length > 30 
+        ? messageContent.substring(0, 30) + "..." 
+        : messageContent
+      updateChatTitle(currentChatId!, newTitle)
+    }
 
     // Simuler une réponse de l'assistant
     setTimeout(() => {
@@ -97,9 +157,53 @@ export default function ChatbotPage() {
         role: 'assistant',
         timestamp: new Date()
       }
-      setMessages(prev => [...prev, assistantMessage])
+      const finalMessages = [...newMessages, assistantMessage]
+      setMessages(finalMessages)
+      updateChatMessages(currentChatId!, finalMessages)
       setIsLoading(false)
     }, 1000)
+  }
+
+  const updateChatTitle = (chatId: string, newTitle: string) => {
+    const updatedChats = chats.map(chat => 
+      chat.id === chatId 
+        ? { ...chat, title: newTitle, updatedAt: new Date() }
+        : chat
+    )
+    setChats(updatedChats)
+    saveChats(updatedChats)
+  }
+
+  const updateChatMessages = (chatId: string, newMessages: Message[]) => {
+    const updatedChats = chats.map(chat => 
+      chat.id === chatId 
+        ? { ...chat, messages: newMessages, updatedAt: new Date() }
+        : chat
+    )
+    setChats(updatedChats)
+    saveChats(updatedChats)
+  }
+
+  const selectChat = (chatId: string) => {
+    const chat = chats.find(c => c.id === chatId)
+    if (chat) {
+      setCurrentChatId(chatId)
+      setMessages(chat.messages)
+    }
+  }
+
+  const deleteChat = (chatId: string) => {
+    const updatedChats = chats.filter(chat => chat.id !== chatId)
+    setChats(updatedChats)
+    saveChats(updatedChats)
+    
+    if (currentChatId === chatId) {
+      if (updatedChats.length > 0) {
+        selectChat(updatedChats[0].id)
+      } else {
+        createNewChat()
+      }
+    }
   }
 
   const generateResponse = (userMessage: string): string => {
@@ -145,172 +249,197 @@ export default function ChatbotPage() {
   }
 
   const clearChat = () => {
-    setMessages([{
-      id: '1',
-      content: `Bonjour ${session?.user?.name || 'utilisateur'} ! 👋 Je suis votre assistant FarmLink. Comment puis-je vous aider aujourd'hui ?`,
-      role: 'assistant',
-      timestamp: new Date(),
-      type: 'text'
-    }])
+    createNewChat()
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F5DC] via-[#FFF8DC] to-[#F0E68C] p-2 sm:p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <div className="min-h-screen bg-[#0D1B2A] flex">
+      {/* Overlay pour mobile */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-5 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 bg-[#1a2a3a] border-r border-[#D4AF37]/20 overflow-hidden fixed lg:relative z-10 h-full`}>
+        <div className="p-4 border-b border-[#D4AF37]/20">
+          <div className="flex items-center justify-between mb-4">
+            <Button
+              onClick={createNewChat}
+              className="w-full bg-[#006633] hover:bg-[#C1440E] text-white"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Nouvelle conversation
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
             <Link href="/dashboard">
-              <Button variant="outline" className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
+              <Button variant="ghost" size="sm" className="text-[#F5F5DC] hover:text-[#D4AF37] hover:bg-[#D4AF37]/10">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Retour
               </Button>
             </Link>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#0D1B2A] flex items-center gap-3">
-                <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-[#006633]" />
-                Assistant FarmLink
-              </h1>
-              <p className="text-[#0D1B2A]/70 text-sm sm:text-base">Votre assistant IA pour tout savoir sur FarmLink</p>
+          </div>
+        </div>
+
+        <ScrollArea className="flex-1 p-4">
+          <div className="space-y-2">
+            {chats.map((chat) => (
+              <div
+                key={chat.id}
+                className={`group flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${
+                  currentChatId === chat.id
+                    ? 'bg-[#006633] text-white'
+                    : 'hover:bg-[#D4AF37]/10 text-[#F5F5DC]'
+                }`}
+                onClick={() => selectChat(chat.id)}
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <MessageSquare className="h-4 w-4 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{chat.title}</p>
+                    <p className="text-xs opacity-70">
+                      {chat.updatedAt.toLocaleDateString('fr-FR')}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deleteChat(chat.id)
+                  }}
+                  className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 hover:bg-red-500/20"
+                >
+                  <Trash2 className="h-3 w-3" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="bg-[#1a2a3a] border-b border-[#D4AF37]/20 p-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="text-[#F5F5DC] hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 lg:hidden"
+            >
+              <Menu className="h-4 w-4" />
+            </Button>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center">
+                <Bot className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-semibold text-[#F5F5DC]">Assistant FarmLink</h1>
+                <p className="text-sm text-[#F5F5DC]/70">En ligne</p>
+              </div>
             </div>
           </div>
           <Button
             onClick={clearChat}
             variant="outline"
-            className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] w-full sm:w-auto"
+            className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Nouvelle conversation
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
-          {/* Chat principal */}
-          <div className="lg:col-span-3">
-            <Card className="h-[500px] sm:h-[600px] shadow-xl border-0">
-              <CardHeader className="bg-gradient-to-r from-[#006633] to-[#0D1B2A] text-white">
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-[#D4AF37]" />
-                  Conversation
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 h-full flex flex-col">
-                {/* Messages */}
-                <ScrollArea className="flex-1 p-4">
-                  <div className="space-y-4">
-                    {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                      >
-                        <div className={`max-w-[80%] rounded-lg p-4 ${
-                          message.role === 'user'
-                            ? 'bg-[#006633] text-white'
-                            : 'bg-[#F5F5DC] text-[#0D1B2A] border border-[#D4AF37]/20'
-                        }`}>
-                          <div className="flex items-start gap-3">
-                            {message.role === 'assistant' && (
-                              <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center flex-shrink-0">
-                                <Bot className="h-4 w-4 text-white" />
-                              </div>
-                            )}
-                            {message.role === 'user' && (
-                              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                <User className="h-4 w-4 text-white" />
-                              </div>
-                            )}
-                            <div className="whitespace-pre-wrap text-sm">
-                              {message.content}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    {isLoading && (
-                      <div className="flex justify-start">
-                        <div className="bg-[#F5F5DC] text-[#0D1B2A] rounded-lg p-4 max-w-[80%] border border-[#D4AF37]/20">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center">
-                              <Bot className="h-4 w-4 text-white" />
-                            </div>
-                            <div className="flex gap-1">
-                              <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" />
-                              <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                              <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                            </div>
-                          </div>
-                        </div>
+        {/* Messages */}
+        <ScrollArea className="flex-1 p-4">
+          <div className="max-w-4xl mx-auto space-y-6">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div className={`max-w-[80%] rounded-lg p-4 ${
+                  message.role === 'user'
+                    ? 'bg-[#006633] text-white'
+                    : 'bg-[#1a2a3a] text-[#F5F5DC] border border-[#D4AF37]/20'
+                }`}>
+                  <div className="flex items-start gap-3">
+                    {message.role === 'assistant' && (
+                      <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center flex-shrink-0">
+                        <Bot className="h-4 w-4 text-white" />
                       </div>
                     )}
-                    <div ref={messagesEndRef} />
-                  </div>
-                </ScrollArea>
-
-                {/* Input */}
-                <div className="p-4 border-t border-[#D4AF37]/20">
-                  <div className="flex gap-2">
-                    <Input
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="Posez votre question..."
-                      className="flex-1 border-[#D4AF37]/30 focus:border-[#006633]"
-                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(input)}
-                    />
-                    <Button
-                      onClick={() => handleSendMessage(input)}
-                      disabled={!input.trim() || isLoading}
-                      className="bg-[#006633] hover:bg-[#C1440E] text-white"
-                    >
-                      <Send className="h-4 w-4" />
-                    </Button>
+                    {message.role === 'user' && (
+                      <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <User className="h-4 w-4 text-white" />
+                      </div>
+                    )}
+                    <div className="whitespace-pre-wrap text-sm">
+                      {message.content}
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-[#1a2a3a] text-[#F5F5DC] rounded-lg p-4 max-w-[80%] border border-[#D4AF37]/20">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[#006633] rounded-full flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                      <div className="w-2 h-2 bg-[#006633] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
+        </ScrollArea>
 
-          {/* Sidebar */}
-          <div className="space-y-4">
-            {/* Actions rapides */}
-            <Card className="shadow-lg border-0">
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg text-[#0D1B2A]">Actions rapides</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {quickActions.map((action, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    onClick={() => handleQuickAction(action.action)}
-                    className="w-full justify-start border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A] text-xs sm:text-sm"
-                  >
-                    <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${action.color} mr-2 sm:mr-3`} />
-                    <action.icon className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                    <span className="hidden sm:inline">{action.label}</span>
-                    <span className="sm:hidden">{action.label.split(' ')[0]}</span>
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Suggestions */}
-            <Card className="shadow-lg border-0">
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg text-[#0D1B2A]">Suggestions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {suggestions.slice(0, 4).map((suggestion, index) => (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    onClick={() => handleSuggestion(suggestion)}
-                    className="w-full justify-start text-left text-xs sm:text-sm text-[#0D1B2A]/70 hover:text-[#0D1B2A] hover:bg-[#D4AF37]/10"
-                  >
-                    {suggestion}
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
+        {/* Input */}
+        <div className="bg-[#1a2a3a] border-t border-[#D4AF37]/20 p-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Posez votre question..."
+                className="flex-1 bg-[#0D1B2A] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(input)}
+              />
+              <Button
+                onClick={() => handleSendMessage(input)}
+                disabled={!input.trim() || isLoading}
+                className="bg-[#006633] hover:bg-[#C1440E] text-white"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Suggestions rapides */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {suggestions.slice(0, 4).map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleSuggestion(suggestion)}
+                  className="text-xs border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -38,6 +38,7 @@ interface ChatbotInterfaceProps {
   onClose: () => void
   isMinimized?: boolean
   onToggleMinimize?: () => void
+  onMaximize?: () => void
 }
 
 const quickActions = [
@@ -59,7 +60,7 @@ const suggestions = [
 ]
 
 export function ChatbotInterface({ 
-  isOpen, onClose, isMinimized = false, onToggleMinimize 
+  isOpen, onClose, isMinimized = false, onToggleMinimize, onMaximize 
 }: ChatbotInterfaceProps) {
   const { data: session } = useSession()
   const [messages, setMessages] = useState<Message[]>([])
@@ -175,6 +176,15 @@ export function ChatbotInterface({
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onMaximize}
+                className="text-white hover:bg-white/20"
+                title="Ouvrir en plein écran"
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"
