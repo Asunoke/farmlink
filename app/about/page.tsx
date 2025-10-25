@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -122,6 +123,34 @@ const TimelineItem = ({ year, title, description, icon: Icon, delay = 0 }: {
 )
 
 export default function AboutPage() {
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalFarms: 0,
+    totalTransactions: 0,
+    yieldIncrease: "40%",
+    costReduction: "30%",
+    support: "24/7"
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/stats')
+        if (response.ok) {
+          const data = await response.json()
+          setStats(data)
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchStats()
+  }, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <MainNav />
@@ -324,21 +353,21 @@ export default function AboutPage() {
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
             <StatCard
-              number="10+"
+              number={loading ? "..." : `${stats.totalUsers}+`}
               label="Agriculteurs connectés"
               icon={Users}
               delay={0.1}
             />
             <StatCard
-              number="1"
-              label="Pays couverts"
+              number={loading ? "..." : `${stats.totalFarms}+`}
+              label="Fermes gérées"
               icon={MapPin}
               delay={0.2}
             />
             <StatCard
-              number="99%"
-              label="Satisfaction client"
-              icon={Star}
+              number={loading ? "..." : `${stats.totalTransactions}+`}
+              label="Transactions réalisées"
+              icon={TrendingUp}
               delay={0.3}
             />
           </div>
@@ -351,15 +380,54 @@ export default function AboutPage() {
             className="text-center"
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-8">Nos Partenaires</h3>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Atlas capital Holding SA</span>
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-70 hover:opacity-100 transition-opacity">
+              <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
+                <img 
+                  src="/partners/atlas-capital.svg" 
+                  alt="Atlas Capital Holding SA" 
+                  className="max-h-12 max-w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    e.currentTarget.nextElementSibling.style.display = 'flex'
+                  }}
+                />
+                <div className="hidden text-gray-600 text-sm font-medium">Atlas Capital Holding SA</div>
               </div>
-              <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Florynx labs SARL</span>
+              <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
+                <img 
+                  src="/partners/florynx-labs.svg" 
+                  alt="Florynx Labs SARL" 
+                  className="max-h-12 max-w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    e.currentTarget.nextElementSibling.style.display = 'flex'
+                  }}
+                />
+                <div className="hidden text-gray-600 text-sm font-medium">Florynx Labs SARL</div>
               </div>
-              <div className="w-32 h-16 bg-gray-200 rounded flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Evotech mali SARL</span>
+              <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
+                <img 
+                  src="/partners/evotech-mali.svg" 
+                  alt="Evotech Mali SARL" 
+                  className="max-h-12 max-w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    e.currentTarget.nextElementSibling.style.display = 'flex'
+                  }}
+                />
+                <div className="hidden text-gray-600 text-sm font-medium">Evotech Mali SARL</div>
+              </div>
+              <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
+                <img 
+                  src="/partners/mali-agriculture.svg" 
+                  alt="Ministère de l'Agriculture du Mali" 
+                  className="max-h-12 max-w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    e.currentTarget.nextElementSibling.style.display = 'flex'
+                  }}
+                />
+                <div className="hidden text-gray-600 text-sm font-medium">Ministère de l'Agriculture</div>
               </div>
             </div>
           </motion.div>

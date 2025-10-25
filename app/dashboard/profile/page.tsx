@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { User, Lock, CreditCard, Calendar, CheckCircle, AlertTriangle, Edit } from "lucide-react"
 import { getSubscriptionLimits } from "@/lib/subscription-limits"
 import { DashboardLayout } from "@/components/dashboard-layout"
+import { SubscriptionUsage } from "@/components/subscription-usage"
 
 export default function ProfilePage() {
   const { data: session, update } = useSession()
@@ -334,6 +335,8 @@ export default function ProfilePage() {
         </TabsContent>
 
         <TabsContent value="billing" className="space-y-6">
+          {/* Subscription Usage */}
+          <SubscriptionUsage />
           <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-[#D4AF37]">

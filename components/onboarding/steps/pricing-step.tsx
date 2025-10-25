@@ -73,13 +73,8 @@ export function PricingStep({ onNext, onSkip, isLoading }: PricingStepProps) {
 
   const handleContinue = async () => {
     if (selectedPlan) {
-      // Rediriger vers la page de paiement ou continuer
-      if (selectedPlan === "FREE") {
-        onNext()
-      } else {
-        // Rediriger vers la page de paiement
-        window.location.href = `/pricing/payment?plan=${selectedPlan}`
-      }
+      // Rediriger vers la page de pricing pour tous les plans
+      window.location.href = `/pricing`
     }
   }
 

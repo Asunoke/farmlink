@@ -13,7 +13,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Leaf, Users, TrendingUp, Cloud, Calculator, AlertTriangle, Droplets, Wind, Eye, Plus, X, Save } from "lucide-react"
 import { DashboardLayout } from "@/components/dashboard-layout"
-import { SubscriptionUsage } from "@/components/subscription-usage"
 import { TrialAlert } from "@/components/trial-alert"
 import { TrialBanner } from "@/components/trial-banner"
 import { WeatherWidget } from "@/components/weather-widget"
@@ -232,9 +231,6 @@ export default function DashboardPage() {
         
         {/* Trial Alert */}
         <TrialAlert />
-        
-        {/* Subscription Usage */}
-        <SubscriptionUsage />
 
         {/* Weather Alert */}
         <WeatherAlert />
