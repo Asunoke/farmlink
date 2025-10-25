@@ -84,7 +84,7 @@ export function SubscriptionUsage() {
   })
 
   return (
-    <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+    <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -92,7 +92,7 @@ export function SubscriptionUsage() {
               <TrendingUp className="h-5 w-5" />
               Utilisation de votre abonnement
             </CardTitle>
-            <CardDescription className="text-[#F5F5DC]">
+            <CardDescription className="text-[#F5F5DC]/80">
               Plan actuel: <Badge className="ml-1 bg-[#006633] text-white hover:bg-[#C1440E] transition-colors">{subscription}</Badge>
             </CardDescription>
           </div>
@@ -105,7 +105,7 @@ export function SubscriptionUsage() {
       </CardHeader>
       <CardContent className="space-y-4">
         {hasWarnings && (
-          <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+          <Alert className="border border-[#C1440E]/30 bg-[#C1440E]/10">
             <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
             <AlertDescription className="text-[#F5F5DC]">
               Vous approchez des limites de votre plan. Considérez un upgrade pour éviter les restrictions.
@@ -142,7 +142,7 @@ export function SubscriptionUsage() {
           )
         })}
 
-        <div className="pt-4 border-t border-[#D4AF37]/20">
+        <div className="pt-4 border-t border-[#D4AF37]/30">
           <h4 className="text-sm font-medium mb-2 text-[#D4AF37]">Fonctionnalités disponibles</h4>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div

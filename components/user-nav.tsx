@@ -26,11 +26,11 @@ export function UserNav() {
   const getSubscriptionColor = (subscription: string) => {
     switch (subscription) {
       case "PREMIUM":
-        return "bg-yellow-500 text-yellow-50"
+        return "bg-[#C1440E] text-white"
       case "BASIC":
-        return "bg-blue-500 text-blue-50"
+        return "bg-[#006633] text-white"
       default:
-        return "bg-gray-500 text-gray-50"
+        return "bg-[#D4AF37] text-[#0D1B2A]"
     }
   }
 
@@ -57,7 +57,7 @@ export function UserNav() {
           <div className="flex flex-col space-y-2">
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium leading-none">{session.user.name}</p>
-              {session.user.role === "ADMIN" && <Crown className="h-4 w-4 text-yellow-500" />}
+              {session.user.role === "ADMIN" && <Crown className="h-4 w-4 text-[#D4AF37]" />}
             </div>
             <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
             <Badge className={`w-fit text-xs ${getSubscriptionColor(session.user.subscription)}`}>

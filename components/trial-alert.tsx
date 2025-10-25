@@ -45,7 +45,7 @@ export function TrialAlert() {
 
   if (trialInfo.isExpired) {
     return (
-      <Alert className="mb-6 border-[#C1440E] bg-[#C1440E]/10">
+      <Alert className="mb-6 border border-[#C1440E]/30 bg-[#C1440E]/10">
         <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
         <AlertDescription className="text-[#F5F5DC]">
           <div className="flex items-center justify-between">
@@ -70,7 +70,7 @@ export function TrialAlert() {
 
   if (trialInfo.daysLeft <= 2) {
     return (
-      <Alert className="mb-6 border-[#D4AF37] bg-[#D4AF37]/10">
+      <Alert className="mb-6 border border-[#D4AF37]/30 bg-[#D4AF37]/10">
         <Clock className="h-4 w-4 text-[#D4AF37]" />
         <AlertDescription className="text-[#F5F5DC]">
           <div className="flex items-center justify-between">

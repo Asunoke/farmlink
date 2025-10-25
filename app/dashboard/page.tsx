@@ -240,33 +240,33 @@ export default function DashboardPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Fermes</CardTitle>
               <Leaf className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{farms.length}</div>
-              <p className="text-xs text-[#F5F5DC]/70">
+              <p className="text-xs text-[#F5F5DC]/80">
                 {plots.length} parcelles au total
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Équipe</CardTitle>
               <Users className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{teamMembers.length}</div>
-              <p className="text-xs text-[#F5F5DC]/70">
+              <p className="text-xs text-[#F5F5DC]/80">
                 Membres actifs
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Dépenses</CardTitle>
               <Calculator className="h-4 w-4 text-[#006633]" />
@@ -275,20 +275,20 @@ export default function DashboardPage() {
               <div className="text-2xl font-bold text-[#F5F5DC]">
                 {expenses.reduce((sum, expense) => sum + expense.amount, 0).toLocaleString()} FCFA
               </div>
-              <p className="text-xs text-[#F5F5DC]/70">
+              <p className="text-xs text-[#F5F5DC]/80">
                 Ce mois-ci
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300 hover:scale-105">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-[#D4AF37]">Tâches</CardTitle>
               <TrendingUp className="h-4 w-4 text-[#006633]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#F5F5DC]">{tasks.length}</div>
-              <p className="text-xs text-[#F5F5DC]/70">
+              <p className="text-xs text-[#F5F5DC]/80">
                 En cours
               </p>
             </CardContent>
@@ -299,10 +299,10 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Activities */}
           <div className="lg:col-span-2">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
             <CardHeader>
                 <CardTitle className="text-[#D4AF37]">Activités récentes</CardTitle>
-                <CardDescription className="text-[#F5F5DC]/70">Dernières actions sur vos fermes</CardDescription>
+                <CardDescription className="text-[#F5F5DC]/80">Dernières actions sur vos fermes</CardDescription>
             </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -311,7 +311,7 @@ export default function DashboardPage() {
                       <div className="w-2 h-2 bg-[#006633] rounded-full"></div>
                         <div className="flex-1">
                           <p className="text-sm font-medium text-[#F5F5DC]">{task.title}</p>
-                          <p className="text-xs text-[#F5F5DC]/70">
+                          <p className="text-xs text-[#F5F5DC]/80">
                           Assigné à {task.assignedTo} • {new Date(task.createdAt).toLocaleDateString('fr-FR')}
                           </p>
                       </div>
@@ -329,10 +329,10 @@ export default function DashboardPage() {
 
           {/* Quick Actions */}
           <div className="space-y-6">
-          <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+          <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-[#D4AF37]">Actions Rapides</CardTitle>
-              <CardDescription className="text-[#F5F5DC]/70">Raccourcis vers les tâches courantes</CardDescription>
+              <CardDescription className="text-[#F5F5DC]/80">Raccourcis vers les tâches courantes</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
                 <Button 
@@ -378,66 +378,68 @@ export default function DashboardPage() {
 
       {/* Expense Modal */}
       <Dialog open={showExpenseModal} onOpenChange={setShowExpenseModal}>
-        <DialogContent>
+        <DialogContent className="bg-[#0B1623] border border-[#D4AF37]/30">
           <DialogHeader>
-            <DialogTitle>Enregistrer une dépense</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#D4AF37]">Enregistrer une dépense</DialogTitle>
+            <DialogDescription className="text-[#F5F5DC]/80">
               Ajoutez une nouvelle dépense à votre ferme
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleExpenseSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="amount">Montant (FCFA)</Label>
+              <Label htmlFor="amount" className="text-[#F5F5DC]">Montant (FCFA)</Label>
               <Input
                 id="amount"
                 type="number"
                 value={expenseForm.amount}
                 onChange={(e) => setExpenseForm(prev => ({ ...prev, amount: e.target.value }))}
                 required
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="text-[#F5F5DC]">Description</Label>
               <Input
                 id="description"
                 value={expenseForm.description}
                 onChange={(e) => setExpenseForm(prev => ({ ...prev, description: e.target.value }))}
                 required
+                className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="category">Catégorie</Label>
+              <Label htmlFor="category" className="text-[#F5F5DC]">Catégorie</Label>
               <Select value={expenseForm.category} onValueChange={(value) => setExpenseForm(prev => ({ ...prev, category: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                   <SelectValue placeholder="Sélectionner une catégorie" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="SEEDS">Graines</SelectItem>
-                  <SelectItem value="FERTILIZER">Engrais</SelectItem>
-                  <SelectItem value="EQUIPMENT">Équipement</SelectItem>
-                  <SelectItem value="LABOR">Main d'œuvre</SelectItem>
-                  <SelectItem value="OTHER">Autre</SelectItem>
+                <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
+                  <SelectItem value="SEEDS" className="text-[#F5F5DC] hover:bg-[#006633]/20">Graines</SelectItem>
+                  <SelectItem value="FERTILIZER" className="text-[#F5F5DC] hover:bg-[#006633]/20">Engrais</SelectItem>
+                  <SelectItem value="EQUIPMENT" className="text-[#F5F5DC] hover:bg-[#006633]/20">Équipement</SelectItem>
+                  <SelectItem value="LABOR" className="text-[#F5F5DC] hover:bg-[#006633]/20">Main d'œuvre</SelectItem>
+                  <SelectItem value="OTHER" className="text-[#F5F5DC] hover:bg-[#006633]/20">Autre</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="farmId">Ferme</Label>
+              <Label htmlFor="farmId" className="text-[#F5F5DC]">Ferme</Label>
               <Select value={expenseForm.farmId} onValueChange={(value) => setExpenseForm(prev => ({ ...prev, farmId: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
                   <SelectValue placeholder="Sélectionner une ferme" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
                   {farms.map((farm) => (
-                    <SelectItem key={farm.id} value={farm.id}>{farm.name}</SelectItem>
+                    <SelectItem key={farm.id} value={farm.id} className="text-[#F5F5DC] hover:bg-[#006633]/20">{farm.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="flex justify-end space-x-2">
-              <Button type="button" variant="outline" onClick={() => setShowExpenseModal(false)}>
+              <Button type="button" variant="outline" onClick={() => setShowExpenseModal(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
                 Annuler
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={submitting} className="bg-[#006633] hover:bg-[#C1440E] text-white">
                 <Save className="h-4 w-4 mr-2" />
                 {submitting ? "Enregistrement..." : "Enregistrer"}
               </Button>

@@ -46,7 +46,7 @@ export function TrialBanner() {
 
   if (trialInfo.isExpired) {
     return (
-      <Card className="mb-6 border-[#C1440E] bg-gradient-to-r from-[#C1440E]/10 to-[#C1440E]/5">
+      <Card className="mb-6 border border-[#C1440E]/30 bg-gradient-to-r from-[#C1440E]/10 to-[#C1440E]/5">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -72,7 +72,7 @@ export function TrialBanner() {
 
   if (trialInfo.daysLeft <= 2) {
     return (
-      <Card className="mb-6 border-[#D4AF37] bg-gradient-to-r from-[#D4AF37]/10 to-[#D4AF37]/5">
+      <Card className="mb-6 border border-[#D4AF37]/30 bg-gradient-to-r from-[#D4AF37]/10 to-[#D4AF37]/5">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -104,7 +104,7 @@ export function TrialBanner() {
   }
 
   return (
-    <Card className="mb-6 border-[#006633] bg-gradient-to-r from-[#006633]/10 to-[#006633]/5">
+    <Card className="mb-6 border border-[#006633]/30 bg-gradient-to-r from-[#006633]/10 to-[#006633]/5">
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

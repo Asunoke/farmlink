@@ -203,7 +203,7 @@ export function WeatherWidget() {
 
   if (error) {
     return (
-      <Card className="bg-[#0B1623] border border-[#D4AF37]/20">
+      <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-[#D4AF37]">
             <Cloud className="h-5 w-5" />
@@ -211,7 +211,7 @@ export function WeatherWidget() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Alert className="border-[#C1440E] bg-[#C1440E]/10">
+          <Alert className="border border-[#C1440E]/30 bg-[#C1440E]/10">
             <AlertTriangle className="h-4 w-4 text-[#C1440E]" />
             <AlertDescription className="text-[#F5F5DC]">{error}</AlertDescription>
           </Alert>
@@ -231,7 +231,7 @@ export function WeatherWidget() {
   }
 
   return (
-    <Card className="bg-[#0B1623] border border-[#D4AF37]/20 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
+    <Card className="bg-gradient-to-br from-[#0B1623] to-[#1A2332] border border-[#D4AF37]/30 hover:border-[#006633] hover:shadow-lg transition-all duration-300">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-[#D4AF37]">

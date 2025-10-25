@@ -50,24 +50,24 @@ export function WeatherAlert() {
   return (
     <>
       {alerts.map((alert, index) => (
-        <Card key={index} className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20">
+        <Card key={index} className="border border-[#D4AF37]/30 bg-gradient-to-r from-[#D4AF37]/10 to-[#D4AF37]/5">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               {alert.type === 'rain' ? (
-                <Droplets className="h-5 w-5 text-amber-600" />
+                <Droplets className="h-5 w-5 text-[#D4AF37]" />
               ) : (
-                <AlertTriangle className="h-5 w-5 text-amber-600" />
+                <AlertTriangle className="h-5 w-5 text-[#D4AF37]" />
               )}
               <div className="flex-1">
-                <p className="font-medium text-amber-900 dark:text-amber-100">{alert.title}</p>
-                <p className="text-sm text-amber-700 dark:text-amber-200">
+                <p className="font-medium text-[#D4AF37]">{alert.title}</p>
+                <p className="text-sm text-[#D4AF37]/80">
                   {alert.message}
                 </p>
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="border-amber-300 text-amber-700 hover:bg-amber-100 bg-transparent"
+                className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]"
                 asChild
               >
                 <Link href="/weather">
