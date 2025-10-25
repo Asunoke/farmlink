@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
-import { Menu, X, Leaf, Bot } from "lucide-react"
+import { Menu, X, Leaf } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSession } from "next-auth/react"
 import { UserNav } from "@/components/user-nav"
@@ -14,7 +14,6 @@ const navigation = [
   { name: "Accueil", href: "/" },
   { name: "À propos", href: "/about" },
   { name: "Fonctionnalités", href: "/features" },
-  { name: "Assistant IA", href: "/chatbot", icon: Bot },
   { name: "Tarifs", href: "/pricing" },
   { name: "Contact", href: "/contact" },
 ]
@@ -43,13 +42,12 @@ export function MainNav() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-[#D4AF37] flex items-center gap-1",
+                  "text-sm font-medium transition-colors hover:text-[#D4AF37]",
                   pathname === item.href
                     ? "text-[#D4AF37]"
                     : "text-[#F5F5DC]"
                 )}
               >
-                {item.icon && <item.icon className="h-4 w-4" />}
                 {item.name}
               </Link>
             ))}
@@ -111,14 +109,13 @@ export function MainNav() {
                       key={item.name}
                       href={item.href}
                       className={cn(
-                        "block px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg hover:bg-[#D4AF37]/10 flex items-center gap-2",
+                        "block px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg hover:bg-[#D4AF37]/10",
                         pathname === item.href
                           ? "text-[#D4AF37] bg-[#D4AF37]/10 border-l-4 border-[#D4AF37]"
                           : "text-[#F5F5DC] hover:text-[#D4AF37]"
                       )}
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      {item.icon && <item.icon className="h-4 w-4" />}
                       {item.name}
                     </Link>
                   ))}

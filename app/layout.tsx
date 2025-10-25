@@ -8,7 +8,6 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
-import { ChatbotTrigger } from "@/components/chatbot/chatbot-trigger"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
@@ -101,7 +100,6 @@ export default async function RootLayout({
           <SessionProvider session={session}>
             <OnboardingProvider>
               <Suspense fallback={null}>{children}</Suspense>
-              <ChatbotTrigger />
             </OnboardingProvider>
           </SessionProvider>
           <Toaster />
