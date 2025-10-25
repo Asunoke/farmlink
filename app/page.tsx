@@ -7,6 +7,7 @@ import { MainNav } from "@/components/main-nav"
 import { AnimatedSection, AnimatedCard, AnimatedButton } from "@/components/animated-section"
 import { FeatureShowcase } from "@/components/feature-showcase"
 import { SocialProof } from "@/components/social-proof"
+import { StatsSection } from "@/components/stats-section"
 import { LazySection, PerformanceMonitor, CriticalCSSLoader, ResourceHints } from "@/components/performance-optimizer"
 
 export default function LandingPage() {
@@ -57,36 +58,7 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-[#F5F5DC] border-y border-[#D4AF37]/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#0D1B2A] mb-4">
-              {"Rejoignez plus de 500 agriculteurs maliens"}
-            </h2>
-            <p className="text-lg text-[#0D1B2A]/80">
-              {"Qui ont déjà transformé leur agriculture avec FarmLink"}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <AnimatedCard delay={0.1} className="text-center group hover:shadow-lg p-4 rounded-lg">
-              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">500+</div>
-              <div className="text-[#0D1B2A] font-medium">Fermes connectées</div>
-            </AnimatedCard>
-            <AnimatedCard delay={0.2} className="text-center group hover:shadow-lg p-4 rounded-lg">
-              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">40%</div>
-              <div className="text-[#0D1B2A] font-medium">{"Augmentation des rendements"}</div>
-            </AnimatedCard>
-            <AnimatedCard delay={0.3} className="text-center group hover:shadow-lg p-4 rounded-lg">
-              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">30%</div>
-              <div className="text-[#0D1B2A] font-medium">{"Réduction des coûts"}</div>
-            </AnimatedCard>
-            <AnimatedCard delay={0.4} className="text-center group hover:shadow-lg p-4 rounded-lg">
-              <div className="text-3xl font-bold text-[#006633] mb-2 group-hover:text-[#C1440E] transition-colors">24/7</div>
-              <div className="text-[#0D1B2A] font-medium">Support technique</div>
-            </AnimatedCard>
-          </div>
-        </div>
-      </section>
+      <StatsSection />
 
       {/* Features Section */}
       <section id="features" className="py-24 bg-[#F5F5DC]">
