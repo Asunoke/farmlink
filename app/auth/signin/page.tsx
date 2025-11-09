@@ -4,7 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Mail, Lock, Eye, EyeOff, Github } from "lucide-react"
+import { Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { AuthLayout } from "@/components/auth-layout"
 import { AuthInput } from "@/components/auth-input"
 import { AuthButton } from "@/components/auth-button"
@@ -97,26 +97,6 @@ export default function SignInPage() {
 
         <AuthButton type="submit" loading={loading}>
           Se connecter
-        </AuthButton>
-
-        {/* Divider */}
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200 dark:border-gray-700" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white dark:bg-slate-800 text-gray-500">Ou continuer avec</span>
-          </div>
-        </div>
-
-        {/* Social Login */}
-        <AuthButton
-          type="button"
-          variant="social"
-          icon={Github}
-          onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-        >
-          GitHub
         </AuthButton>
 
         {/* Sign Up Link */}

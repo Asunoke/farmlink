@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { User, Mail, Lock, Eye, EyeOff, Github, Check } from "lucide-react"
+import { User, Mail, Lock, Eye, EyeOff, Check } from "lucide-react"
 import { AuthLayout } from "@/components/auth-layout"
 import { AuthInput } from "@/components/auth-input"
 import { AuthButton } from "@/components/auth-button"
@@ -205,26 +205,6 @@ export default function SignUpPage() {
           disabled={!isPasswordValid || password !== confirmPassword}
         >
           Créer mon compte
-        </AuthButton>
-
-        {/* Divider */}
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200 dark:border-gray-700" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white dark:bg-slate-800 text-gray-500">Ou continuer avec</span>
-          </div>
-        </div>
-
-        {/* Social Login */}
-        <AuthButton
-          type="button"
-          variant="social"
-          icon={Github}
-          onClick={() => {/* Handle GitHub signup */}}
-        >
-          GitHub
         </AuthButton>
 
         {/* Sign In Link */}
