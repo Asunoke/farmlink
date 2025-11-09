@@ -23,7 +23,6 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['recharts', 'lucide-react', 'framer-motion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
   },
   serverExternalPackages: ['@prisma/client', 'bcryptjs'],
