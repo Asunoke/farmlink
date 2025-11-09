@@ -1,8 +1,5 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
@@ -10,6 +7,27 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
+
+const Analytics = dynamic(() => import("@vercel/analytics/next").then(mod => ({ default: mod.Analytics })), { ssr: false })
+
+import dynamic from "next/dynamic"
+import localFont from "next/font/local"
+
+const geistSans = localFont({
+  src: "../public/fonts/GeistVF.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+  display: "swap",
+  preload: true,
+})
+
+const geistMono = localFont({
+  src: "../public/fonts/GeistMonoVF.woff2",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+  display: "swap",
+  preload: true,
+})
 
 export const metadata: Metadata = {
   title: {
@@ -90,7 +108,11 @@ export default async function RootLayout({
 
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://api.openweathermap.org" />
+      </head>
+      <body className={`font-sans ${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
