@@ -6,11 +6,9 @@ import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const Analytics = dynamic(() => import("@vercel/analytics/next").then(mod => ({ default: mod.Analytics })), { ssr: false })
-
-import dynamic from "next/dynamic"
 import localFont from "next/font/local"
 
 const geistSans = localFont({
@@ -19,6 +17,7 @@ const geistSans = localFont({
   weight: "100 900",
   display: "swap",
   preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 const geistMono = localFont({
@@ -27,6 +26,7 @@ const geistMono = localFont({
   weight: "100 900",
   display: "swap",
   preload: true,
+  fallback: ['monospace'],
 })
 
 export const metadata: Metadata = {

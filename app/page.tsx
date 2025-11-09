@@ -3,17 +3,14 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Leaf, Users, TrendingUp, Cloud, Calculator, ShoppingCart } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import dynamic from "next/dynamic"
 import { MainNav } from "@/components/main-nav"
 import { AnimatedSection, AnimatedCard, AnimatedButton } from "@/components/animated-section"
 
 const FeatureShowcase = dynamic(() => import("@/components/feature-showcase").then(mod => ({ default: mod.FeatureShowcase })), { 
-  ssr: false,
   loading: () => <div className="h-96 animate-pulse bg-gray-200" />
 })
 const SocialProof = dynamic(() => import("@/components/social-proof").then(mod => ({ default: mod.SocialProof })), { 
-  ssr: false,
   loading: () => <div className="h-64 animate-pulse bg-gray-200" />
 })
 const StatsSection = dynamic(() => import("@/components/stats-section").then(mod => ({ default: mod.StatsSection })), { 
