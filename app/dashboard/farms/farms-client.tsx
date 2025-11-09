@@ -556,7 +556,7 @@ export function FarmsClient({ farms: initialFarms }: FarmsClientProps) {
             {farms.map((farm) => (
               <div
                 key={farm.id}
-                className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                className={`p-3 rounded-lg border text-white cursor-pointer transition-colors ${
                   selectedFarm?.id === farm.id ? "border-primary bg-primary/5" : "border-border hover:bg-muted/50"
                 }`}
                 onClick={() => setSelectedFarm(farm)}
