@@ -31,7 +31,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Récupérer les données de prévision
-    const forecastResponse = await fetch(`${process.env.NEXTAUTH_URL}/api/weather/forecast?city=${city}`)
+    const baseUrl = process.env.NEXTAUTH_URL || 
+                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') || 
+                    'http://localhost:3000'
+    const forecastResponse = await fetch(`${baseUrl}/api/weather/forecast?city=${city}`)
     
     if (!forecastResponse.ok) {
       return NextResponse.json({ alerts: [] })

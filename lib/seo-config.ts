@@ -87,7 +87,8 @@ export const seoConfig = {
     home: "/og-home.jpg",
     features: "/og-features.jpg", 
     pricing: "/og-pricing.jpg",
-    about: "/og-about.jpg"
+    about: "/og-about.jpg",
+    contact: "/og-contact.jpg"
   },
 
   // Local business schema for Mali

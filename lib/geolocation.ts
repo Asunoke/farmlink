@@ -170,7 +170,7 @@ export function sortByDistance<T extends { latitude?: number; longitude?: number
         : Infinity
     }))
     .sort((a, b) => a.distance - b.distance)
-    .map(({ distance, ...item }) => item as T)
+    .map(({ distance, ...item }) => item as unknown as T)
 }
 
 // Villes principales du Sénégal avec leurs coordonnées

@@ -37,7 +37,7 @@ export async function GET(
   }
 }
 
-// PUT /api/tasks/[id] - Mettre à jour une tâche
+// PUT/PATCH /api/tasks/[id] - Mettre à jour une tâche
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -98,6 +98,13 @@ export async function PUT(
     console.error('Erreur lors de la mise à jour de la tâche:', error)
     return NextResponse.json({ error: "Erreur interne du serveur" }, { status: 500 })
   }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  return PUT(request, { params })
 }
 
 // DELETE /api/tasks/[id] - Supprimer une tâche

@@ -133,9 +133,11 @@ export default function BudgetPage() {
         const res = await fetch("/api/expenses")
         if (!res.ok) return
         const data: ExpenseApi[] = await res.json()
+        // Filtrer les appels API météo et autres transactions système
+        const filtered = data.filter(t => !t.description.includes('weather_api_call'))
         // sort desc by date
-        data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        setTransactions(data)
+        filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        setTransactions(filtered)
       } catch (e) {
         // ignore
       }
@@ -705,6 +707,55 @@ export default function BudgetPage() {
           </Card>
         </div>
       </div>
+
+      {/* Edit Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[500px] bg-[#0B1623] border border-[#D4AF37]/30">
+          <DialogHeader>
+            <DialogTitle className="text-[#D4AF37]">Modifier la Transaction</DialogTitle>
+            <DialogDescription className="text-[#F5F5DC]/80">Modifiez les détails de la transaction.</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="edit-category" className="text-[#F5F5DC]">Catégorie</Label>
+              <Select value={editCategory} onValueChange={setEditCategory}>
+                <SelectTrigger className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]">
+                  <SelectValue placeholder="Sélectionner une catégorie" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0B1623] border border-[#D4AF37]/30">
+                  {expenseCategories.map((category) => (
+                    <SelectItem key={category} value={category} className="text-[#F5F5DC] hover:bg-[#006633]/20">
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-amount" className="text-[#F5F5DC]">Montant (FCFA)</Label>
+                <Input id="edit-amount" type="number" placeholder="0" value={editAmount} onChange={(e) => setEditAmount(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-date" className="text-[#F5F5DC]">Date</Label>
+                <Input id="edit-date" type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="edit-description" className="text-[#F5F5DC]">Description</Label>
+              <Textarea id="edit-description" placeholder="Détails de la transaction..." value={editDescription} onChange={(e) => setEditDescription(e.target.value)} className="bg-[#1A2332] border-[#D4AF37]/30 text-[#F5F5DC] focus:border-[#006633]" />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" type="button" onClick={() => setIsEditDialogOpen(false)} className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0D1B2A]">
+              Annuler
+            </Button>
+            <Button type="button" onClick={handleUpdateExpense} disabled={loading} className="bg-[#006633] hover:bg-[#C1440E] text-white">
+              {loading ? "Mise à jour..." : "Mettre à jour"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   )
 }
