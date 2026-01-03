@@ -31,7 +31,7 @@ export const SUBSCRIPTION_LIMITS: Record<string, SubscriptionLimits> = {
     },
   },
   BASIC: {
-    farms: 3,
+    farms: 1,
     parcels: 4,
     teamMembers: 10,
     expenses: 500,

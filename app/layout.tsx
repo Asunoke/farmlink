@@ -9,6 +9,7 @@ import { auth } from "@/lib/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { RedirectionOverlay } from "@/components/redirection-overlay"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -107,6 +108,7 @@ export default async function RootLayout({
             </OnboardingProvider>
           </SessionProvider>
           <Toaster />
+          <RedirectionOverlay />
         </ThemeProvider>
         <Analytics />
       </body>

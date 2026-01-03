@@ -197,7 +197,7 @@ export default function AboutPage() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Link href="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-700 font-semibold">
+              <Button size="lg" variant="outline" className="border-white text-green-700 hover:bg-white hover:text-green-700 font-semibold">
                 <Play className="mr-2 w-5 h-5" />
                 se joindre a nous 
               </Button>
@@ -405,18 +405,7 @@ export default function AboutPage() {
                 />
                 <div className="hidden text-gray-600 text-sm font-medium">Florynx Labs SARL</div>
               </div>
-              <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
-                <img 
-                  src="/partners/evotech-mali.svg" 
-                  alt="Evotech Mali SARL" 
-                  className="max-h-12 max-w-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                    e.currentTarget.nextElementSibling.style.display = 'flex'
-                  }}
-                />
-                <div className="hidden text-gray-600 text-sm font-medium">Evotech Mali SARL</div>
-              </div>
+             
               <div className="w-40 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center p-4 hover:shadow-xl transition-shadow">
                 <img 
                   src="/partners/mali-agriculture.svg" 
